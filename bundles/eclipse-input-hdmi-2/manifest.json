@@ -34,13 +34,5 @@
       "settingTitle": "Channel Mapping",
       "settingType": "string"
     }
-  ],
-  "marketplace": {
-    "description": "Open the TV\u2019s HDMI 2 port from Eclipse Home.",
-    "capabilities": [
-      "Channel mapping",
-      "Fullscreen viewing",
-      "Live thumbnail on supported setups"
-    ]
-  }
+  ]
 }

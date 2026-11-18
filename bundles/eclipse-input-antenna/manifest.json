@@ -34,13 +34,5 @@
       "settingTitle": "Channel Mapping",
       "settingType": "string"
     }
-  ],
-  "marketplace": {
-    "description": "Watch over-the-air channels configured in the TV\u2019s channel setup.",
-    "capabilities": [
-      "Channel mapping",
-      "Fullscreen viewing",
-      "Live thumbnail on supported setups"
-    ]
-  }
+  ]
 }

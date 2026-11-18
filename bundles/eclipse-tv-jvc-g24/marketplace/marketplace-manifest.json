@@ -1,0 +1,7 @@
+{
+  "schemaVersion": 1,
+  "capabilities": [
+    "Shares the digital tuner across Antenna, Cable, and Satellite where applicable",
+    "Enables the manual TV backlight control in Control Centre when permission is available"
+  ]
+}

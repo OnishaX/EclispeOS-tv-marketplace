@@ -28,15 +28,5 @@
     "liveThumbnail": true,
     "nowPlaying": true
   },
-  "settings": [],
-  "marketplace": {
-    "tagline": "AirPlay in Eclipse",
-    "description": "Open the AirPlay receiver included with Eclipse. Receiver support is experimental and may not work with every sender.",
-    "features": [
-      "AirPlay receiver screen"
-    ],
-    "capabilities": [
-      "Advertises the receiver on the local network"
-    ]
-  }
+  "settings": []
 }
