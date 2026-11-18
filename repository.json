@@ -54,6 +54,12 @@
       "title": "Google Cast",
       "type": "app",
       "featured": true
+    },
+    {
+      "id": "eclipse-tv-jvc-g24",
+      "title": "JVC G24 TV Compatibility",
+      "type": "plugin",
+      "device": {"model": "JVC G24 TV", "product": "SW8_JVC_NZ", "sdk": 30}
     }
   ]
 }
