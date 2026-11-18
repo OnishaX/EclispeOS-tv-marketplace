@@ -6,8 +6,8 @@
   "type": "plugin",
   "version": "0.1",
   "entryPoint": {"handler": "compatibility"},
-  "icons": [{"iconName": "TV", "path": "icon0.png"}],
-  "colours": [{"colourName": "Sapphire", "hex": "#27539C"}],
+  "icons": [{"iconName": "TV Compatibility", "path": "icon0.png"}],
+  "colours": [{"colourName": "Graphite", "hex": "#4A505C"}],
   "customisation": {"title": false, "colour": false},
   "capabilities": {"liveThumbnail": false, "nowPlaying": false},
   "compatibility": {
