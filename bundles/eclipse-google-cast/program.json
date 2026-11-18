@@ -1,0 +1,107 @@
+{
+  "version": 1,
+  "start": "ready",
+  "pages": {
+    "ready": {
+      "draw": [
+        {
+          "op": "pulse",
+          "y": 300
+        },
+        {
+          "op": "icon",
+          "y": 300,
+          "size": 84
+        },
+        {
+          "op": "label",
+          "y": 470,
+          "size": 40,
+          "text": "Ready to Cast"
+        },
+        {
+          "op": "label",
+          "y": 515,
+          "size": 22,
+          "shade": 221,
+          "field": "device"
+        },
+        {
+          "op": "label",
+          "y": 552,
+          "size": 18,
+          "shade": 170,
+          "text": "Network: ",
+          "field": "network"
+        },
+        {
+          "op": "label",
+          "y": 620,
+          "size": 18,
+          "shade": 136,
+          "text": "Open a Cast-enabled app on your phone and tap the Cast icon."
+        },
+        {
+          "op": "label",
+          "y": 720,
+          "size": 15,
+          "shade": 136,
+          "text": "Right: help   |   Select: refresh status   |   Back: return"
+        }
+      ],
+      "keys": {
+        "right": {
+          "op": "open",
+          "page": "help"
+        },
+        "select": {
+          "op": "refresh"
+        }
+      }
+    },
+    "help": {
+      "draw": [
+        {
+          "op": "icon",
+          "y": 300,
+          "size": 84
+        },
+        {
+          "op": "label",
+          "y": 440,
+          "size": 40,
+          "text": "How to Cast"
+        },
+        {
+          "op": "label",
+          "y": 510,
+          "size": 22,
+          "text": "Connect your phone and TV to the same network."
+        },
+        {
+          "op": "label",
+          "y": 550,
+          "size": 22,
+          "text": "Tap Cast in a supported app and select this TV."
+        },
+        {
+          "op": "label",
+          "y": 720,
+          "size": 15,
+          "shade": 136,
+          "text": "Left or Select: status   |   Back: return"
+        }
+      ],
+      "keys": {
+        "left": {
+          "op": "open",
+          "page": "ready"
+        },
+        "select": {
+          "op": "open",
+          "page": "ready"
+        }
+      }
+    }
+  }
+}
