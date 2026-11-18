@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "eclipse-input-composite-2",
+  "title": "Composite 2",
+  "developer": "Eclipse",
+  "type": "input",
+  "version": "0.1",
+  "entryPoint": {
+    "handler": "composite2"
+  },
+  "icons": [
+    {
+      "iconName": "Composite",
+      "path": "icon0.png"
+    }
+  ],
+  "colours": [
+    {
+      "colourName": "Jade Green",
+      "hex": "#277447"
+    }
+  ],
+  "customisation": {
+    "title": true,
+    "colour": true
+  },
+  "capabilities": {
+    "liveThumbnail": true,
+    "nowPlaying": true
+  },
+  "settings": [
+    {
+      "key": "channelMapping",
+      "settingTitle": "Channel Mapping",
+      "settingType": "string"
+    }
+  ]
+}

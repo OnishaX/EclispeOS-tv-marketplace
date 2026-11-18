@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "description": "Open Component 2, an analog component video input, from Eclipse Home. Requires a matching physical input on the TV.",
+  "capabilities": [
+    "Channel mapping",
+    "Fullscreen viewing",
+    "Optional live thumbnail on supported setups"
+  ]
+}

@@ -4,7 +4,7 @@
   "title": "Cable",
   "developer": "Eclipse",
   "type": "input",
-  "version": "0.1",
+  "version": "0.2",
   "entryPoint": {
     "handler": "cable"
   },
@@ -16,8 +16,8 @@
   ],
   "colours": [
     {
-      "colourName": "Amber",
-      "hex": "#A87A1E"
+      "colourName": "Harvest Yellow",
+      "hex": "#AE8D20"
     }
   ],
   "customisation": {

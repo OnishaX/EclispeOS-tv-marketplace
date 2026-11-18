@@ -21,7 +21,37 @@
     },
     {
       "id": "eclipse-input-composite",
-      "title": "Composite",
+      "title": "Composite 1",
+      "type": "input",
+      "featured": false
+    },
+    {
+      "id": "eclipse-input-composite-2",
+      "title": "Composite 2",
+      "type": "input",
+      "featured": false
+    },
+    {
+      "id": "eclipse-input-composite-3",
+      "title": "Composite 3",
+      "type": "input",
+      "featured": false
+    },
+    {
+      "id": "eclipse-input-component-1",
+      "title": "Component 1",
+      "type": "input",
+      "featured": false
+    },
+    {
+      "id": "eclipse-input-component-2",
+      "title": "Component 2",
+      "type": "input",
+      "featured": false
+    },
+    {
+      "id": "eclipse-input-component-3",
+      "title": "Component 3",
       "type": "input",
       "featured": false
     },

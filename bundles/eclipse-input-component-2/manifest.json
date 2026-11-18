@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "eclipse-input-component-2",
+  "title": "Component 2",
+  "developer": "Eclipse",
+  "type": "input",
+  "version": "0.1",
+  "entryPoint": {
+    "handler": "component2"
+  },
+  "icons": [
+    {
+      "iconName": "Component",
+      "path": "icon0.png"
+    }
+  ],
+  "colours": [
+    {
+      "colourName": "Ocean Teal",
+      "hex": "#197C80"
+    }
+  ],
+  "customisation": {
+    "title": true,
+    "colour": true
+  },
+  "capabilities": {
+    "liveThumbnail": true,
+    "nowPlaying": true
+  },
+  "settings": [
+    {
+      "key": "channelMapping",
+      "settingTitle": "Channel Mapping",
+      "settingType": "string"
+    }
+  ]
+}

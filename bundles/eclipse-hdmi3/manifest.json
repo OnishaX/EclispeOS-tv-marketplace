@@ -4,7 +4,7 @@
   "title": "HDMI 3",
   "developer": "Eclipse",
   "type": "input",
-  "version": "0.1",
+  "version": "0.2",
   "entryPoint": {
     "handler": "hdmi"
   },
@@ -16,8 +16,8 @@
   ],
   "colours": [
     {
-      "colourName": "Amethyst",
-      "hex": "#6A3596"
+      "colourName": "Midnight Blue",
+      "hex": "#283D79"
     }
   ],
   "customisation": {

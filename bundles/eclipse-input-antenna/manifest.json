@@ -4,7 +4,7 @@
   "title": "Antenna",
   "developer": "Eclipse",
   "type": "input",
-  "version": "0.1",
+  "version": "0.2",
   "entryPoint": {
     "handler": "antenna"
   },
@@ -16,8 +16,8 @@
   ],
   "colours": [
     {
-      "colourName": "Garnet",
-      "hex": "#9E2F3A"
+      "colourName": "Sunflower Yellow",
+      "hex": "#CCAA27"
     }
   ],
   "customisation": {

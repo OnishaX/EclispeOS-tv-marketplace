@@ -21,7 +21,7 @@
     },
     {
       "id": "eclipse-composite",
-      "title": "Composite",
+      "title": "Composite 1",
       "type": "input",
       "featured": false
     },
@@ -59,7 +59,11 @@
       "id": "eclipse-tv-jvc-g24",
       "title": "JVC G24 TV Compatibility",
       "type": "plugin",
-      "device": {"model": "JVC G24 TV", "product": "SW8_JVC_NZ", "sdk": 30}
+      "device": {
+        "model": "JVC G24 TV",
+        "product": "SW8_JVC_NZ",
+        "sdk": 30
+      }
     }
   ]
 }

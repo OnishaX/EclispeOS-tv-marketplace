@@ -4,7 +4,7 @@
   "title": "Satellite",
   "developer": "Eclipse",
   "type": "input",
-  "version": "0.1",
+  "version": "0.2",
   "entryPoint": {
     "handler": "satellite"
   },
@@ -16,8 +16,8 @@
   ],
   "colours": [
     {
-      "colourName": "Lagoon",
-      "hex": "#1E6F8C"
+      "colourName": "Old Gold",
+      "hex": "#8F761E"
     }
   ],
   "customisation": {

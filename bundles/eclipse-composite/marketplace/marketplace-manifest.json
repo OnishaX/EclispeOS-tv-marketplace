@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "description": "Open the TV\u2019s analog composite video input from Eclipse Home.",
+  "description": "Open Composite 1, an analog composite video input, from Eclipse Home. Requires a matching physical input on the TV.",
   "capabilities": [
     "Channel mapping",
     "Fullscreen viewing",
-    "Live thumbnail on supported setups"
+    "Optional live thumbnail on supported setups"
   ]
 }
