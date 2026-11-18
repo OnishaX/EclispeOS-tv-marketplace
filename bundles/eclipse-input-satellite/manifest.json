@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "eclipse-input-satellite",
+  "title": "Satellite",
+  "developer": "Eclipse",
+  "type": "input",
+  "version": "0.1",
+  "entryPoint": {
+    "handler": "satellite"
+  },
+  "icons": [
+    {
+      "iconName": "Satellite",
+      "path": "icon0.png"
+    }
+  ],
+  "colours": [
+    {
+      "colourName": "Lagoon",
+      "hex": "#1E6F8C"
+    }
+  ],
+  "customisation": {
+    "title": true,
+    "colour": true
+  },
+  "capabilities": {
+    "liveThumbnail": true,
+    "nowPlaying": true
+  },
+  "settings": [
+    {
+      "key": "channelMapping",
+      "settingTitle": "Channel Mapping",
+      "settingType": "string"
+    }
+  ]
+}

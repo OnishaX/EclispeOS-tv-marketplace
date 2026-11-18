@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "eclipse-input-hdmi-1",
+  "title": "HDMI 1",
+  "developer": "Eclipse",
+  "type": "input",
+  "version": "0.1",
+  "entryPoint": {
+    "handler": "hdmi"
+  },
+  "icons": [
+    {
+      "iconName": "HDMI",
+      "path": "icon0.png"
+    }
+  ],
+  "colours": [
+    {
+      "colourName": "Emerald",
+      "hex": "#1F7B61"
+    }
+  ],
+  "customisation": {
+    "title": true,
+    "colour": true
+  },
+  "capabilities": {
+    "liveThumbnail": true,
+    "nowPlaying": true
+  },
+  "settings": [
+    {
+      "key": "channelMapping",
+      "settingTitle": "Channel Mapping",
+      "settingType": "string"
+    }
+  ]
+}

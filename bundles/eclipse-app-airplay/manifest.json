@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "eclipse-app-airplay",
+  "title": "AirPlay",
+  "developer": "Eclipse",
+  "type": "app",
+  "version": "0.1",
+  "entryPoint": {
+    "handler": "airplay"
+  },
+  "icons": [
+    {
+      "iconName": "AirPlay",
+      "path": "icon0.png"
+    }
+  ],
+  "colours": [
+    {
+      "colourName": "Indigo",
+      "hex": "#3D4F8F"
+    }
+  ],
+  "customisation": {
+    "title": false,
+    "colour": true
+  },
+  "capabilities": {
+    "liveThumbnail": true,
+    "nowPlaying": true
+  },
+  "settings": []
+}

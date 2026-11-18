@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "bundles": [
+    {
+      "id": "eclipse-input-hdmi-1",
+      "title": "HDMI 1",
+      "type": "input",
+      "featured": true
+    },
+    {
+      "id": "eclipse-input-hdmi-2",
+      "title": "HDMI 2",
+      "type": "input",
+      "featured": false
+    },
+    {
+      "id": "eclipse-input-hdmi-3",
+      "title": "HDMI 3",
+      "type": "input",
+      "featured": false
+    },
+    {
+      "id": "eclipse-input-composite",
+      "title": "Composite",
+      "type": "input",
+      "featured": false
+    },
+    {
+      "id": "eclipse-input-antenna",
+      "title": "Antenna",
+      "type": "input",
+      "featured": false
+    },
+    {
+      "id": "eclipse-input-cable",
+      "title": "Cable",
+      "type": "input",
+      "featured": false
+    },
+    {
+      "id": "eclipse-input-satellite",
+      "title": "Satellite",
+      "type": "input",
+      "featured": false
+    },
+    {
+      "id": "eclipse-app-airplay",
+      "title": "AirPlay",
+      "type": "app",
+      "featured": true
+    },
+    {
+      "id": "eclipse-app-google-cast",
+      "title": "Google Cast",
+      "type": "app",
+      "featured": true
+    },
+    {
+      "id": "eclipse-plugin-compatibility-tv-jvc-g24",
+      "title": "JVC G24 TV Compatibility",
+      "type": "plugin",
+      "device": {
+        "model": "JVC G24 TV",
+        "product": "SW8_JVC_NZ",
+        "sdk": 30
+      }
+    }
+  ]
+}
