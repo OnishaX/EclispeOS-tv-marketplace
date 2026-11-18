@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "bundles": [
+    {
+      "id": "eclipse-hdmi1",
+      "title": "HDMI 1",
+      "type": "input",
+      "featured": true
+    },
+    {
+      "id": "eclipse-hdmi2",
+      "title": "HDMI 2",
+      "type": "input",
+      "featured": false
+    },
+    {
+      "id": "eclipse-hdmi3",
+      "title": "HDMI 3",
+      "type": "input",
+      "featured": false
+    },
+    {
+      "id": "eclipse-composite",
+      "title": "Composite",
+      "type": "input",
+      "featured": false
+    },
+    {
+      "id": "eclipse-antenna",
+      "title": "Antenna",
+      "type": "input",
+      "featured": false
+    },
+    {
+      "id": "eclipse-cable",
+      "title": "Cable",
+      "type": "input",
+      "featured": false
+    },
+    {
+      "id": "eclipse-satellite",
+      "title": "Satellite",
+      "type": "input",
+      "featured": false
+    },
+    {
+      "id": "eclipse-airplay",
+      "title": "AirPlay",
+      "type": "app",
+      "featured": true
+    },
+    {
+      "id": "eclipse-google-cast",
+      "title": "Google Cast",
+      "type": "app",
+      "featured": true
+    }
+  ]
+}

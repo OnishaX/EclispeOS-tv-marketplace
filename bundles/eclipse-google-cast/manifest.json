@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "id": "eclipse-google-cast",
+  "title": "Google Cast",
+  "developer": "Eclipse",
+  "type": "app",
+  "version": "0.1",
+  "entryPoint": {
+    "handler": "cast"
+  },
+  "icons": [
+    {
+      "iconName": "Cast",
+      "path": "icon0.png"
+    }
+  ],
+  "colours": [
+    {
+      "colourName": "Forest",
+      "hex": "#2F7D3E"
+    }
+  ],
+  "customisation": {
+    "title": false,
+    "colour": true
+  },
+  "capabilities": {
+    "liveThumbnail": false,
+    "nowPlaying": true
+  },
+  "settings": [
+
+  ]
+}
