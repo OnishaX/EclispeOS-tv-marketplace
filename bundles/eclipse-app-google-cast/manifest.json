@@ -29,5 +29,16 @@
     "liveThumbnail": false,
     "nowPlaying": true
   },
-  "settings": []
+  "settings": [],
+  "marketplace": {
+    "tagline": "Cast status at a glance",
+    "description": "Check your TV\u2019s network details and see how to cast from a supported app. This screen does not replace the TV\u2019s built-in Cast receiver.",
+    "features": [
+      "Use Right to open casting help",
+      "Press Select to refresh status"
+    ],
+    "capabilities": [
+      "Shows the TV name and connection status"
+    ]
+  }
 }

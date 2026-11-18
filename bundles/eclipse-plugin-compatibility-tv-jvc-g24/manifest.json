@@ -38,5 +38,11 @@
     "backlight": "jvc-picture"
   },
   "pluginType": "compatibility",
-  "compatibilityType": "tv"
+  "compatibilityType": "tv",
+  "marketplace": {
+    "capabilities": [
+      "Shares the digital tuner across Antenna, Cable, and Satellite where applicable",
+      "Enables the manual TV backlight control in Control Centre when permission is available"
+    ]
+  }
 }
