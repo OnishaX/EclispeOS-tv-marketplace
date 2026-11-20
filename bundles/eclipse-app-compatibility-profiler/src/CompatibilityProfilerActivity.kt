@@ -44,6 +44,7 @@ class CompatibilityProfilerActivity : AppCompatActivity() {
     private var report: JSONObject? = null
     private var scanned = false
     private var page = 0
+    private var reportParentRow: String? = null
     private var busy = false
     private var generation = 0
     private var job: Future<*>? = null
@@ -61,6 +62,8 @@ class CompatibilityProfilerActivity : AppCompatActivity() {
         WindowInsetsControllerCompat(window, window.decorView).hide(WindowInsetsCompat.Type.systemBars())
         report = savedInstanceState?.getString("report")?.let { JSONObject(it).also(TvCapabilities::parse) }
         scanned = savedInstanceState?.getBoolean("scanned") == true
+        page = savedInstanceState?.getInt("page", 0) ?: 0
+        reportParentRow = savedInstanceState?.getString("reportParentRow")
         pullRequest = savedInstanceState?.getString("pullRequest")
         particles = ParticleBackgroundView(this).apply {
             glowStrength = 0f
@@ -70,8 +73,18 @@ class CompatibilityProfilerActivity : AppCompatActivity() {
             drawsOwnBackground = false
             focusColor = 0xFF4A505C.toInt()
             pageCategories = sections.mapIndexed { index, title -> SettingsRow("profiler:$index", title) }
-            onCategory = { page = it; render() }
-            onBack = { if (busy) cancel() else finish() }
+            showBack = reportParentRow != null
+            onCategory = { reportParentRow = null; showBack = false; page = it; render() }
+            onBack = {
+                if (busy) cancel()
+                else reportParentRow?.let { row ->
+                    beginPageTransition(forward = false)
+                    reportParentRow = null
+                    showBack = false
+                    page = 0
+                    render(focusId = row)
+                }
+            }
             glowStrength = HomePrefs(this@CompatibilityProfilerActivity).glowIntensityOther / 100f
         }
         qr = ProfilerQrView(this)
@@ -100,7 +113,14 @@ class CompatibilityProfilerActivity : AppCompatActivity() {
         panel.requestFocus()
     }
 
-    private fun render() {
+    private fun openReport(row: String) {
+        panel.beginPageTransition(forward = true)
+        reportParentRow = row
+        panel.showBack = true
+        page = 1
+    }
+
+    private fun render(focusId: String? = panel.selectedRowId) {
         qr.setCode(if (page == 6) authorization?.verificationUrl else null)
         val rows = when (page) {
             0 -> listOf(
@@ -108,7 +128,7 @@ class CompatibilityProfilerActivity : AppCompatActivity() {
                     submit(onSuccess = {
                         report = it
                         scanned = true
-                        page = 1
+                        openReport("scan")
                         val missing = it.getJSONObject("verification").getJSONArray("unavailableProbes").length()
                         if (missing > 0) Toast.makeText(this, "$missing probes unavailable. Review Scan verification.", Toast.LENGTH_LONG).show()
                     }) { TvCapabilityReport(this).scan() }
@@ -132,8 +152,8 @@ class CompatibilityProfilerActivity : AppCompatActivity() {
                     EclipseBundles(this, HomePrefs(this)).activeCompatibility()?.capabilities?.let {
                         report = JSONObject(it.source)
                         scanned = false
-                        page = 1
-                        render()
+                        openReport("profile")
+                        render(focusId = null)
                     } ?: explain("No capability report is installed for this model and firmware.")
                 },
                 SettingsRow("writes", "Scan is read-only", value = "No display or sound changes", enabled = false),
@@ -146,7 +166,7 @@ class CompatibilityProfilerActivity : AppCompatActivity() {
             } ?: listOf(SettingsRow("empty", "Run a scan first", enabled = false))
         }
         panel.message = if (busy && authorization == null) "Working..." else null
-        panel.showPage(rows, category = page)
+        panel.showPage(rows, category = page, focusCategories = panel.categoriesFocused, focusId = focusId)
     }
 
     private fun contributionRows(): List<SettingsRow> {
@@ -296,6 +316,8 @@ class CompatibilityProfilerActivity : AppCompatActivity() {
     override fun onSaveInstanceState(outState: Bundle) {
         report?.let { outState.putString("report", it.toString()) }
         outState.putBoolean("scanned", scanned)
+        outState.putInt("page", page)
+        reportParentRow?.let { outState.putString("reportParentRow", it) }
         pullRequest?.let { outState.putString("pullRequest", it) }
         super.onSaveInstanceState(outState)
     }
@@ -312,10 +334,25 @@ class CompatibilityProfilerActivity : AppCompatActivity() {
             return true
         }
         if (appSettings.isShowing) return appSettings.handleKey(event)
+        if (event.keyCode == KeyEvent.KEYCODE_BACK) {
+            if (event.action == KeyEvent.ACTION_UP && !event.isCanceled) panel.onBack()
+            return true
+        }
+        if (event.keyCode in NAV_KEYS) {
+            val center = event.keyCode == KeyEvent.KEYCODE_DPAD_CENTER || event.keyCode == KeyEvent.KEYCODE_ENTER
+            if (event.action == if (center) KeyEvent.ACTION_UP else KeyEvent.ACTION_DOWN) {
+                if (!event.isCanceled) panel.handleKey(event.keyCode, event.repeatCount > 0)
+            }
+            if (event.action == KeyEvent.ACTION_UP) panel.releaseKey(event.keyCode)
+            return true
+        }
         return super.dispatchKeyEvent(event)
     }
 
     companion object {
+        private val NAV_KEYS = setOf(KeyEvent.KEYCODE_DPAD_LEFT, KeyEvent.KEYCODE_DPAD_RIGHT,
+            KeyEvent.KEYCODE_DPAD_UP, KeyEvent.KEYCODE_DPAD_DOWN, KeyEvent.KEYCODE_DPAD_CENTER, KeyEvent.KEYCODE_ENTER)
+
         internal fun flatten(json: JSONObject): List<Pair<String, String>> {
             val rows = mutableListOf<Pair<String, String>>()
             fun visit(path: String, value: Any?) {

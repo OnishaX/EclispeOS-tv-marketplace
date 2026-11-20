@@ -33,6 +33,14 @@ and Compatibility Profiler require Eclipse 1.1 (version code 2) or later.
 Their bundled Kotlin sources are informational/build inputs, not executable
 downloads; installing a catalog entry cannot upgrade the Eclipse host APK.
 
+Uninstalled plugins are offered only in Marketplace. Settings lists connection
+plugins only after installation; media-app listing manifests do not advertise
+optional plugins.
+
+Music offers per-user List/Grid choices for Artists, Albums and Playlists;
+Songs stay in a list. Open collections use a left artwork/information pane and
+a right track list, with parent-only Back navigation.
+
 ## Model compatibility
 
 Official TV plugins match Android model, product and SDK exactly and install
@@ -55,6 +63,9 @@ receivers; unknown decoder, channel and scaler limits remain unknown.
 (`#4A505C`) and the supplied profiler icon. Install it through Marketplace,
 authorize Eclipse's existing local ADB connection, and scan/review Display,
 Sound, OS, Remote and Buffers. All probes are read-only and command-allowlisted.
+Use D-pad directions to navigate both panes, Select to activate a row, and
+Back to close a dialog or return to its parent report page. Root pages have no
+Back button and stay in the app; use Home to return to the dashboard.
 Display modes and codec limits are labelled as advertised; measured UI cadence
 is reported only when the profiler's own surface exposes usable timing.
 

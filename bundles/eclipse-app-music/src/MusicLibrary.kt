@@ -22,6 +22,15 @@ internal data class MusicSong(
 internal data class MusicPlaylist(val id: String, val name: String, val songs: List<Long>)
 internal data class MusicCollection(val id: String, val title: String, val subtitle: String, val songs: List<MusicSong>)
 internal enum class MusicSection(val title: String) { ARTISTS("Artists"), ALBUMS("Albums"), SONGS("Songs"), PLAYLISTS("Playlists") }
+internal class MusicLayouts(context: Context) {
+    private val prefs = HomePrefs(context)
+    fun grid(section: MusicSection) = section != MusicSection.SONGS &&
+        prefs.bundleSetting("music", "${section.name.lowercase()}Grid") == "true"
+    fun setGrid(section: MusicSection, grid: Boolean) {
+        require(section != MusicSection.SONGS) { "Songs always use a list." }
+        prefs.setBundleSetting("music", "${section.name.lowercase()}Grid", grid.toString())
+    }
+}
 internal enum class MusicRepeat { NONE, ALL, ONE }
 private fun songCount(count: Int) = if (count == 1) "1 song" else "$count songs"
 

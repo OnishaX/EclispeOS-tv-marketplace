@@ -100,7 +100,7 @@ open class MusicActivity : AppCompatActivity() {
             setAccentColor(appAccent, 0)
         }
         music = MusicView(this, videoKind).apply {
-            onBack = { dispatchKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BACK)) }
+            onBack = { music.key(KeyEvent.KEYCODE_BACK) }
             onPermission = { requestPermissions(arrayOf(permission), REQUEST_AUDIO) }
             onPlay = { songs, id ->
                 if (videoKind == null) control { it.play(songs, id) }
@@ -147,6 +147,7 @@ open class MusicActivity : AppCompatActivity() {
             }
             onClosed = {
                 particles.setAccentColor(appAccent)
+                music.refreshLayout()
                 music.requestFocus()
             }
         }
@@ -185,6 +186,7 @@ open class MusicActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         active = true
+        music.refreshLayout()
         particles.setRunning(true)
         if (videoKind == null) {
             bound = bindService(Intent(this, MusicPlaybackService::class.java), connection, Context.BIND_AUTO_CREATE)
@@ -363,6 +365,10 @@ open class MusicActivity : AppCompatActivity() {
             return true
         }
         if (appSettings.isShowing) return appSettings.handleKey(event)
+        if (code == KeyEvent.KEYCODE_BACK) {
+            if (event.action == KeyEvent.ACTION_UP && !event.isCanceled) music.key(code)
+            return true
+        }
         if (code == KeyEvent.KEYCODE_DPAD_CENTER || code == KeyEvent.KEYCODE_ENTER) {
             if (event.action == KeyEvent.ACTION_UP && !event.isCanceled) {
                 if (event.eventTime - event.downTime >= ViewConfiguration.getLongPressTimeout()) music.longSelect()
@@ -385,7 +391,6 @@ open class MusicActivity : AppCompatActivity() {
                 KeyEvent.KEYCODE_MEDIA_PREVIOUS -> { music.onSkip(-1); return true }
             }
             if (music.key(code)) return true
-            if (code == KeyEvent.KEYCODE_BACK) { finish(); return true }
         }
         return super.dispatchKeyEvent(event)
     }

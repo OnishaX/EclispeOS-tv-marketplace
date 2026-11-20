@@ -5,7 +5,7 @@
   "developer": "Eclipse",
   "type": "plugin",
   "pluginType": "connection",
-  "version": "0.1",
+  "version": "0.2",
   "entryPoint": {
     "handler": "navidrome"
   },

@@ -1,8 +1,11 @@
 {
   "schemaVersion": 1,
-  "description": "Browse and play local, Jellyfin and Navidrome music.",
+  "description": "Browse artists, albums and playlists as lists or grids, with collection details and native music playback.",
   "features": [
-    "Native Eclipse integration",
+    "Independent Artists, Albums and Playlists list/grid settings",
+    "Songs always use a list",
+    "Collection artwork and information beside its tracks",
+    "Background playback, shuffle and repeat",
     "Requires Eclipse host version 2 or later"
   ]
 }

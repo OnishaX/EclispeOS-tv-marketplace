@@ -4,7 +4,7 @@
   "title": "Music",
   "developer": "Eclipse",
   "type": "app",
-  "version": "0.1",
+  "version": "0.2",
   "entryPoint": {
     "handler": "music"
   },
@@ -28,6 +28,22 @@
     "liveThumbnail": false,
     "nowPlaying": true
   },
-  "settings": [],
+  "settings": [
+    {
+      "key": "artistsGrid",
+      "settingTitle": "Artists layout",
+      "settingType": "bool"
+    },
+    {
+      "key": "albumsGrid",
+      "settingTitle": "Albums layout",
+      "settingType": "bool"
+    },
+    {
+      "key": "playlistsGrid",
+      "settingTitle": "Playlists layout",
+      "settingType": "bool"
+    }
+  ],
   "minimumHostVersionCode": 2
 }

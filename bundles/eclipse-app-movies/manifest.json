@@ -4,7 +4,7 @@
   "title": "Movies",
   "developer": "Eclipse",
   "type": "app",
-  "version": "0.2",
+  "version": "0.3",
   "entryPoint": {
     "handler": "movies"
   },

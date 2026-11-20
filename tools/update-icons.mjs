@@ -19,6 +19,8 @@ const entries = [
   ['movies.svg', [['eclipse-app-movies', 'ic_movies']]],
   ['TV Shows.svg', [['eclipse-app-tv-shows', 'ic_tv_shows']]],
   ['tv-compatibility.svg', [['eclipse-plugin-compatibility-tv-jvc-g24', 'ic_tv_compatibility']]],
+  ['settings.svg', [['eclipse-app-settings', 'ic_settings']]],
+  ['navidrome.svg', [['eclipse-plugin-connection-navidrome', 'logo_navidrome']]],
   ['chat.svg', [], 'ic_chat'],
   ['computer.svg', [], 'ic_computer'],
   ['google-play.svg', [], 'logo_google_play'],
@@ -50,7 +52,7 @@ for (const [file, targets, core] of entries) {
     return `        <path android:fillColor="#FFFFFFFF" android:pathData="${d}" />`;
   });
   if (!paths.length) throw new Error(`No SVG paths: ${file}`);
-  const [width, height] = size.slice(1).map(Number);
+    const [width, height] = size.slice(1).map(Number);
   const side = Math.max(width, height);
   const vector = `<vector xmlns:android="http://schemas.android.com/apk/res/android"\n` +
     `    android:width="48dp" android:height="48dp" android:viewportWidth="${side}" android:viewportHeight="${side}">\n` +
@@ -69,6 +71,8 @@ for (const [file, targets, core] of entries) {
         save(local, JSON.stringify(manifest) + '\n');
       }
     }
+    // Settings is built into the host, never a downloadable Marketplace bundle.
+    if (id === 'eclipse-app-settings') continue;
     const canonical = resolve(repo, 'bundles', id);
     if (!existsSync(resolve(canonical, 'manifest.json'))) {
       if (!existsSync(local)) throw new Error(`Missing manifest for ${id}`);
