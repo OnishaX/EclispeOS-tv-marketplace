@@ -4,7 +4,7 @@
   "title": "JVC G24 TV Compatibility",
   "developer": "Eclipse",
   "type": "plugin",
-  "version": "0.3",
+  "version": "0.4",
   "entryPoint": {
     "handler": "compatibility"
   },
@@ -43,7 +43,11 @@
         "firmwareBuild": "RTM9.241015.070",
         "securityPatch": "2024-12-01",
         "manufacturer": "skyworth",
-        "board": "anaheim"
+        "board": "anaheim",
+        "supportedAbis": [
+          "armeabi-v7a",
+          "armeabi"
+        ]
       },
       "display": {
         "nativeSize": [

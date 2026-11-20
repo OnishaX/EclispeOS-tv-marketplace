@@ -65,6 +65,7 @@ internal class TvCapabilityReport(
         val os = JSONObject().put("sdk", Build.VERSION.SDK_INT).put("release", Build.VERSION.RELEASE)
             .put("firmwareBuild", Build.DISPLAY).put("securityPatch", Build.VERSION.SECURITY_PATCH)
             .put("manufacturer", Build.MANUFACTURER).put("board", Build.BOARD)
+            .put("supportedAbis", JSONArray(Build.SUPPORTED_ABIS.toList()))
         val keys = listOf(KeyEvent.KEYCODE_DPAD_UP, KeyEvent.KEYCODE_DPAD_DOWN, KeyEvent.KEYCODE_DPAD_LEFT,
             KeyEvent.KEYCODE_DPAD_RIGHT, KeyEvent.KEYCODE_DPAD_CENTER, KeyEvent.KEYCODE_BACK, KeyEvent.KEYCODE_HOME,
             KeyEvent.KEYCODE_SETTINGS, KeyEvent.KEYCODE_NOTIFICATION, KeyEvent.KEYCODE_TV_INPUT,
