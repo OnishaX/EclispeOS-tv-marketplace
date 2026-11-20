@@ -1,7 +1,12 @@
 {
   "schemaVersion": 1,
+  "tagline": "Verified JVC G24 TV quirks and firmware-scoped capability data",
+  "description": "JVC G24 TV / SW8_JVC_NZ, Android 11. Records the physical panel, app display modes, 1080p graphics composition, HDR UI driver limitation, observed audio behavior, remote Settings key and buffer tests. Recommends Android-window UI buffers on the tested firmware. Unknown limits stay unknown; connected receiver support is not a TV-wide codec guarantee.",
   "capabilities": [
     "Shares the digital tuner across Antenna, Cable, and Satellite where applicable",
-    "Enables the manual TV backlight control in Control Centre when permission is available"
+    "Enables the manual TV backlight control in Control Centre when permission is available",
+    "Provides display, sound, OS, remote and buffer facts to Eclipse",
+    "Firmware-scoped rendering recommendations; user choices take precedence",
+    "Preserves unknowns and distinguishes advertised support from verified operation"
   ]
 }

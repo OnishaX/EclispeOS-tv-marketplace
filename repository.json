@@ -5,55 +5,64 @@
       "id": "eclipse-hdmi1",
       "title": "HDMI 1",
       "type": "input",
-      "featured": true
+      "featured": true,
+      "version": "0.3"
     },
     {
       "id": "eclipse-hdmi2",
       "title": "HDMI 2",
       "type": "input",
-      "featured": false
+      "featured": false,
+      "version": "0.3"
     },
     {
       "id": "eclipse-hdmi3",
       "title": "HDMI 3",
       "type": "input",
-      "featured": false
+      "featured": false,
+      "version": "0.3"
     },
     {
       "id": "eclipse-composite",
       "title": "Composite 1",
       "type": "input",
-      "featured": false
+      "featured": false,
+      "version": "0.3"
     },
     {
       "id": "eclipse-antenna",
       "title": "Antenna",
       "type": "input",
-      "featured": false
+      "featured": false,
+      "version": "0.3"
     },
     {
       "id": "eclipse-cable",
       "title": "Cable",
       "type": "input",
-      "featured": false
+      "featured": false,
+      "version": "0.3"
     },
     {
       "id": "eclipse-satellite",
       "title": "Satellite",
       "type": "input",
-      "featured": false
+      "featured": false,
+      "version": "0.2"
     },
     {
       "id": "eclipse-airplay",
       "title": "AirPlay",
       "type": "app",
-      "featured": true
+      "featured": true,
+      "version": "0.2"
     },
     {
       "id": "eclipse-google-cast",
       "title": "Google Cast",
       "type": "app",
-      "featured": true
+      "featured": true,
+      "version": "0.3"
     },
     {
       "id": "eclipse-tv-jvc-g24",
@@ -63,7 +72,8 @@
         "model": "JVC G24 TV",
         "product": "SW8_JVC_NZ",
         "sdk": 30
-      }
+      },
+      "version": "0.3"
     }
   ]
 }

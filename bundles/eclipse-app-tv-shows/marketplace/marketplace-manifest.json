@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "description": "Browse show posters, seasons and episodes.",
+  "features": [
+    "Native Eclipse integration",
+    "Requires Eclipse host version 2 or later"
+  ]
+}

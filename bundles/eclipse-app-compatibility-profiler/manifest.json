@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "id": "eclipse-app-compatibility-profiler",
+  "title": "Compatibility Profiler",
+  "developer": "Eclipse",
+  "type": "app",
+  "version": "0.2",
+  "entryPoint": {
+    "handler": "compatibility-profiler"
+  },
+  "icons": [
+    {
+      "iconName": "Compatibility Profiler",
+      "path": "icon0.png"
+    }
+  ],
+  "colours": [
+    {
+      "colourName": "Graphite",
+      "hex": "#4A505C"
+    }
+  ],
+  "customisation": {
+    "title": false,
+    "colour": true
+  },
+  "capabilities": {
+    "liveThumbnail": false,
+    "nowPlaying": false
+  },
+  "settings": [],
+  "configuration": {
+    "githubClientId": "Ov23libhhEPE1ROxbkuA"
+  },
+  "minimumHostVersionCode": 2
+}

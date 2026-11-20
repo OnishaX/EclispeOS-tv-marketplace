@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "id": "eclipse-plugin-connection-navidrome",
+  "title": "Navidrome",
+  "developer": "Eclipse",
+  "type": "plugin",
+  "pluginType": "connection",
+  "version": "0.1",
+  "entryPoint": {
+    "handler": "navidrome"
+  },
+  "icons": [
+    {
+      "iconName": "Navidrome",
+      "path": "icon0.png"
+    }
+  ],
+  "colours": [
+    {
+      "colourName": "Navidrome Blue",
+      "hex": "#0084FF"
+    }
+  ],
+  "customisation": {
+    "title": false,
+    "colour": false
+  },
+  "capabilities": {
+    "liveThumbnail": false,
+    "nowPlaying": false
+  },
+  "settings": [],
+  "minimumHostVersionCode": 2
+}

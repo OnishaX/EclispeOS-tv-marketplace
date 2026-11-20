@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "description": "Browse movie posters and play videos with the built-in Eclipse player.",
+  "features": [
+    "Native Eclipse integration",
+    "Requires Eclipse host version 2 or later"
+  ]
+}

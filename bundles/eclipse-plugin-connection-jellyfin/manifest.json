@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "id": "eclipse-plugin-connection-jellyfin",
+  "title": "Jellyfin",
+  "developer": "Eclipse",
+  "type": "plugin",
+  "pluginType": "connection",
+  "version": "0.1",
+  "entryPoint": {
+    "handler": "jellyfin"
+  },
+  "icons": [
+    {
+      "iconName": "Jellyfin",
+      "path": "icon0.png"
+    }
+  ],
+  "colours": [
+    {
+      "colourName": "Jellyfin Blue",
+      "hex": "#00A4DC"
+    }
+  ],
+  "customisation": {
+    "title": false,
+    "colour": false
+  },
+  "capabilities": {
+    "liveThumbnail": false,
+    "nowPlaying": false
+  },
+  "settings": [],
+  "minimumHostVersionCode": 2
+}

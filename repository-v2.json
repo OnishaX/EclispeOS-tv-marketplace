@@ -5,85 +5,99 @@
       "id": "eclipse-input-hdmi-1",
       "title": "HDMI 1",
       "type": "input",
-      "featured": true
+      "featured": true,
+      "version": "0.3"
     },
     {
       "id": "eclipse-input-hdmi-2",
       "title": "HDMI 2",
       "type": "input",
-      "featured": false
+      "featured": false,
+      "version": "0.3"
     },
     {
       "id": "eclipse-input-hdmi-3",
       "title": "HDMI 3",
       "type": "input",
-      "featured": false
+      "featured": false,
+      "version": "0.3"
     },
     {
       "id": "eclipse-input-composite",
       "title": "Composite 1",
       "type": "input",
-      "featured": false
+      "featured": false,
+      "version": "0.3"
     },
     {
       "id": "eclipse-input-composite-2",
       "title": "Composite 2",
       "type": "input",
-      "featured": false
+      "featured": false,
+      "version": "0.2"
     },
     {
       "id": "eclipse-input-composite-3",
       "title": "Composite 3",
       "type": "input",
-      "featured": false
+      "featured": false,
+      "version": "0.2"
     },
     {
       "id": "eclipse-input-component-1",
       "title": "Component 1",
       "type": "input",
-      "featured": false
+      "featured": false,
+      "version": "0.2"
     },
     {
       "id": "eclipse-input-component-2",
       "title": "Component 2",
       "type": "input",
-      "featured": false
+      "featured": false,
+      "version": "0.2"
     },
     {
       "id": "eclipse-input-component-3",
       "title": "Component 3",
       "type": "input",
-      "featured": false
+      "featured": false,
+      "version": "0.2"
     },
     {
       "id": "eclipse-input-antenna",
       "title": "Antenna",
       "type": "input",
-      "featured": false
+      "featured": false,
+      "version": "0.3"
     },
     {
       "id": "eclipse-input-cable",
       "title": "Cable",
       "type": "input",
-      "featured": false
+      "featured": false,
+      "version": "0.3"
     },
     {
       "id": "eclipse-input-satellite",
       "title": "Satellite",
       "type": "input",
-      "featured": false
+      "featured": false,
+      "version": "0.2"
     },
     {
       "id": "eclipse-app-airplay",
       "title": "AirPlay",
       "type": "app",
-      "featured": true
+      "featured": true,
+      "version": "0.2"
     },
     {
       "id": "eclipse-app-google-cast",
       "title": "Google Cast",
       "type": "app",
-      "featured": true
+      "featured": true,
+      "version": "0.3"
     },
     {
       "id": "eclipse-plugin-compatibility-tv-jvc-g24",
@@ -93,7 +107,50 @@
         "model": "JVC G24 TV",
         "product": "SW8_JVC_NZ",
         "sdk": 30
-      }
+      },
+      "version": "0.3"
+    },
+    {
+      "id": "eclipse-app-music",
+      "title": "Music",
+      "type": "app",
+      "featured": true,
+      "version": "0.1"
+    },
+    {
+      "id": "eclipse-app-movies",
+      "title": "Movies",
+      "type": "app",
+      "featured": true,
+      "version": "0.2"
+    },
+    {
+      "id": "eclipse-app-tv-shows",
+      "title": "TV Shows",
+      "type": "app",
+      "featured": true,
+      "version": "0.2"
+    },
+    {
+      "id": "eclipse-plugin-connection-jellyfin",
+      "title": "Jellyfin",
+      "type": "plugin",
+      "featured": true,
+      "version": "0.1"
+    },
+    {
+      "id": "eclipse-plugin-connection-navidrome",
+      "title": "Navidrome",
+      "type": "plugin",
+      "featured": true,
+      "version": "0.1"
+    },
+    {
+      "id": "eclipse-app-compatibility-profiler",
+      "title": "Compatibility Profiler",
+      "type": "app",
+      "featured": true,
+      "version": "0.2"
     }
   ]
 }

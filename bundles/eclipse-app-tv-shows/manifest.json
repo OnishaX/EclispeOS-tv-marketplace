@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "eclipse-app-tv-shows",
+  "title": "TV Shows",
+  "developer": "Eclipse",
+  "type": "app",
+  "version": "0.2",
+  "entryPoint": {
+    "handler": "tvshows"
+  },
+  "icons": [
+    {
+      "iconName": "TV Shows",
+      "path": "icon0.png"
+    }
+  ],
+  "colours": [
+    {
+      "colourName": "TV Blue",
+      "hex": "#31A8EC"
+    }
+  ],
+  "customisation": {
+    "title": false,
+    "colour": true
+  },
+  "capabilities": {
+    "liveThumbnail": false,
+    "nowPlaying": true
+  },
+  "settings": [],
+  "minimumHostVersionCode": 2
+}

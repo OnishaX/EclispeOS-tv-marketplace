@@ -4,7 +4,7 @@
   "title": "AirPlay",
   "developer": "Eclipse",
   "type": "app",
-  "version": "0.1",
+  "version": "0.2",
   "entryPoint": {
     "handler": "airplay"
   },
@@ -28,7 +28,5 @@
     "liveThumbnail": true,
     "nowPlaying": true
   },
-  "settings": [
-
-  ]
+  "settings": []
 }

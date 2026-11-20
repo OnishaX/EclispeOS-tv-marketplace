@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "eclipse-app-movies",
+  "title": "Movies",
+  "developer": "Eclipse",
+  "type": "app",
+  "version": "0.2",
+  "entryPoint": {
+    "handler": "movies"
+  },
+  "icons": [
+    {
+      "iconName": "Movies",
+      "path": "icon0.png"
+    }
+  ],
+  "colours": [
+    {
+      "colourName": "Cinema Orange",
+      "hex": "#EC8531"
+    }
+  ],
+  "customisation": {
+    "title": false,
+    "colour": true
+  },
+  "capabilities": {
+    "liveThumbnail": false,
+    "nowPlaying": true
+  },
+  "settings": [],
+  "minimumHostVersionCode": 2
+}

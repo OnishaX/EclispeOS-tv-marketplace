@@ -4,15 +4,150 @@
   "title": "JVC G24 TV Compatibility",
   "developer": "Eclipse",
   "type": "plugin",
-  "version": "0.1",
-  "entryPoint": {"handler": "compatibility"},
-  "icons": [{"iconName": "TV Compatibility", "path": "icon0.png"}],
-  "colours": [{"colourName": "Graphite", "hex": "#4A505C"}],
-  "customisation": {"title": false, "colour": false},
-  "capabilities": {"liveThumbnail": false, "nowPlaying": false},
+  "version": "0.3",
+  "entryPoint": {
+    "handler": "compatibility"
+  },
+  "icons": [
+    {
+      "iconName": "TV Compatibility",
+      "path": "icon0.png"
+    }
+  ],
+  "colours": [
+    {
+      "colourName": "Graphite",
+      "hex": "#4A505C"
+    }
+  ],
+  "customisation": {
+    "title": false,
+    "colour": false
+  },
+  "capabilities": {
+    "liveThumbnail": false,
+    "nowPlaying": false
+  },
   "compatibility": {
-    "device": {"model": "JVC G24 TV", "product": "SW8_JVC_NZ", "sdk": 30},
+    "device": {
+      "model": "JVC G24 TV",
+      "product": "SW8_JVC_NZ",
+      "sdk": 30
+    },
     "sharedDigitalTuner": true,
-    "backlight": "jvc-picture"
+    "backlight": "jvc-picture",
+    "capabilities": {
+      "os": {
+        "sdk": 30,
+        "release": "11",
+        "firmwareBuild": "RTM9.241015.070",
+        "securityPatch": "2024-12-01",
+        "manufacturer": "skyworth",
+        "board": "anaheim"
+      },
+      "display": {
+        "nativeSize": [
+          3840,
+          2160
+        ],
+        "appModes": [
+          {
+            "width": 1920,
+            "height": 1080,
+            "refreshHz": 50
+          },
+          {
+            "width": 1920,
+            "height": 1080,
+            "refreshHz": 60
+          }
+        ],
+        "panelHdrTypes": [
+          1,
+          2,
+          3
+        ],
+        "observedClientTargetSize": [
+          1920,
+          1080
+        ],
+        "graphicsDriver": "ARM Mali-G52 r25p1-01bet0",
+        "openGlEs": "3.2",
+        "hdrUiColourSpace": null,
+        "nativeUiScanout": false,
+        "backlight": {
+          "backend": "jvc-picture",
+          "levelRange": [
+            0,
+            100
+          ],
+          "step": 5,
+          "manualModeRequired": true,
+          "requiredPermission": "android.permission.WRITE_SECURE_SETTINGS"
+        },
+        "compositionEvidence": "3840x2160 RGBA UI buffers were CLIENT-composited into a 1920x1080 graphics target, then scaled to the panel"
+      },
+      "sound": {
+        "pcmReturnAudioObserved": true,
+        "earcReturnAudioObserved": true,
+        "advertisedPolicyFormats": [
+          "AUDIO_FORMAT_PCM_16_BIT",
+          "AUDIO_FORMAT_PCM_32_BIT",
+          "AUDIO_FORMAT_AC3",
+          "AUDIO_FORMAT_E_AC3",
+          "AUDIO_FORMAT_E_AC3_JOC"
+        ],
+        "policyFormatsArePlaybackVerification": false,
+        "codecAndChannelLimits": null,
+        "returnAudioNotes": "PCM return audio worked in the tested external receiver configuration. Bitstream behavior depends on the connected audio route, not only the TV model."
+      },
+      "remote": {
+        "additionalSettingsKeys": [
+          83
+        ],
+        "settingsKey": "KEYCODE_NOTIFICATION",
+        "keyDelivery": "Settings gear key 83 observed; other model-specific deliveries remain unverified",
+        "inputKeyRouting": "May be intercepted by firmware; use Eclipse button mapping to test delivery"
+      },
+      "buffers": {
+        "verifiedUiBufferSizes": [
+          [
+            1920,
+            1080
+          ],
+          [
+            3840,
+            2160
+          ]
+        ],
+        "verifiedUiBufferFormats": [
+          "RGBA_8888"
+        ],
+        "hdrUiOutput": false,
+        "floatEglFormatAdvertised": true,
+        "bt2020PqEglColourSpaceAdvertised": false,
+        "safeConcurrentTvPreviews": 1,
+        "reportedTvInputScalers": null,
+        "hdmiSettleMillis": 2200,
+        "tunerSettleMillis": 1500,
+        "nativeBufferObservedFps": 18.8,
+        "nativeBufferPresentationSamples": 126,
+        "hdmiSnapshotCapture": "No usable HDMI snapshots from the tested PixelCopy and MediaProjection paths; protected and unprotected source behavior is not established",
+        "libVlcHomePreview": "Intermittent frozen or black frames observed during fullscreen-to-thumbnail surface handoff"
+      },
+      "recommendations": {
+        "nativeUiBuffers": false,
+        "audioEncodingOverride": null
+      },
+      "verification": {
+        "method": "Read-only ADB diagnostics, actual compositor buffers and presentation timestamps, and user-confirmed audio routing",
+        "rawDiagnosticsIncluded": false,
+        "hdrVideoIsHdrUi": false,
+        "appDisplayModeIsMeasuredFps": false,
+        "unavailableProbes": [
+          "Hardware decoder/channel limits and complete remote delivery require Compatibility Profiler validation"
+        ]
+      }
+    }
   }
 }

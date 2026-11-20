@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "description": "Browse and play local, Jellyfin and Navidrome music.",
+  "features": [
+    "Native Eclipse integration",
+    "Requires Eclipse host version 2 or later"
+  ]
+}

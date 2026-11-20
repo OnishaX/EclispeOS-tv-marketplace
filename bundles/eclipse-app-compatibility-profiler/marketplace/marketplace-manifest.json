@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "description": "Review hardware and firmware capabilities and propose a model compatibility plugin through GitHub.",
+  "features": [
+    "Read-only local ADB scan",
+    "Review display, sound, OS, remote and buffer facts",
+    "QR GitHub Device Flow sign-in",
+    "Explicitly create a public pull request; never push to main",
+    "No raw dumps, network addresses, serial numbers or credentials in reports"
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "description": "Connect Eclipse media apps to a Jellyfin server.",
+  "features": [
+    "Native Eclipse integration",
+    "Requires Eclipse host version 2 or later"
+  ]
+}

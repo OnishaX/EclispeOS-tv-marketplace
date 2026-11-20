@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "eclipse-app-music",
+  "title": "Music",
+  "developer": "Eclipse",
+  "type": "app",
+  "version": "0.1",
+  "entryPoint": {
+    "handler": "music"
+  },
+  "icons": [
+    {
+      "iconName": "Music",
+      "path": "icon0.png"
+    }
+  ],
+  "colours": [
+    {
+      "colourName": "Music Pink",
+      "hex": "#EC31BD"
+    }
+  ],
+  "customisation": {
+    "title": false,
+    "colour": true
+  },
+  "capabilities": {
+    "liveThumbnail": false,
+    "nowPlaying": true
+  },
+  "settings": [],
+  "minimumHostVersionCode": 2
+}

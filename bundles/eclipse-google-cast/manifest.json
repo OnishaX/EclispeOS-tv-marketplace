@@ -4,7 +4,7 @@
   "title": "Google Cast",
   "developer": "Eclipse",
   "type": "app",
-  "version": "0.2",
+  "version": "0.3",
   "entryPoint": {
     "handler": "cast",
     "program": "program.json"
@@ -29,7 +29,5 @@
     "liveThumbnail": false,
     "nowPlaying": true
   },
-  "settings": [
-
-  ]
+  "settings": []
 }
