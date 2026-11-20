@@ -41,6 +41,8 @@ open class MusicActivity : AppCompatActivity() {
     private lateinit var music: MusicView
     private lateinit var particles: ParticleBackgroundView
     private lateinit var content: FrameLayout
+    private lateinit var chrome: FrameLayout
+    private lateinit var homeTransition: MediaAppTransition
     private lateinit var appSettings: ItemSettingsView
     private val library by lazy { MusicLibrary(this) }
     private val remoteMapping by lazy { RemoteButtonMapping(this) }
@@ -56,6 +58,7 @@ open class MusicActivity : AppCompatActivity() {
     private var playlists = emptyList<MusicPlaylist>()
     private var dialog: AlertDialog? = null
     private val requestedArt = mutableSetOf<Long>()
+    private val requestedArtistArt = mutableSetOf<Long>()
     private val permission get() = mediaPermission(videoKind)
     private val refresh = Runnable { load() }
     private val connectionsChanged = object : BroadcastReceiver() {
@@ -114,6 +117,7 @@ open class MusicActivity : AppCompatActivity() {
                 }
             }
             onToggle = { if (videoKind == null) control { it.toggle() } else openVideo() }
+            onQueuePlay = { id -> control { it.playFromQueue(id) } }
             onSkip = { direction ->
                 if (videoKind == null) control { if (direction < 0) it.previous() else it.next() }
                 else if (VideoPlayback.kind == videoKind) {
@@ -129,14 +133,18 @@ open class MusicActivity : AppCompatActivity() {
             }
             onCreatePlaylist = { createPlaylist() }
             onAddToPlaylist = ::addToPlaylist
-            onArtwork = ::loadArtwork
+            onArtwork = { loadArtwork(it) }
+            onArtistArtwork = { song, artist -> loadArtwork(song, artist) }
         }
         val clock = ClockView(this)
         music.onUiAlpha = { clock.alpha = it }
-        content = FrameLayout(this).apply {
-            addView(particles, FrameLayout.LayoutParams(-1, -1))
+        chrome = FrameLayout(this).apply {
             addView(music, FrameLayout.LayoutParams(-1, -1))
             addView(clock, FrameLayout.LayoutParams(-1, -1))
+        }
+        content = FrameLayout(this).apply {
+            addView(particles, FrameLayout.LayoutParams(-1, -1))
+            addView(chrome, FrameLayout.LayoutParams(-1, -1))
         }
         appSettings = ItemSettingsView(this).apply {
             prefs = HomePrefs(this@MusicActivity)
@@ -154,27 +162,25 @@ open class MusicActivity : AppCompatActivity() {
                 music.requestFocus()
             }
         }
-        content.addView(appSettings, FrameLayout.LayoutParams(-1, -1))
-        content.alpha = 0f
-        setContentView(UiSurfaceHost.install(window, content))
-        content.animate().alpha(1f).setDuration(APP_REVEAL_DURATION_MS).start()
+        chrome.addView(appSettings, FrameLayout.LayoutParams(-1, -1))
+        val surface = UiSurfaceHost.install(window, content)
+        homeTransition = MediaAppTransition(this, chrome, surface::afterNextFrame)
+        setContentView(surface)
         music.requestFocus()
     }
 
     override fun onResume() {
         super.onResume()
+        homeTransition.resume()
         music.userActive()
         UserButtonShortcutService.onAppSettingsButton = ::settingsButtonPressed
         UserButtonShortcutService.onEclipseSource = { QuickSource(packageName, appTitle, eclipse = true) }
         if (videoKind != null) videoPlaybackChanged()
-        UserButtonShortcutService.onCloseEclipse = {
-            startActivity(Intent(this, MainActivity::class.java).setAction(Intent.ACTION_MAIN)
-                .addCategory(Intent.CATEGORY_HOME).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP))
-            finish()
-        }
+        UserButtonShortcutService.onCloseEclipse = homeTransition::goHome
     }
 
     override fun onPause() {
+        homeTransition.pause()
         music.suspendIdle()
         UserButtonShortcutService.onAppSettingsButton = null
         UserButtonShortcutService.onEclipseSource = null
@@ -227,7 +233,9 @@ open class MusicActivity : AppCompatActivity() {
         if (changed || snapshot.refreshArtwork) {
             artworkGeneration++
             requestedArt.clear()
+            requestedArtistArt.clear()
             music.artwork.evictAll()
+            music.artistArtwork.evictAll()
             music.library(snapshot.songs, snapshot.playlists)
         }
         shownSongs = snapshot.songs
@@ -282,13 +290,16 @@ open class MusicActivity : AppCompatActivity() {
             }
     }
 
-    private fun loadArtwork(song: MusicSong) {
-        if (song.connectionId != null && song.sourceArtwork == null) return
-        if (!active || !requestedArt.add(song.albumId)) return
+    private fun loadArtwork(song: MusicSong, artist: MusicArtist? = null) {
+        if (artist == null && song.connectionId != null && song.sourceArtwork == null) return
+        val key = artist?.id ?: song.albumId
+        val requested = if (artist == null) requestedArt else requestedArtistArt
+        if (!active || !requested.add(key)) return
         val request = artworkGeneration
         worker.execute {
             val bitmap = try {
-                if (song.connectionId != null) MediaConnections.artwork(this, song)
+                if (artist != null) MediaConnections.artistPrimaryArtwork(this, song, artist)
+                else if (song.connectionId != null) MediaConnections.artwork(this, song)
                 else if (videoKind != null) contentResolver.loadThumbnail(song.uri, android.util.Size(320, 320), null)
                 else {
                     val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
@@ -312,9 +323,9 @@ open class MusicActivity : AppCompatActivity() {
                 if (videoKind != null) Log.w("Music", "Video thumbnail is unavailable for ${song.title}")
                 null
             } catch (e: IOException) {
-                Log.w("Music", "Could not load album artwork", e); null
+                Log.w("Music", "Could not load media artwork", e); null
             } catch (e: SecurityException) {
-                Log.w("Music", "Album artwork access was denied", e); null
+                Log.w("Music", "Artwork access was denied", e); null
             } catch (e: GeneralSecurityException) {
                 main.post { report("Reconnect your media server in Settings > Connections.", e) }; null
             } catch (e: JSONException) {
@@ -322,7 +333,8 @@ open class MusicActivity : AppCompatActivity() {
             }
             main.post {
                 if (!isDestroyed && request == artworkGeneration && bitmap != null) {
-                    music.artwork.put(song.albumId, bitmap)
+                    val cache = if (artist == null) music.artwork else music.artistArtwork
+                    cache.put(key, bitmap)
                     music.invalidate()
                 } else bitmap?.recycle()
             }
@@ -355,18 +367,16 @@ open class MusicActivity : AppCompatActivity() {
     }
 
     override fun dispatchKeyEvent(rawEvent: KeyEvent): Boolean {
-        if (::music.isInitialized && rawEvent.action == KeyEvent.ACTION_DOWN) music.userActive()
         if (!::music.isInitialized || dialog?.isShowing == true) return super.dispatchKeyEvent(rawEvent)
         val event = remoteMapping.mappedEvent(rawEvent)
         val code = event.keyCode
         if (code == KeyEvent.KEYCODE_HOME) {
-            if (event.action == KeyEvent.ACTION_UP && !event.isCanceled) {
-                startActivity(Intent(this, MainActivity::class.java).setAction(Intent.ACTION_MAIN)
-                    .addCategory(Intent.CATEGORY_HOME).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP))
-                finish()
-            }
+            if (event.action == KeyEvent.ACTION_UP && !event.isCanceled) homeTransition.goHome()
             return true
         }
+        if (homeTransition.returningHome) return true
+        if (music.consumeWakeKey(event)) return true
+        if (event.action == KeyEvent.ACTION_UP) music.releaseKey(code)
         if (code == KeyEvent.KEYCODE_SETTINGS) {
             if (event.action == KeyEvent.ACTION_DOWN && event.repeatCount == 0) settingsButtonPressed()
             return true
@@ -378,14 +388,15 @@ open class MusicActivity : AppCompatActivity() {
         }
         if (code == KeyEvent.KEYCODE_DPAD_CENTER || code == KeyEvent.KEYCODE_ENTER) {
             if (event.action == KeyEvent.ACTION_UP && !event.isCanceled) {
-                if (event.eventTime - event.downTime >= ViewConfiguration.getLongPressTimeout()) music.longSelect()
+                if (!music.playbackControlsFocused &&
+                    event.eventTime - event.downTime >= ViewConfiguration.getLongPressTimeout()) music.longSelect()
                 else music.key(code)
             }
             return true
         }
         if (event.action == KeyEvent.ACTION_DOWN && code in setOf(KeyEvent.KEYCODE_DPAD_LEFT,
                 KeyEvent.KEYCODE_DPAD_RIGHT, KeyEvent.KEYCODE_DPAD_UP, KeyEvent.KEYCODE_DPAD_DOWN)) {
-            return music.key(code)
+            return music.key(code, repeat = event.repeatCount > 0)
         }
         if (event.action == KeyEvent.ACTION_DOWN && event.repeatCount == 0) {
             when (code) {

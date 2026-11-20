@@ -43,7 +43,8 @@ a right track list, with parent-only Back navigation. Artists use plural credits
 so shared tracks appear under each contributor. Select an artist to browse
 their albums, then an album to open its full track list; Back restores each
 parent selection. Album details use square artwork, and artist images are
-circular in lists, grids and details. Album, movie and TV-show artwork matches
+circular in lists, grids and details, using the artist's own primary image or
+an artist placeholder, never an album-cover substitute. Album, movie and TV-show artwork matches
 the app tiles' rounded corners. TV Shows uses a five-column portrait-poster
 grid; opening a show retains its episode list and parent selection.
 Album track lists show track numbers and per-song contributing artists;
@@ -59,6 +60,20 @@ public artwork hosts never receive media-server credentials.
 All three media apps smoothly scroll lists and grids. After five idle seconds
 with playback controls focused, the UI and clock fade away until remote or touch
 input, leaving the backdrop visible. Browsing does not auto-hide.
+Music only hides during active playback: pausing, stopping or loading the next
+track immediately restores its UI and clock. The first remote press or touch
+gesture that wakes Music is consumed, including its release and held repeats.
+The footer title/artist is a Queue tab. Open it to see the current track at the
+top and Up next below; scroll up for previously played entries in the current
+in-memory queue. Selecting an entry preserves its existing queue/shuffle order,
+and Back restores the previous browser page and selection.
+Playback controls are one Left/Select/Right row for Previous/Play/Next; Music
+also has a grouped Shuffle/Favourite/Repeat row. Side presses move the focus
+glow temporarily, returning it to the centre on release.
+Media apps synchronize their Home handoffs with presented UI frames, fade their
+interfaces over the continuous backdrop and defer tile rebuilding until the
+return animation finishes. The fullscreen video player and decoder handoff
+remain unchanged.
 Music includes an icon-only heart between Shuffle and Repeat, cycling unset,
 favourite and dislike. Ratings are local to Eclipse, per song and user; they
 do not alter server ratings or automatically skip tracks.

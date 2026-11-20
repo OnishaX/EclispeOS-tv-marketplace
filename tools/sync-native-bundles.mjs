@@ -78,7 +78,7 @@ for (const [id, description] of entries) {
         'No raw dumps, network addresses, serial numbers or credentials in reports'] :
       id === 'eclipse-app-music' ?
         ['Independent Artists, Albums and Playlists list/five-column grid settings', 'Songs always use a list',
-          'Circular artist artwork in grids, lists and details',
+          'Circular artist-primary portraits in grids, lists and details; never album-cover substitutes',
           'Collaborations appear under every credited artist', 'Browse artists, then their albums, then songs',
           'Square album artwork beside its tracks',
           'Album-only track numbers and per-song contributing artist credits',
@@ -86,6 +86,10 @@ for (const [id, description] of entries) {
           'Playback artwork fades in and crossfades without clearing during buffering',
           'Smooth list/grid scrolling and five-second playback-control UI auto-hide',
           'Icon-only Favourite/Dislike/Unset heart, saved per song and Eclipse user',
+          'Grouped Left/Select/Right playback and Shuffle/Favourite/Repeat controls',
+          'Wake-only first input; paused, stopped and loading music never hides the UI',
+          'Now-playing Queue tab with current, up-next and previously played queue entries',
+          'Frame-synchronized Home transitions with a continuous artwork backdrop',
           'Synchronized artwork backdrop at 25% opacity', 'Background playback, shuffle and repeat',
           'Requires Eclipse host version 2 or later'] :
       ['Native Eclipse integration', 'Requires Eclipse host version 2 or later'],

@@ -25,12 +25,14 @@ internal class MusicView(context: Context, private val videoKind: VideoKind? = n
     private val appTitle get() = videoKind?.title ?: "Music"
     private val noun get() = if (videoKind == null) "music" else "videos"
     private val sections = videoKind?.sections ?: MusicSection.entries
-    private val transportIndex get() = sections.size
+    private val nowPlayingIndex get() = sections.size
+    private val transportIndex get() = sections.size + if (videoKind == null) 1 else 0
     private val showModes get() = videoKind == null
     private val footerRows get() = if (showModes) 2 else 1
     private fun sectionTitle(section: MusicSection) = videoKind?.labels?.get(section.ordinal) ?: section.title
     var localAccessMissing = false
     var onPlay: (List<MusicSong>, Long) -> Unit = { _, _ -> }
+    var onQueuePlay: (Long) -> Unit = {}
     var onToggle: () -> Unit = {}
     var onSkip: (Int) -> Unit = {}
     var onShuffle: () -> Unit = {}
@@ -40,15 +42,44 @@ internal class MusicView(context: Context, private val videoKind: VideoKind? = n
     var onCreatePlaylist: () -> Unit = {}
     var onAddToPlaylist: (MusicSong) -> Unit = {}
     var onArtwork: (MusicSong) -> Unit = {}
+    var onArtistArtwork: (MusicSong, MusicArtist) -> Unit = { _, _ -> }
     var onUiAlpha: (Float) -> Unit = {}
     var playback = MusicPlayback(null, false, false, false, MusicRepeat.NONE)
-        set(value) { field = value; describe(); invalidate() }
+        set(value) {
+            val focused = if (queuePage) tracks.getOrNull(selected)?.id else null
+            val changedTrack = field.song?.id != value.song?.id
+            val follow = !right || focused == field.song?.id || focused == value.song?.id
+            val wasPlaying = field.playing
+            field = value
+            queueTracks = value.previouslyPlayed + listOfNotNull(value.song) + value.upNext
+            queueCurrentIndex = value.previouslyPlayed.size
+            if (queuePage) {
+                selected = if (follow && changedTrack) queueCurrentIndex
+                    else queueTracks.indexOfFirst { it.id == focused }.takeIf { it >= 0 } ?: queueCurrentIndex
+                selected = selected.coerceAtMost((count - 1).coerceAtLeast(0))
+                if (follow && changedTrack) scroll = selected
+                keepVisible(animate = !changedTrack)
+            }
+            if (videoKind == null) {
+                if (!value.playing) showUiImmediately()
+                else if (!wasPlaying || changedTrack) userActive()
+            }
+            describe(); invalidate()
+        }
     var notice: String? = "Loading local music..."
         set(value) { field = value; invalidate() }
     var needsPermission = false
         set(value) { field = value; updateFocus(); invalidate() }
     val artwork = LruCache<Long, Bitmap>(24)
+    val artistArtwork = LruCache<Long, Bitmap>(24)
     private var songs = emptyList<MusicSong>()
+    private var queuePage = false
+    private var queueTracks = emptyList<MusicSong>()
+    private var queueCurrentIndex = 0
+    private var queueParentSelected = 0
+    private var queueParentScroll = 0
+    private var wakeTouch = false
+    private var wakeKey: Int? = null
     private var collections = emptyMap<MusicSection, List<MusicCollection>>()
     private var section = MusicSection.ARTISTS
     private var collection: String? = null
@@ -62,13 +93,16 @@ internal class MusicView(context: Context, private val videoKind: VideoKind? = n
     private val layouts = MusicLayouts(context)
     private val ratings = MusicRatings(context)
     private val rating get() = playback.song?.let(ratings::get) ?: MusicRating.NONE
-    private val collectionDetails get() = videoKind == null && hasParentPage
+    private val collectionDetails get() = videoKind == null && hasParentPage && !queuePage
     private val grid get() = !list && !needsPermission && when (videoKind) {
         null -> layouts.grid(if (browsingArtistAlbums) MusicSection.ALBUMS else section)
         VideoKind.SHOWS -> true
         VideoKind.MOVIES -> false
     }
-    private val visibleCount get() = if (grid) GRID_COLUMNS * GRID_ROWS else VISIBLE_ROWS
+    private val visibleCount get() = if (grid) GRID_COLUMNS * GRID_ROWS else if (queuePage) 7 else VISIBLE_ROWS
+    private val rowHeight get() = if (queuePage) 84f else SettingsChrome.ROW_HEIGHT
+    private val contentTop get() = if (grid || queuePage) SettingsChrome.PANE_TOP else SettingsChrome.TOP
+    private val permissionRequired get() = needsPermission && !queuePage
     private var sidebar = 0
     private var right = false
     private var selected = 0
@@ -79,13 +113,15 @@ internal class MusicView(context: Context, private val videoKind: VideoKind? = n
     private val idleHandler = Handler(Looper.getMainLooper())
     private var uiAnimator: ValueAnimator? = null
     private var uiTarget = 1f
-    private val playbackControlsFocused get() = !right && sidebar >= transportIndex
-    private val hideUi = Runnable { if (playbackControlsFocused) fadeUi(0f) }
-    private val scrollUnit get() = if (grid) GRID_ROW_HEIGHT else SettingsChrome.ROW_HEIGHT
-    private val targetOffset get() = if (grid) scroll / GRID_COLUMNS * GRID_ROW_HEIGHT else scroll * SettingsChrome.ROW_HEIGHT
+    internal val playbackControlsFocused get() = !right && sidebar >= transportIndex
+    private var footerDirection = 0
+    private val canHideUi get() = playbackControlsFocused && (videoKind != null || playback.playing)
+    private val hideUi = Runnable { if (canHideUi) fadeUi(0f) }
+    private val scrollUnit get() = if (grid) GRID_ROW_HEIGHT else rowHeight
+    private val targetOffset get() = if (grid) scroll / GRID_COLUMNS * GRID_ROW_HEIGHT else scroll * rowHeight
     private val contentBottom get() = minOf(SettingsChrome.PANE_BOTTOM,
         if (grid) SettingsChrome.PANE_TOP + GRID_ROWS * GRID_ROW_HEIGHT
-        else SettingsChrome.TOP + VISIBLE_ROWS * SettingsChrome.ROW_HEIGHT)
+        else contentTop + visibleCount * rowHeight)
     private val painter = CardPainter(context)
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG or Paint.FILTER_BITMAP_FLAG)
     private val text = TextPaint(Paint.ANTI_ALIAS_FLAG).apply { typeface = Typeface.create("sans-serif", Typeface.NORMAL) }
@@ -100,6 +136,7 @@ internal class MusicView(context: Context, private val videoKind: VideoKind? = n
     private var glowY = SettingsChrome.TOP + SettingsChrome.ROW_HEIGHT / 2
     private var focusPosition: RectF? = null
     private var focusTarget: RectF? = null
+    private var focusTargetX = Float.NaN
     private var focusAnimator: ValueAnimator? = null
     private val rootGroups get() = collections[section].orEmpty().let {
         if (section == MusicSection.PLAYLISTS) listOf(MusicCollection(NEW, "New playlist", "Create a playlist", emptyList())) + it else it
@@ -118,13 +155,13 @@ internal class MusicView(context: Context, private val videoKind: VideoKind? = n
     }
     private val browsingArtistAlbums get() = artist != null && album == null
     private val groups get() = if (artist != null) artistAlbums else rootGroups
-    private val opened get() = if (album != null) artistAlbums.firstOrNull { it.id == album }
+    private val opened get() = if (queuePage) null else if (album != null) artistAlbums.firstOrNull { it.id == album }
         else rootGroups.firstOrNull { it.id == collection }
-    private val list get() = (section == MusicSection.SONGS && videoKind != VideoKind.MOVIES) ||
+    private val list get() = queuePage || (section == MusicSection.SONGS && videoKind != VideoKind.MOVIES) ||
         (collection != null && !browsingArtistAlbums)
-    private val albumTracks get() = videoKind == null && hasParentPage && (section == MusicSection.ALBUMS || album != null)
-    private val tracks get() = opened?.songs ?: if (collection == null) songs else emptyList()
-    private val count get() = if (needsPermission) 1 else if (list) tracks.size else groups.size
+    private val albumTracks get() = !queuePage && videoKind == null && hasParentPage && (section == MusicSection.ALBUMS || album != null)
+    private val tracks get() = if (queuePage) queueTracks else opened?.songs ?: if (collection == null) songs else emptyList()
+    private val count get() = if (permissionRequired) 1 else if (list) tracks.size else groups.size
 
     init { isFocusable = true; isFocusableInTouchMode = true }
 
@@ -137,10 +174,40 @@ internal class MusicView(context: Context, private val videoKind: VideoKind? = n
     fun userActive() {
         idleHandler.removeCallbacks(hideUi)
         fadeUi(1f)
-        if (playbackControlsFocused) idleHandler.postDelayed(hideUi, 5000)
+        if (canHideUi && footerDirection == 0) idleHandler.postDelayed(hideUi, 5000)
+    }
+
+    fun wakeForInput(): Boolean {
+        val consume = videoKind == null && uiTarget == 0f
+        userActive()
+        return consume
+    }
+
+    fun consumeWakeKey(event: KeyEvent): Boolean {
+        val code = event.keyCode
+        if (wakeKey == code) {
+            if (event.action == KeyEvent.ACTION_UP) wakeKey = null
+            return true
+        }
+        if (event.action == KeyEvent.ACTION_DOWN && wakeForInput() &&
+            code in setOf(KeyEvent.KEYCODE_BACK, KeyEvent.KEYCODE_DPAD_CENTER, KeyEvent.KEYCODE_ENTER,
+                KeyEvent.KEYCODE_DPAD_LEFT, KeyEvent.KEYCODE_DPAD_RIGHT, KeyEvent.KEYCODE_DPAD_UP,
+                KeyEvent.KEYCODE_DPAD_DOWN, KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE, KeyEvent.KEYCODE_MEDIA_NEXT,
+                KeyEvent.KEYCODE_MEDIA_PREVIOUS)) {
+            wakeKey = code
+            return true
+        }
+        return false
     }
 
     fun suspendIdle() {
+        wakeKey = null
+        wakeTouch = false
+        releaseFooterFocus()
+        showUiImmediately()
+    }
+
+    private fun showUiImmediately() {
         idleHandler.removeCallbacks(hideUi)
         uiAnimator?.cancel()
         uiAnimator = null
@@ -189,13 +256,21 @@ internal class MusicView(context: Context, private val videoKind: VideoKind? = n
         invalidate()
     }
 
-    fun key(code: Int): Boolean {
+    fun key(code: Int, repeat: Boolean = false): Boolean {
         val previousSection = section
         val previousCollection = collection
         val previousAlbum = album
+        val previousQueue = queuePage
+        if (code != KeyEvent.KEYCODE_DPAD_LEFT && code != KeyEvent.KEYCODE_DPAD_RIGHT) releaseFooterFocus()
         when (code) {
             KeyEvent.KEYCODE_BACK -> {
-                if (album != null) {
+                if (queuePage) {
+                    queuePage = false
+                    selected = queueParentSelected.coerceAtMost((count - 1).coerceAtLeast(0))
+                    scroll = queueParentScroll
+                    right = count > 0
+                    sidebar = sections.indexOf(section)
+                } else if (album != null) {
                     pageTransition.begin(forward = false)
                     val parent = album
                     album = null
@@ -216,28 +291,29 @@ internal class MusicView(context: Context, private val videoKind: VideoKind? = n
             KeyEvent.KEYCODE_DPAD_CENTER, KeyEvent.KEYCODE_ENTER -> {
                 if (right) activate()
                 else when (sidebar) {
+                    nowPlayingIndex.takeIf { videoKind == null } -> right = count > 0
                     transportIndex -> onToggle()
-                    transportIndex + 1 -> onShuffle()
-                    transportIndex + 2 -> favourite()
-                    transportIndex + 3 -> onRepeat()
+                    transportIndex + 1 -> favourite()
                     else -> right = count > 0
                 }
             }
             KeyEvent.KEYCODE_DPAD_LEFT, KeyEvent.KEYCODE_DPAD_RIGHT -> {
                 val delta = if (code == KeyEvent.KEYCODE_DPAD_LEFT) -1 else 1
-                if (!right && collectionDetails && delta > 0) right = count > 0
-                else if (!right) when (sidebar) {
-                    transportIndex -> onSkip(delta)
-                    transportIndex + 1, transportIndex + 2, transportIndex + 3 ->
-                        sidebar = (sidebar + delta).coerceIn(transportIndex + 1, transportIndex + 3)
-                    else -> if (delta > 0) right = count > 0
+                if (playbackControlsFocused) {
+                    if (!repeat) {
+                        footerDirection = delta
+                        if (sidebar == transportIndex) onSkip(delta)
+                        else if (delta < 0) onShuffle() else onRepeat()
+                    }
+                } else if (!right) {
+                    if (delta > 0) right = count > 0
                 } else if (grid && delta > 0) {
                     if (selected % GRID_COLUMNS < GRID_COLUMNS - 1 && selected + 1 < count) selected++
                 } else if (grid && delta < 0 && selected % GRID_COLUMNS > 0) {
                     selected--
                 } else if (delta < 0) {
                     right = false
-                    sidebar = if (collectionDetails) transportIndex else sections.indexOf(section)
+                    sidebar = if (queuePage) nowPlayingIndex else if (collectionDetails) transportIndex else sections.indexOf(section)
                 }
             }
             KeyEvent.KEYCODE_DPAD_UP, KeyEvent.KEYCODE_DPAD_DOWN -> {
@@ -250,10 +326,12 @@ internal class MusicView(context: Context, private val videoKind: VideoKind? = n
                 } else {
                     sidebar = when {
                         sidebar > transportIndex -> if (delta < 0) transportIndex else sidebar
-                        else -> (sidebar + delta).coerceIn(if (collectionDetails) transportIndex else 0,
+                        else -> (sidebar + delta).coerceIn(if (collectionDetails) nowPlayingIndex else 0,
                             transportIndex + if (showModes) 1 else 0)
                     }
-                    if (sidebar < transportIndex && section != sections[sidebar]) {
+                    if (videoKind == null && sidebar == nowPlayingIndex) openQueue()
+                    else if (sidebar < sections.size && (section != sections[sidebar] || queuePage)) {
+                        queuePage = false
                         section = sections[sidebar]
                         collection = null; album = null; selected = 0; scroll = 0
                     }
@@ -261,11 +339,26 @@ internal class MusicView(context: Context, private val videoKind: VideoKind? = n
             }
             else -> return false
         }
-        keepVisible(animate = section == previousSection && collection == previousCollection && album == previousAlbum)
+        keepVisible(animate = section == previousSection && collection == previousCollection && album == previousAlbum && queuePage == previousQueue)
         describe()
         userActive()
         invalidate()
         return true
+    }
+
+    fun releaseKey(code: Int) {
+        if ((code == KeyEvent.KEYCODE_DPAD_LEFT && footerDirection < 0) ||
+            (code == KeyEvent.KEYCODE_DPAD_RIGHT && footerDirection > 0)) {
+            releaseFooterFocus()
+            userActive()
+        }
+    }
+
+    private fun releaseFooterFocus() {
+        if (footerDirection == 0) return
+        footerDirection = 0
+        updateFocus()
+        invalidate()
     }
 
     fun longSelect() {
@@ -282,9 +375,19 @@ internal class MusicView(context: Context, private val videoKind: VideoKind? = n
         ratings.cycle(song)
     }
 
+    private fun openQueue() {
+        if (queuePage) return
+        queueParentSelected = selected
+        queueParentScroll = scroll
+        queuePage = true
+        selected = queueCurrentIndex.coerceAtMost((queueTracks.size - 1).coerceAtLeast(0))
+        scroll = selected
+    }
+
     private fun activate() {
-        if (needsPermission) { onPermission(); return }
-        if (list) tracks.getOrNull(selected)?.let { onPlay(tracks, it.id) }
+        if (permissionRequired) { onPermission(); return }
+        if (queuePage) tracks.getOrNull(selected)?.let { onQueuePlay(it.id) }
+        else if (list) tracks.getOrNull(selected)?.let { onPlay(tracks, it.id) }
         else groups.getOrNull(selected)?.let {
             if (it.id == NEW) onCreatePlaylist()
             else if (videoKind == VideoKind.MOVIES && section == MusicSection.ARTISTS) {
@@ -306,7 +409,7 @@ internal class MusicView(context: Context, private val videoKind: VideoKind? = n
     }
 
     private fun keepVisible(animate: Boolean = false) {
-        if (right && count == 0) { right = false; sidebar = if (collectionDetails) transportIndex else sections.indexOf(section) }
+        if (right && count == 0) { right = false; sidebar = if (queuePage) nowPlayingIndex else if (collectionDetails) transportIndex else sections.indexOf(section) }
         val row = selected
         val visible = visibleCount
         if (grid) {
@@ -320,7 +423,7 @@ internal class MusicView(context: Context, private val videoKind: VideoKind? = n
         } else {
             if (row < scroll) scroll = row
             if (row >= scroll + visible) scroll = row - visible + 1
-            scroll = scroll.coerceIn(0, (count - visible).coerceAtLeast(0))
+            scroll = scroll.coerceIn(0, (count - if (queuePage) 1 else visible).coerceAtLeast(0))
         }
         moveScroll(animate)
     }
@@ -353,16 +456,16 @@ internal class MusicView(context: Context, private val videoKind: VideoKind? = n
 
     private fun describe() {
         val focus = if (right) {
-            if (needsPermission) "Allow $noun access"
+            if (permissionRequired) "Allow $noun access"
             else if (list) tracks.getOrNull(selected)?.title.orEmpty() else groups.getOrNull(selected)?.title.orEmpty()
         } else when (sidebar) {
+            nowPlayingIndex.takeIf { videoKind == null } -> "Now playing. Select or Right to browse the queue."
             transportIndex -> "Playback controls. Left previous, Select play or pause, Right next."
-            transportIndex + 1 -> "Shuffle ${if (playback.shuffle) "on" else "off"}"
-            transportIndex + 2 -> "Favourite: ${rating.description}"
-            transportIndex + 3 -> "Repeat ${playback.repeat.name.lowercase()}"
+            transportIndex + 1 -> "Playback modes. Left Shuffle ${if (playback.shuffle) "on" else "off"}, " +
+                "Select Favourite: ${rating.description}, Right Repeat ${playback.repeat.name.lowercase()}."
             else -> sectionTitle(sections[sidebar])
         }
-        contentDescription = "$appTitle. ${opened?.title ?: sectionTitle(section)}. Focus: $focus. " +
+        contentDescription = "$appTitle. ${if (queuePage) "Queue" else opened?.title ?: sectionTitle(section)}. Focus: $focus. " +
             "${playback.song?.title.orEmpty()}. ${if (playback.playing) "Playing" else "Paused"}" +
             if (!list) " Layout: ${if (grid) "Grid" else "List"}." else ""
         updateFocus()
@@ -370,27 +473,33 @@ internal class MusicView(context: Context, private val videoKind: VideoKind? = n
 
     private fun updateFocus() {
         val target = when {
-            !right && sidebar < transportIndex -> {
+            !right && sidebar < sections.size -> {
                 val y = SettingsChrome.TOP + sidebar * SettingsChrome.ROW_HEIGHT
                 RectF(SettingsChrome.LEFT, y, SettingsChrome.SIDEBAR_RIGHT, y + SettingsChrome.ROW_HEIGHT)
             }
-            !right && sidebar == transportIndex -> RectF(SettingsChrome.LEFT, footerTop(footerRows), SettingsChrome.SIDEBAR_RIGHT, footerTop(footerRows) + FOOTER_ROW_HEIGHT)
+            !right && videoKind == null && sidebar == nowPlayingIndex -> nowPlayingBounds()
             !right -> {
-                val x = 150f + (sidebar - transportIndex - 1) * 61f
-                RectF(x - 25f, footerTop(1), x + 25f, FOOTER_BOTTOM)
+                val top = if (sidebar == transportIndex) footerTop(footerRows) else footerTop(1)
+                RectF(SettingsChrome.LEFT, top, SettingsChrome.SIDEBAR_RIGHT, top + FOOTER_ROW_HEIGHT)
             }
             grid -> gridBounds(selected, targetOffset)
             else -> {
-                val y = SettingsChrome.TOP + (selected - scroll) * SettingsChrome.ROW_HEIGHT
-                RectF(SettingsChrome.CONTENT_LEFT, y, SettingsChrome.CONTENT_RIGHT, y + SettingsChrome.ROW_HEIGHT)
+                val y = contentTop + (selected - scroll) * rowHeight
+                RectF(SettingsChrome.CONTENT_LEFT, y, SettingsChrome.CONTENT_RIGHT, y + rowHeight)
             }
         }
-        if (target == focusTarget) return
+        val targetX = when {
+            playbackControlsFocused -> if (sidebar == transportIndex) transportIconX(footerDirection) else 211f + footerDirection * 61f
+            !right -> 134f
+            grid -> target.centerX()
+            else -> 620f
+        }
+        if (target == focusTarget && targetX == focusTargetX) return
         focusTarget = target
+        focusTargetX = targetX
         focusAnimator?.cancel()
         val start = focusPosition?.let(::RectF)
         focusPosition = RectF(target)
-        val targetX = if (!right) 134f else if (grid) target.centerX() else 620f
         val targetY = target.centerY()
         if (start == null) {
             focusPosition = RectF(target)
@@ -424,9 +533,9 @@ internal class MusicView(context: Context, private val videoKind: VideoKind? = n
         halo(canvas)
         if (hasParentPage) painter.drawIcon(canvas, R.drawable.ic_chevron_left, 46f, 48f, 20f, Color.WHITE, 1f)
         SettingsChrome.divider(canvas, line)
-        if (!needsPermission && notice == null && count > 0) {
+        if (!permissionRequired && (notice == null || queuePage) && count > 0) {
             val maximum = if (grid) ((count + GRID_COLUMNS - 1) / GRID_COLUMNS - GRID_ROWS).coerceAtLeast(0)
-                else (count - VISIBLE_ROWS).coerceAtLeast(0)
+                else (count - if (queuePage) 1 else visibleCount).coerceAtLeast(0)
             drawPaneScrollIndicator(canvas, line, scrollPosition / scrollUnit, maximum.toFloat(),
                 accent, PANE_SEPARATOR_ALPHA)
         }
@@ -437,23 +546,25 @@ internal class MusicView(context: Context, private val videoKind: VideoKind? = n
             val focused = !right && sidebar == index
             painter.drawIcon(canvas, sectionIcon(item), SettingsChrome.LEFT + 12f, mid - 1f, 24f, Color.WHITE, 0.95f)
             label(canvas, sectionTitle(item), SettingsChrome.LEFT + 37f, mid + 7f, 22f, 177f, 0.95f,
-                glow = if (focused) 1f else if (section == item) 0.5f else 0f)
-            if (section == item && !focused) {
+                glow = if (focused) 1f else if (section == item && !queuePage) 0.5f else 0f)
+            if (section == item && !focused && !queuePage) {
                 SettingsChrome.hairline(canvas, line, SettingsChrome.LEFT, top + SettingsChrome.ROW_HEIGHT - 1f, SettingsChrome.SIDEBAR_RIGHT, accent, 0.35f)
             }
         }
         drawPlayback(canvas)
-        if (needsPermission) {
+        if (permissionRequired) {
             painter.drawIcon(canvas, videoKind?.icon ?: R.drawable.ic_music_songs, 403f, 83f, 24f, Color.WHITE, 0.95f)
             label(canvas, "Allow $noun access", 428f, 91f, 22f, 830f, 0.95f, glow = if (right) 1f else 0f)
             label(canvas, "Browse $noun stored on your TV and connected storage.", 428f, 119f, 18f, 830f,
                 color = Color.LTGRAY)
-        } else if (notice != null) {
+        } else if (notice != null && !queuePage) {
             label(canvas, requireNotNull(notice), 428f, 91f, 22f, 830f, 0.95f)
         } else if (count == 0) {
             painter.drawIcon(canvas, sectionIcon(section), 403f, 83f, 24f, Color.WHITE, 0.95f)
-            label(canvas, if (collection != null) "This playlist is empty." else "No $noun found.", 428f, 91f, 22f, 830f, 0.95f)
-            label(canvas, "Add local $noun or connect a server in Settings.", 428f, 119f, 18f, 830f, color = Color.LTGRAY)
+            label(canvas, if (queuePage) "The queue is empty." else if (collection != null) "This playlist is empty." else "No $noun found.",
+                428f, 91f, 22f, 830f, 0.95f)
+            label(canvas, if (queuePage) "Choose a song to start playing." else "Add local $noun or connect a server in Settings.",
+                428f, 119f, 18f, 830f, color = Color.LTGRAY)
         } else {
             val content = canvas.save()
             canvas.clipRect(SettingsChrome.CONTENT_LEFT, SettingsChrome.PANE_TOP,
@@ -467,19 +578,35 @@ internal class MusicView(context: Context, private val videoKind: VideoKind? = n
         canvas.restoreToCount(save)
     }
 
+    private fun transportIconX(direction: Int) = when (direction) { -1 -> 118f; 1 -> 308f; else -> 211f }
+    private fun nowPlayingBounds() = RectF(SettingsChrome.LEFT, footerTop(2) - 97f, SettingsChrome.SIDEBAR_RIGHT, footerTop(2) - 24f)
+
     private fun drawPlayback(canvas: Canvas) {
         val controlsTop = footerTop(footerRows)
-        SettingsChrome.centeredRule(canvas, line, SettingsChrome.LEFT, controlsTop - SettingsChrome.FOOTER_DIVIDER_GAP, SettingsChrome.SIDEBAR_RIGHT)
-        playback.song?.let {
-            label(canvas, it.title, SettingsChrome.LEFT, controlsTop - 69f, 18f, 214f)
+        val titleY = controlsTop - 69f
+        val separatorY = if (videoKind == null) titleY - 18f - SettingsChrome.FOOTER_DIVIDER_GAP
+            else controlsTop - SettingsChrome.FOOTER_DIVIDER_GAP
+        SettingsChrome.centeredRule(canvas, line, SettingsChrome.LEFT, separatorY, SettingsChrome.SIDEBAR_RIGHT)
+        if (videoKind == null) {
+            val focused = !right && sidebar == nowPlayingIndex
+            label(canvas, playback.song?.title ?: "Now playing", SettingsChrome.LEFT, titleY, 18f, 214f,
+                glow = if (focused) 1f else 0f)
+            label(canvas, if (playback.loading) "Loading..." else playback.song?.artist ?: "Queue is empty",
+                SettingsChrome.LEFT, controlsTop - 42f, 18f, 214f, color = 0xFFAAAAAA.toInt())
+            if (queuePage && !focused) {
+                val bounds = nowPlayingBounds()
+                SettingsChrome.hairline(canvas, line, bounds.left, bounds.bottom - 1f, bounds.right, accent, 0.35f)
+            }
+        } else playback.song?.let {
+            label(canvas, it.title, SettingsChrome.LEFT, titleY, 18f, 214f)
             label(canvas, if (playback.loading) "Loading..." else it.artist, SettingsChrome.LEFT, controlsTop - 42f, 18f, 214f, color = 0xFFAAAAAA.toInt())
         }
         val controlsY = controlsTop + FOOTER_ROW_HEIGHT / 2
         val modesY = footerTop(1) + FOOTER_ROW_HEIGHT / 2
-        painter.drawIcon(canvas, R.drawable.ic_music_previous, 118f, controlsY, 24f, Color.WHITE, 0.95f)
+        painter.drawIcon(canvas, R.drawable.ic_music_previous, transportIconX(-1), controlsY, 24f, Color.WHITE, 0.95f)
         painter.drawIcon(canvas, if (playback.playing || playback.loading) R.drawable.ic_cc_pause else R.drawable.ic_cc_play,
-            211f, controlsY, 24f, Color.WHITE, 0.95f)
-        painter.drawIcon(canvas, R.drawable.ic_music_next, 308f, controlsY, 24f, Color.WHITE, 0.95f)
+            transportIconX(0), controlsY, 24f, Color.WHITE, 0.95f)
+        painter.drawIcon(canvas, R.drawable.ic_music_next, transportIconX(1), controlsY, 24f, Color.WHITE, 0.95f)
         if (showModes) {
             painter.drawIcon(canvas, R.drawable.ic_music_shuffle, 150f, modesY, 24f,
                 if (playback.shuffle) accent else Color.WHITE, 0.95f)
@@ -497,7 +624,7 @@ internal class MusicView(context: Context, private val videoKind: VideoKind? = n
             SettingsChrome.SIDEBAR_RIGHT, SettingsChrome.PANE_TOP +
                 if (detailSection == MusicSection.ALBUMS || detailSection == MusicSection.ARTISTS)
                     SettingsChrome.SIDEBAR_RIGHT - SettingsChrome.LEFT else 121f)
-        drawCover(canvas, group.songs.firstOrNull(), card, fit = true, placeholder = detailSection)
+        drawCover(canvas, group.songs.firstOrNull(), card, fit = true, placeholder = detailSection, artist = group.artist)
         label(canvas, group.title, card.centerX(), card.bottom + 34f, 22f, card.width(), align = Paint.Align.CENTER)
         label(canvas, group.subtitle, card.centerX(), card.bottom + 69f, 18f, card.width(),
             color = Color.LTGRAY, align = Paint.Align.CENTER)
@@ -528,7 +655,7 @@ internal class MusicView(context: Context, private val videoKind: VideoKind? = n
             val size = minOf(224f, cell.width())
             val cover = RectF(cell.centerX() - size / 2f, cell.top, cell.centerX() + size / 2f,
                 cell.top + gridArtworkHeight(size))
-            drawCover(canvas, group.songs.firstOrNull(), cover)
+            drawCover(canvas, group.songs.firstOrNull(), cover, artist = group.artist)
             label(canvas, group.title, cell.centerX(), cover.bottom + 25f, 22f, cell.width(),
                 glow = if (right && selected == index) 1f else 0f, align = Paint.Align.CENTER)
             label(canvas, group.subtitle, cell.centerX(), cover.bottom + 51f, 18f, cell.width(),
@@ -541,7 +668,17 @@ internal class MusicView(context: Context, private val videoKind: VideoKind? = n
         val visible = visibleIndices()
         tracks.forEachIndexed { index, song ->
             if (index !in visible) return@forEachIndexed
-            val mid = SettingsChrome.TOP + (index + 0.5f) * SettingsChrome.ROW_HEIGHT - scrollPosition
+            val top = contentTop + index * rowHeight - scrollPosition
+            val mid = top + rowHeight / 2
+            if (queuePage) {
+                val heading = when {
+                    index == queueCurrentIndex -> "Current track"
+                    index == queueCurrentIndex + 1 -> "Up next"
+                    index < queueCurrentIndex && (index == 0 || index == scroll) -> "Previously played"
+                    else -> null
+                }
+                heading?.let { label(canvas, it, SettingsChrome.CONTENT_LEFT, top + 18f, 15f, 700f, color = Color.LTGRAY) }
+            }
             val playing = song.id == playback.song?.id
             if (albumRows) {
                 label(canvas, song.trackNumber?.toString() ?: "-", SettingsChrome.CONTENT_LEFT + 21f, mid + 7f,
@@ -567,7 +704,7 @@ internal class MusicView(context: Context, private val videoKind: VideoKind? = n
             if (index !in visible) return@forEachIndexed
             val mid = SettingsChrome.TOP + (index + 0.5f) * SettingsChrome.ROW_HEIGHT - scrollPosition
             val song = group.songs.firstOrNull()
-            if (song != null) drawArtwork(canvas, song, mid)
+            if (song != null) drawArtwork(canvas, song, mid, group.artist)
             else painter.drawIcon(canvas, if (group.id == NEW) R.drawable.ic_music_playlist else sectionIcon(section),
                 403f, mid - 1f, 24f, Color.WHITE, 0.95f)
             val textX = if (videoKind != null) 437f else 449f
@@ -578,23 +715,25 @@ internal class MusicView(context: Context, private val videoKind: VideoKind? = n
         }
     }
 
-    private fun drawArtwork(canvas: Canvas, song: MusicSong, mid: Float) {
+    private fun drawArtwork(canvas: Canvas, song: MusicSong, mid: Float, artist: MusicArtist? = null) {
         val coverWidth = if (videoKind == null) 42f else 28f
         rect.set(SettingsChrome.CONTENT_LEFT, mid - 13f, SettingsChrome.CONTENT_LEFT + coverWidth, mid + 29f)
-        drawCover(canvas, song, rect)
+        drawCover(canvas, song, rect, artist = artist)
     }
 
     private fun drawCover(canvas: Canvas, song: MusicSong?, cover: RectF, fit: Boolean = false,
-        placeholder: MusicSection = if (browsingArtistAlbums) MusicSection.ALBUMS else section) {
-        val art = song?.let { artwork.get(it.albumId) }
+        placeholder: MusicSection = if (browsingArtistAlbums) MusicSection.ALBUMS else section, artist: MusicArtist? = null) {
         val circular = videoKind == null && placeholder == MusicSection.ARTISTS
+        val art = if (circular) artist?.let { artistArtwork.get(it.id) } else song?.let { artwork.get(it.albumId) }
         val contain = fit && !circular
         paint.shader = null
         paint.color = 0xFF171719.toInt()
         val radius = if (circular) cover.width() / 2f else cover.width() * CardPainter.TILE_RADIUS_FRACTION
         canvas.drawRoundRect(cover, radius, radius, paint)
         if (art == null) {
-            song?.let(onArtwork)
+            if (circular) {
+                if (song != null && artist != null) onArtistArtwork(song, artist)
+            } else song?.let(onArtwork)
             painter.drawIcon(canvas, sectionIcon(placeholder), cover.centerX(), cover.centerY(),
                 if (cover.width() > 100f) 64f else 22f, Color.WHITE, 0.95f)
             return
@@ -645,28 +784,38 @@ internal class MusicView(context: Context, private val videoKind: VideoKind? = n
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
+        if (event.action == MotionEvent.ACTION_DOWN) wakeTouch = wakeForInput()
+        if (wakeTouch) {
+            if (event.action == MotionEvent.ACTION_UP || event.action == MotionEvent.ACTION_CANCEL) wakeTouch = false
+            return true
+        }
+        releaseFooterFocus()
         userActive()
         if (event.action != MotionEvent.ACTION_UP) return true
         val previousSection = section
         val previousCollection = collection
         val previousAlbum = album
+        val previousQueue = queuePage
         val x = event.x * MOCK_W / width
         val y = event.y * MOCK_W / width
         if (x < 90f && y < SettingsChrome.PANE_TOP) { if (hasParentPage) onBack(); return true }
         if (x < SettingsChrome.DIVIDER_X) {
-            if (collectionDetails && y < footerTop(footerRows)) { performClick(); return true }
+            val nowPlaying = videoKind == null && nowPlayingBounds().contains(x, y)
+            if (collectionDetails && y < footerTop(footerRows) && !nowPlaying) { performClick(); return true }
             right = false
             when {
+                nowPlaying -> { sidebar = nowPlayingIndex; openQueue() }
                 !collectionDetails && y >= SettingsChrome.TOP && y < SettingsChrome.TOP + sections.size * SettingsChrome.ROW_HEIGHT -> {
+                    queuePage = false
                     sidebar = ((y - SettingsChrome.TOP) / SettingsChrome.ROW_HEIGHT).toInt().coerceIn(sections.indices)
                     section = sections[sidebar]; collection = null; album = null; selected = 0; scroll = 0 }
                 y >= footerTop(footerRows) && y < footerTop(footerRows) + FOOTER_ROW_HEIGHT -> { sidebar = transportIndex
                     if (x < 169f) onSkip(-1) else if (x > 251f) onSkip(1) else onToggle() }
                 showModes && y >= footerTop(1) && y < FOOTER_BOTTOM -> {
-                    sidebar = transportIndex + when { x < 181f -> 1; x < 242f -> 2; else -> 3 }
-                    when (sidebar) {
-                        transportIndex + 1 -> onShuffle()
-                        transportIndex + 2 -> favourite()
+                    sidebar = transportIndex + 1
+                    when {
+                        x < 181f -> onShuffle()
+                        x < 242f -> favourite()
                         else -> onRepeat()
                     }
                 }
@@ -676,10 +825,10 @@ internal class MusicView(context: Context, private val videoKind: VideoKind? = n
             right = true
             val visible = visibleIndices()
             val next = if (grid) visible.firstOrNull { gridBounds(it).contains(x, y) }
-                else ((y - SettingsChrome.TOP + scrollPosition) / SettingsChrome.ROW_HEIGHT).toInt().takeIf { it in visible }
+                else ((y - contentTop + scrollPosition) / rowHeight).toInt().takeIf { it in visible }
             if (next != null) { selected = next; activate() }
         }
-        keepVisible(animate = section == previousSection && collection == previousCollection && album == previousAlbum)
+        keepVisible(animate = section == previousSection && collection == previousCollection && album == previousAlbum && queuePage == previousQueue)
         describe(); invalidate()
         userActive()
         performClick()
@@ -688,6 +837,15 @@ internal class MusicView(context: Context, private val videoKind: VideoKind? = n
 
     override fun performClick(): Boolean { super.performClick(); return true }
 
+    override fun onWindowFocusChanged(hasWindowFocus: Boolean) {
+        super.onWindowFocusChanged(hasWindowFocus)
+        if (hasWindowFocus) userActive()
+        else {
+            releaseFooterFocus()
+            idleHandler.removeCallbacks(hideUi)
+        }
+    }
+
     override fun onDetachedFromWindow() {
         suspendIdle()
         pageTransition.clear()
@@ -695,6 +853,7 @@ internal class MusicView(context: Context, private val videoKind: VideoKind? = n
         focusAnimator = null
         focusPosition = null
         focusTarget = null
+        focusTargetX = Float.NaN
         scrollAnimator?.cancel()
         scrollAnimator = null
         scrollPosition = targetOffset

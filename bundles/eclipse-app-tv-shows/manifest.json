@@ -4,7 +4,7 @@
   "title": "TV Shows",
   "developer": "Eclipse",
   "type": "app",
-  "version": "0.6",
+  "version": "0.7",
   "entryPoint": {
     "handler": "tvshows"
   },

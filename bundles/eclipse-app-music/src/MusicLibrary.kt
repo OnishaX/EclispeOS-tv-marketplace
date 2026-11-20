@@ -29,7 +29,8 @@ internal data class MusicSong(
 }
 
 internal data class MusicPlaylist(val id: String, val name: String, val songs: List<Long>)
-internal data class MusicCollection(val id: String, val title: String, val subtitle: String, val songs: List<MusicSong>)
+internal data class MusicCollection(val id: String, val title: String, val subtitle: String, val songs: List<MusicSong>,
+    val artist: MusicArtist? = null)
 internal enum class MusicSection(val title: String) { ARTISTS("Artists"), ALBUMS("Albums"), SONGS("Songs"), PLAYLISTS("Playlists") }
 internal class MusicLayouts(context: Context) {
     private val prefs = HomePrefs(context)
@@ -68,7 +69,7 @@ internal fun musicCollections(section: MusicSection, songs: List<MusicSong>, pla
             }
             artists.values.map { (artist, tracks) ->
                 MusicCollection("artist:${artist.id}", artist.name, songCount(tracks.size),
-                    tracks.sortedWith(compareBy<MusicSong> { it.album.lowercase() }.thenBy { it.track }.thenBy { it.title.lowercase() }))
+                    tracks.sortedWith(compareBy<MusicSong> { it.album.lowercase() }.thenBy { it.track }.thenBy { it.title.lowercase() }), artist)
             }.sortedBy { it.title.lowercase() }
         }
         MusicSection.ALBUMS -> songs.groupBy { it.albumId }.map { (id, tracks) ->
@@ -140,10 +141,21 @@ internal class MusicQueue(private val random: Random = Random.Default) {
     private var original = emptyList<MusicSong>()
     private var order = emptyList<MusicSong>()
     private var index = -1
+    private val played = mutableSetOf<Long>()
     var shuffle = false
         private set
     var repeat = MusicRepeat.NONE
     val current get() = order.getOrNull(index)
+    val previouslyPlayed get() = order.take(index.coerceAtLeast(0)).filter { it.id in played }
+    val upNext get() = if (index < 0) emptyList() else order.drop(index + 1)
+
+    fun markPlaying() { current?.let { played.add(it.id) } }
+
+    fun select(id: Long) {
+        val next = order.indexOfFirst { it.id == id }
+        require(next >= 0) { "The selected song is no longer in the queue." }
+        index = next
+    }
 
     fun set(songs: List<MusicSong>, id: Long) {
         require(songs.any { it.id == id }) { "The selected song is no longer available." }
@@ -152,6 +164,7 @@ internal class MusicQueue(private val random: Random = Random.Default) {
             listOf(original.first { it.id == id }) + rest
         } else original
         index = order.indexOfFirst { it.id == id }
+        played.clear()
     }
 
     fun toggleShuffle() {

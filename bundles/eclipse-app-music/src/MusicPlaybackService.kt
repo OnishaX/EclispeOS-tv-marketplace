@@ -30,6 +30,7 @@ import org.videolan.libvlc.MediaPlayer
 internal data class MusicPlayback(
     val song: MusicSong?, val playing: Boolean, val loading: Boolean,
     val shuffle: Boolean, val repeat: MusicRepeat,
+    val previouslyPlayed: List<MusicSong> = emptyList(), val upNext: List<MusicSong> = emptyList(),
 )
 
 class MusicPlaybackService : Service() {
@@ -56,7 +57,7 @@ class MusicPlaybackService : Service() {
     private val attributes = AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_MEDIA)
         .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC).build()
     internal val state get() = MusicPlayback(queue.current, prepared && wantsPlay,
-        player != null && !prepared, queue.shuffle, queue.repeat)
+        player != null && !prepared, queue.shuffle, queue.repeat, queue.previouslyPlayed, queue.upNext)
     private val noisy = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) { pause() }
     }
@@ -126,6 +127,8 @@ class MusicPlaybackService : Service() {
         prepare()
     }
 
+    internal fun playFromQueue(id: Long) { queue.select(id); prepare() }
+
     internal fun toggle() {
         if (wantsPlay) pause() else resume()
     }
@@ -183,6 +186,7 @@ class MusicPlaybackService : Service() {
             candidate.setEventListener { event ->
                 if (player === candidate) when (event.type) {
                     MediaPlayer.Event.Playing -> {
+                        queue.markPlaying()
                         prepared = true
                         if (!wantsPlay) candidate.player.pause()
                         publish()
