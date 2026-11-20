@@ -151,6 +151,17 @@
       "type": "app",
       "featured": true,
       "version": "0.2"
+    },
+    {
+      "id": "eclipse-plugin-compatibility-tv-sdk-google-atv64-a-c8d40ee6",
+      "title": "sdk_google_atv64_arm64 Compatibility",
+      "type": "plugin",
+      "device": {
+        "model": "sdk_google_atv64_arm64",
+        "product": "sdk_google_atv64_arm64",
+        "sdk": 31
+      },
+      "version": "0.1"
     }
   ]
 }

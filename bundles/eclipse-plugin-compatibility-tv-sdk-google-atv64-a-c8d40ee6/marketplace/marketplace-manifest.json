@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "tagline": "Community-reported TV hardware and firmware capabilities",
+  "description": "Reviewed model-specific compatibility data. Reported API limits are not playback verification; unknown capabilities stay unknown.",
+  "features": [
+    "Model and firmware scoped",
+    "No raw diagnostics or identifying device data"
+  ]
+}
