@@ -49,11 +49,16 @@ internal class MusicView(context: Context, private val videoKind: VideoKind? = n
     private var section = MusicSection.ARTISTS
     private var collection: String? = null
     private var parentScroll = 0
+    private var album: String? = null
+    private var albumParentScroll = 0
+    private var artistAlbumSource: MusicCollection? = null
+    private var artistAlbumGroups = emptyList<MusicCollection>()
     internal val hasParentPage get() = collection != null
     private val pageTransition = DualPanePageTransition(this)
     private val layouts = MusicLayouts(context)
     private val collectionDetails get() = videoKind == null && hasParentPage
-    private val grid get() = videoKind == null && !list && !needsPermission && layouts.grid(section)
+    private val grid get() = videoKind == null && !list && !needsPermission &&
+        layouts.grid(if (browsingArtistAlbums) MusicSection.ALBUMS else section)
     private val visibleCount get() = if (grid) GRID_COLUMNS * GRID_ROWS else VISIBLE_ROWS
     private var sidebar = 0
     private var right = false
@@ -74,11 +79,27 @@ internal class MusicView(context: Context, private val videoKind: VideoKind? = n
     private var focusPosition: RectF? = null
     private var focusTarget: RectF? = null
     private var focusAnimator: ValueAnimator? = null
-    private val groups get() = collections[section].orEmpty().let {
+    private val rootGroups get() = collections[section].orEmpty().let {
         if (section == MusicSection.PLAYLISTS) listOf(MusicCollection(NEW, "New playlist", "Create a playlist", emptyList())) + it else it
     }
-    private val opened get() = groups.firstOrNull { it.id == collection }
-    private val list get() = (section == MusicSection.SONGS && videoKind != VideoKind.MOVIES) || collection != null
+    private val artist get() = if (videoKind == null && section == MusicSection.ARTISTS)
+        rootGroups.firstOrNull { it.id == collection } else null
+    private val artistAlbums: List<MusicCollection> get() {
+        val source = artist
+        if (source !== artistAlbumSource) {
+            artistAlbumSource = source
+            val ids = source?.songs?.map { it.albumId }?.toSet().orEmpty()
+            artistAlbumGroups = collections[MusicSection.ALBUMS].orEmpty()
+                .filter { it.songs.firstOrNull()?.albumId in ids }
+        }
+        return artistAlbumGroups
+    }
+    private val browsingArtistAlbums get() = artist != null && album == null
+    private val groups get() = if (artist != null) artistAlbums else rootGroups
+    private val opened get() = if (album != null) artistAlbums.firstOrNull { it.id == album }
+        else rootGroups.firstOrNull { it.id == collection }
+    private val list get() = (section == MusicSection.SONGS && videoKind != VideoKind.MOVIES) ||
+        (collection != null && !browsingArtistAlbums)
     private val tracks get() = opened?.songs ?: if (collection == null) songs else emptyList()
     private val count get() = if (needsPermission) 1 else if (list) tracks.size else groups.size
 
@@ -97,7 +118,8 @@ internal class MusicView(context: Context, private val videoKind: VideoKind? = n
         collections = sections.associateWith {
             if (videoKind == null) musicCollections(it, songs, playlists) else videoCollections(videoKind, it, songs)
         }
-        if (collection != null && opened == null) collection = null
+        if (collection != null && rootGroups.none { it.id == collection }) { collection = null; album = null }
+        if (album != null && artistAlbums.none { it.id == album }) album = null
         val retained = if (list) tracks.indexOfFirst { it.id == selectedSong } else groups.indexOfFirst { it.id == selectedGroup }
         if (retained >= 0) selected = retained
         selected = selected.coerceAtMost((count - 1).coerceAtLeast(0))
@@ -109,7 +131,14 @@ internal class MusicView(context: Context, private val videoKind: VideoKind? = n
     fun key(code: Int): Boolean {
         when (code) {
             KeyEvent.KEYCODE_BACK -> {
-                if (collection != null) {
+                if (album != null) {
+                    pageTransition.begin(forward = false)
+                    val parent = album
+                    album = null
+                    selected = groups.indexOfFirst { it.id == parent }.coerceAtLeast(0)
+                    scroll = albumParentScroll
+                    right = true
+                } else if (collection != null) {
                     pageTransition.begin(forward = false)
                     val parent = collection
                     collection = null
@@ -161,7 +190,7 @@ internal class MusicView(context: Context, private val videoKind: VideoKind? = n
                     }
                     if (sidebar < transportIndex && section != sections[sidebar]) {
                         section = sections[sidebar]
-                        collection = null; selected = 0; scroll = 0
+                        collection = null; album = null; selected = 0; scroll = 0
                     }
                 }
             }
@@ -187,8 +216,15 @@ internal class MusicView(context: Context, private val videoKind: VideoKind? = n
             }
             else {
                 pageTransition.begin(forward = true)
-                parentScroll = scroll
-                collection = it.id; selected = 0; scroll = 0
+                if (browsingArtistAlbums) {
+                    albumParentScroll = scroll
+                    album = it.id
+                } else {
+                    parentScroll = scroll
+                    collection = it.id
+                    album = null
+                }
+                selected = 0; scroll = 0
             }
         }
     }
@@ -348,38 +384,41 @@ internal class MusicView(context: Context, private val videoKind: VideoKind? = n
 
     private fun drawCollectionDetails(canvas: Canvas) {
         val group = opened ?: return
+        val detailSection = if (album != null) MusicSection.ALBUMS else section
         val card = RectF(SettingsChrome.LEFT, SettingsChrome.PANE_TOP,
-            SettingsChrome.SIDEBAR_RIGHT, SettingsChrome.PANE_TOP + 121f)
-        drawCover(canvas, group.songs.firstOrNull(), card, fit = true)
+            SettingsChrome.SIDEBAR_RIGHT, SettingsChrome.PANE_TOP +
+                if (detailSection == MusicSection.ALBUMS) SettingsChrome.SIDEBAR_RIGHT - SettingsChrome.LEFT else 121f)
+        drawCover(canvas, group.songs.firstOrNull(), card, fit = true, placeholder = detailSection)
         label(canvas, group.title, card.centerX(), card.bottom + 34f, 22f, card.width(), align = Paint.Align.CENTER)
         label(canvas, group.subtitle, card.centerX(), card.bottom + 69f, 18f, card.width(),
             color = Color.LTGRAY, align = Paint.Align.CENTER)
-        val type = section.name.lowercase().removeSuffix("s").replaceFirstChar { it.uppercase() }
+        val type = detailSection.name.lowercase().removeSuffix("s").replaceFirstChar { it.uppercase() }
         val duration = group.songs.sumOf { it.duration } / 1000
         listOf("Type:" to type, "Tracks:" to group.songs.size.toString(),
             "Duration:" to "${duration / 60}:${(duration % 60).toString().padStart(2, '0')}").forEachIndexed { index, (name, value) ->
-            val y = 350f + index * 34f
+            val y = maxOf(350f, card.bottom + 120f) + index * 34f
             label(canvas, name, card.left, y, 17f, 95f)
             label(canvas, value, card.right, y, 17f, 115f, color = Color.LTGRAY, align = Paint.Align.RIGHT)
         }
     }
 
     private fun gridBounds(index: Int): RectF {
-        val cellWidth = (SettingsChrome.CONTENT_RIGHT - SettingsChrome.CONTENT_LEFT - 2 * GRID_GAP) / GRID_COLUMNS
+        val cellWidth = (SettingsChrome.CONTENT_RIGHT - SettingsChrome.CONTENT_LEFT - (GRID_COLUMNS - 1) * GRID_GAP) / GRID_COLUMNS
         val x = SettingsChrome.CONTENT_LEFT + ((index - scroll) % GRID_COLUMNS) * (cellWidth + GRID_GAP)
         val y = SettingsChrome.PANE_TOP + ((index - scroll) / GRID_COLUMNS) * GRID_ROW_HEIGHT
-        return RectF(x, y, x + cellWidth, y + 283f)
+        return RectF(x, y, x + cellWidth, y + minOf(224f, cellWidth) + 59f)
     }
 
     private fun drawGrid(canvas: Canvas) {
         groups.forEachIndexed { index, group ->
             if (index !in scroll until scroll + visibleCount) return@forEachIndexed
             val cell = gridBounds(index)
-            val cover = RectF(cell.centerX() - 112f, cell.top, cell.centerX() + 112f, cell.top + 224f)
+            val size = minOf(224f, cell.width())
+            val cover = RectF(cell.centerX() - size / 2f, cell.top, cell.centerX() + size / 2f, cell.top + size)
             drawCover(canvas, group.songs.firstOrNull(), cover)
-            label(canvas, group.title, cell.centerX(), cell.top + 249f, 22f, cell.width(),
+            label(canvas, group.title, cell.centerX(), cover.bottom + 25f, 22f, cell.width(),
                 glow = if (right && selected == index) 1f else 0f, align = Paint.Align.CENTER)
-            label(canvas, group.subtitle, cell.centerX(), cell.top + 275f, 18f, cell.width(),
+            label(canvas, group.subtitle, cell.centerX(), cover.bottom + 51f, 18f, cell.width(),
                 color = Color.LTGRAY, align = Paint.Align.CENTER)
         }
     }
@@ -425,34 +464,37 @@ internal class MusicView(context: Context, private val videoKind: VideoKind? = n
         drawCover(canvas, song, rect)
     }
 
-    private fun drawCover(canvas: Canvas, song: MusicSong?, cover: RectF, fit: Boolean = false) {
+    private fun drawCover(canvas: Canvas, song: MusicSong?, cover: RectF, fit: Boolean = false,
+        placeholder: MusicSection = if (browsingArtistAlbums) MusicSection.ALBUMS else section) {
         val art = song?.let { artwork.get(it.albumId) }
         paint.shader = null
         paint.color = 0xFF171719.toInt()
-        canvas.drawRoundRect(cover, 4f, 4f, paint)
+        val radius = cover.width() * CardPainter.TILE_RADIUS_FRACTION
+        canvas.drawRoundRect(cover, radius, radius, paint)
         if (art == null) {
             song?.let(onArtwork)
-            painter.drawIcon(canvas, sectionIcon(section), cover.centerX(), cover.centerY(),
+            painter.drawIcon(canvas, sectionIcon(placeholder), cover.centerX(), cover.centerY(),
                 if (cover.width() > 100f) 64f else 22f, Color.WHITE, 0.95f)
             return
         }
-        val artSave = canvas.save()
-        clip.reset()
-        clip.addRoundRect(cover, 4f, 4f, Path.Direction.CW)
-        canvas.clipPath(clip)
         val scale = maxOf(cover.width() / art.width, cover.height() / art.height)
         val cropWidth = (cover.width() / scale).roundToInt().coerceIn(1, art.width)
         val cropHeight = (cover.height() / scale).roundToInt().coerceIn(1, art.height)
         val left = (art.width - cropWidth) / 2
         val top = (art.height - cropHeight) / 2
         val src = android.graphics.Rect(left, top, left + cropWidth, top + cropHeight)
-        if (fit) {
+        val destination = if (fit) {
             val fittedScale = minOf(cover.width() / art.width, cover.height() / art.height)
             val w = art.width * fittedScale / 2
             val h = art.height * fittedScale / 2
-            canvas.drawBitmap(art, null, RectF(cover.centerX() - w, cover.centerY() - h,
-                cover.centerX() + w, cover.centerY() + h), paint)
-        } else canvas.drawBitmap(art, src, cover, paint)
+            RectF(cover.centerX() - w, cover.centerY() - h, cover.centerX() + w, cover.centerY() + h)
+        } else cover
+        val imageRadius = destination.width() * CardPainter.TILE_RADIUS_FRACTION
+        val artSave = canvas.save()
+        clip.reset()
+        clip.addRoundRect(destination, imageRadius, imageRadius, Path.Direction.CW)
+        canvas.clipPath(clip)
+        canvas.drawBitmap(art, if (fit) null else src, destination, paint)
         canvas.restoreToCount(artSave)
     }
 
@@ -490,7 +532,7 @@ internal class MusicView(context: Context, private val videoKind: VideoKind? = n
             when {
                 !collectionDetails && y >= SettingsChrome.TOP && y < SettingsChrome.TOP + sections.size * SettingsChrome.ROW_HEIGHT -> {
                     sidebar = ((y - SettingsChrome.TOP) / SettingsChrome.ROW_HEIGHT).toInt().coerceIn(sections.indices)
-                    section = sections[sidebar]; collection = null; selected = 0; scroll = 0 }
+                    section = sections[sidebar]; collection = null; album = null; selected = 0; scroll = 0 }
                 y >= footerTop(footerRows) && y < footerTop(footerRows) + FOOTER_ROW_HEIGHT -> { sidebar = transportIndex
                     if (x < 169f) onSkip(-1) else if (x > 251f) onSkip(1) else onToggle() }
                 showModes && y >= footerTop(1) && y < FOOTER_BOTTOM -> { sidebar = transportIndex + if (x < 203f) 1 else 2
@@ -523,7 +565,7 @@ internal class MusicView(context: Context, private val videoKind: VideoKind? = n
     private companion object {
         const val NEW = "__new_playlist__"
         const val VISIBLE_ROWS = 10
-        const val GRID_COLUMNS = 3
+        const val GRID_COLUMNS = 4
         const val GRID_ROWS = 2
         const val GRID_GAP = 24f
         const val GRID_ROW_HEIGHT = 305f

@@ -96,6 +96,7 @@ open class MusicActivity : AppCompatActivity() {
             systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
         }
         particles = ParticleBackgroundView(this).apply {
+            musicArtworkBackground = videoKind == null
             glowStrength = 0f
             setAccentColor(appAccent, 0)
         }

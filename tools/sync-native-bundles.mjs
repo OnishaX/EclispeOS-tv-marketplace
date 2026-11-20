@@ -8,7 +8,7 @@ if (!android) throw new Error('Usage: node tools/sync-native-bundles.mjs <Androi
 const repo = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const main = resolve(android, 'app/src/main');
 const entries = [
-  ['eclipse-app-music', 'Browse artists, albums and playlists as lists or grids, with collection details and native music playback.'],
+  ['eclipse-app-music', 'Browse every credited artist, albums and playlists in lists or four-column grids, with live artist artwork and native music playback.'],
   ['eclipse-app-movies', 'Browse movie posters and play videos with the built-in Eclipse player.'],
   ['eclipse-app-tv-shows', 'Browse show posters, seasons and episodes.'],
   ['eclipse-plugin-connection-jellyfin', 'Connect Eclipse media apps to a Jellyfin server.'],
@@ -77,8 +77,11 @@ for (const [id, description] of entries) {
         'QR GitHub Device Flow sign-in', 'Explicitly create a public pull request; never push to main',
         'No raw dumps, network addresses, serial numbers or credentials in reports'] :
       id === 'eclipse-app-music' ?
-        ['Independent Artists, Albums and Playlists list/grid settings', 'Songs always use a list',
-          'Collection artwork and information beside its tracks', 'Background playback, shuffle and repeat',
+        ['Independent Artists, Albums and Playlists list/four-column grid settings', 'Songs always use a list',
+          'Collaborations appear under every credited artist', 'Browse artists, then their albums, then songs',
+          'Square album artwork beside its tracks',
+          'Artist-image live thumbnails with Ken Burns slideshows and album-art fallback',
+          'Synchronized artwork backdrop at 25% opacity', 'Background playback, shuffle and repeat',
           'Requires Eclipse host version 2 or later'] :
       ['Native Eclipse integration', 'Requires Eclipse host version 2 or later'],
   });

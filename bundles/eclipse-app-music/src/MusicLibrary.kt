@@ -9,11 +9,14 @@ import org.json.JSONObject
 import java.util.UUID
 import kotlin.random.Random
 
+internal data class MusicArtist(val id: Long, val name: String, val sourceId: String? = null)
+
 internal data class MusicSong(
     val id: Long, val title: String, val artist: String, val artistId: Long,
     val album: String, val albumId: Long, val duration: Long, val track: Int,
     val sourceUri: Uri? = null, val sourceArtwork: Uri? = null, val connectionId: String? = null,
     val genres: List<String> = emptyList(), val collections: List<String> = emptyList(),
+    val artists: List<MusicArtist> = listOf(MusicArtist(artistId, artist)),
 ) {
     val uri: Uri get() = sourceUri ?: ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, id)
     val artwork: Uri get() = sourceArtwork ?: if (connectionId != null) Uri.EMPTY else Uri.parse("content://media/external/audio/albumart/$albumId")
@@ -36,10 +39,18 @@ private fun songCount(count: Int) = if (count == 1) "1 song" else "$count songs"
 
 internal fun musicCollections(section: MusicSection, songs: List<MusicSong>, playlists: List<MusicPlaylist>): List<MusicCollection> =
     when (section) {
-        MusicSection.ARTISTS -> songs.groupBy { it.artistId }.map { (id, tracks) ->
-            MusicCollection("artist:$id", tracks.first().artist, songCount(tracks.size),
-                tracks.sortedWith(compareBy<MusicSong> { it.album.lowercase() }.thenBy { it.track }.thenBy { it.title.lowercase() }))
-        }.sortedBy { it.title.lowercase() }
+        MusicSection.ARTISTS -> {
+            val artists = mutableMapOf<Long, Pair<MusicArtist, MutableList<MusicSong>>>()
+            songs.forEach { song ->
+                song.artists.distinctBy { it.id }.forEach { artist ->
+                    artists.getOrPut(artist.id) { artist to mutableListOf() }.second.add(song)
+                }
+            }
+            artists.values.map { (artist, tracks) ->
+                MusicCollection("artist:${artist.id}", artist.name, songCount(tracks.size),
+                    tracks.sortedWith(compareBy<MusicSong> { it.album.lowercase() }.thenBy { it.track }.thenBy { it.title.lowercase() }))
+            }.sortedBy { it.title.lowercase() }
+        }
         MusicSection.ALBUMS -> songs.groupBy { it.albumId }.map { (id, tracks) ->
             MusicCollection("album:$id", tracks.first().album, tracks.first().artist,
                 tracks.sortedWith(compareBy<MusicSong> { it.track }.thenBy { it.title.lowercase() }))

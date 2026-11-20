@@ -244,6 +244,7 @@ class MusicPlaybackService : Service() {
                 else -> PlaybackState.STATE_STOPPED
             }, if (prepared) player?.player?.time?.coerceAtLeast(0) ?: 0 else 0, if (state.playing) 1f else 0f).build())
         if (foreground) getSystemService(NotificationManager::class.java).notify(NOTIFICATION, notification())
+        MusicArtwork.update(this, state)
         listeners.toList().forEach { it() }
     }
 
@@ -294,6 +295,7 @@ class MusicPlaybackService : Service() {
         if (wake.isHeld) wake.release()
         audio.abandonAudioFocusRequest(focus)
         session.release()
+        MusicArtwork.clear()
         listeners.clear()
         super.onDestroy()
     }

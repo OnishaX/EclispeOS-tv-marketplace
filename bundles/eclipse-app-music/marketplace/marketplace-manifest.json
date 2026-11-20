@@ -1,10 +1,14 @@
 {
   "schemaVersion": 1,
-  "description": "Browse artists, albums and playlists as lists or grids, with collection details and native music playback.",
+  "description": "Browse every credited artist, albums and playlists in lists or four-column grids, with live artist artwork and native music playback.",
   "features": [
-    "Independent Artists, Albums and Playlists list/grid settings",
+    "Independent Artists, Albums and Playlists list/four-column grid settings",
     "Songs always use a list",
-    "Collection artwork and information beside its tracks",
+    "Collaborations appear under every credited artist",
+    "Browse artists, then their albums, then songs",
+    "Square album artwork beside its tracks",
+    "Artist-image live thumbnails with Ken Burns slideshows and album-art fallback",
+    "Synchronized artwork backdrop at 25% opacity",
     "Background playback, shuffle and repeat",
     "Requires Eclipse host version 2 or later"
   ]
