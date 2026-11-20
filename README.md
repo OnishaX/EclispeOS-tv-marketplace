@@ -8,6 +8,13 @@ Official Marketplace repo for EclipseOS (TV)
 updates without resetting tile preferences. The legacy `repository.json` and
 old bundle IDs remain available.
 
+Eclipse 1.1 resolves the catalog revision through GitHub's small
+`git/ref/heads/main` response, not full commit details and file patches.
+Large artwork/source commits can exceed older launchers' commit-response
+limit and produce "A bundle file is too large" during refresh; update the
+Eclipse host APK rather than increasing runtime asset limits. Catalogs remain
+limited to 32 KiB and downloads stay pinned to the resolved commit.
+
 Runtime artwork is transparent PNG, at most 512 x 512 pixels and 256 KiB.
 Manifests are at most 32 KiB. Original supplied artwork is kept as `artwork.svg`.
 The separate `marketplace/marketplace-manifest.json` contains listing details;
