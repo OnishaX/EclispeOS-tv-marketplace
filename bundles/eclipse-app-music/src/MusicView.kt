@@ -57,8 +57,11 @@ internal class MusicView(context: Context, private val videoKind: VideoKind? = n
     private val pageTransition = DualPanePageTransition(this)
     private val layouts = MusicLayouts(context)
     private val collectionDetails get() = videoKind == null && hasParentPage
-    private val grid get() = videoKind == null && !list && !needsPermission &&
-        layouts.grid(if (browsingArtistAlbums) MusicSection.ALBUMS else section)
+    private val grid get() = !list && !needsPermission && when (videoKind) {
+        null -> layouts.grid(if (browsingArtistAlbums) MusicSection.ALBUMS else section)
+        VideoKind.SHOWS -> true
+        VideoKind.MOVIES -> false
+    }
     private val visibleCount get() = if (grid) GRID_COLUMNS * GRID_ROWS else VISIBLE_ROWS
     private var sidebar = 0
     private var right = false
@@ -387,7 +390,8 @@ internal class MusicView(context: Context, private val videoKind: VideoKind? = n
         val detailSection = if (album != null) MusicSection.ALBUMS else section
         val card = RectF(SettingsChrome.LEFT, SettingsChrome.PANE_TOP,
             SettingsChrome.SIDEBAR_RIGHT, SettingsChrome.PANE_TOP +
-                if (detailSection == MusicSection.ALBUMS) SettingsChrome.SIDEBAR_RIGHT - SettingsChrome.LEFT else 121f)
+                if (detailSection == MusicSection.ALBUMS || detailSection == MusicSection.ARTISTS)
+                    SettingsChrome.SIDEBAR_RIGHT - SettingsChrome.LEFT else 121f)
         drawCover(canvas, group.songs.firstOrNull(), card, fit = true, placeholder = detailSection)
         label(canvas, group.title, card.centerX(), card.bottom + 34f, 22f, card.width(), align = Paint.Align.CENTER)
         label(canvas, group.subtitle, card.centerX(), card.bottom + 69f, 18f, card.width(),
@@ -406,15 +410,18 @@ internal class MusicView(context: Context, private val videoKind: VideoKind? = n
         val cellWidth = (SettingsChrome.CONTENT_RIGHT - SettingsChrome.CONTENT_LEFT - (GRID_COLUMNS - 1) * GRID_GAP) / GRID_COLUMNS
         val x = SettingsChrome.CONTENT_LEFT + ((index - scroll) % GRID_COLUMNS) * (cellWidth + GRID_GAP)
         val y = SettingsChrome.PANE_TOP + ((index - scroll) / GRID_COLUMNS) * GRID_ROW_HEIGHT
-        return RectF(x, y, x + cellWidth, y + minOf(224f, cellWidth) + 59f)
+        return RectF(x, y, x + cellWidth, y + gridArtworkHeight(cellWidth) + 59f)
     }
+
+    private fun gridArtworkHeight(width: Float) = if (videoKind == VideoKind.SHOWS) width * 1.5f else minOf(224f, width)
 
     private fun drawGrid(canvas: Canvas) {
         groups.forEachIndexed { index, group ->
             if (index !in scroll until scroll + visibleCount) return@forEachIndexed
             val cell = gridBounds(index)
             val size = minOf(224f, cell.width())
-            val cover = RectF(cell.centerX() - size / 2f, cell.top, cell.centerX() + size / 2f, cell.top + size)
+            val cover = RectF(cell.centerX() - size / 2f, cell.top, cell.centerX() + size / 2f,
+                cell.top + gridArtworkHeight(size))
             drawCover(canvas, group.songs.firstOrNull(), cover)
             label(canvas, group.title, cell.centerX(), cover.bottom + 25f, 22f, cell.width(),
                 glow = if (right && selected == index) 1f else 0f, align = Paint.Align.CENTER)
@@ -467,9 +474,11 @@ internal class MusicView(context: Context, private val videoKind: VideoKind? = n
     private fun drawCover(canvas: Canvas, song: MusicSong?, cover: RectF, fit: Boolean = false,
         placeholder: MusicSection = if (browsingArtistAlbums) MusicSection.ALBUMS else section) {
         val art = song?.let { artwork.get(it.albumId) }
+        val circular = videoKind == null && placeholder == MusicSection.ARTISTS
+        val contain = fit && !circular
         paint.shader = null
         paint.color = 0xFF171719.toInt()
-        val radius = cover.width() * CardPainter.TILE_RADIUS_FRACTION
+        val radius = if (circular) cover.width() / 2f else cover.width() * CardPainter.TILE_RADIUS_FRACTION
         canvas.drawRoundRect(cover, radius, radius, paint)
         if (art == null) {
             song?.let(onArtwork)
@@ -483,7 +492,7 @@ internal class MusicView(context: Context, private val videoKind: VideoKind? = n
         val left = (art.width - cropWidth) / 2
         val top = (art.height - cropHeight) / 2
         val src = android.graphics.Rect(left, top, left + cropWidth, top + cropHeight)
-        val destination = if (fit) {
+        val destination = if (contain) {
             val fittedScale = minOf(cover.width() / art.width, cover.height() / art.height)
             val w = art.width * fittedScale / 2
             val h = art.height * fittedScale / 2
@@ -492,9 +501,10 @@ internal class MusicView(context: Context, private val videoKind: VideoKind? = n
         val imageRadius = destination.width() * CardPainter.TILE_RADIUS_FRACTION
         val artSave = canvas.save()
         clip.reset()
-        clip.addRoundRect(destination, imageRadius, imageRadius, Path.Direction.CW)
+        if (circular) clip.addOval(destination, Path.Direction.CW)
+        else clip.addRoundRect(destination, imageRadius, imageRadius, Path.Direction.CW)
         canvas.clipPath(clip)
-        canvas.drawBitmap(art, if (fit) null else src, destination, paint)
+        canvas.drawBitmap(art, if (contain) null else src, destination, paint)
         canvas.restoreToCount(artSave)
     }
 
@@ -565,7 +575,7 @@ internal class MusicView(context: Context, private val videoKind: VideoKind? = n
     private companion object {
         const val NEW = "__new_playlist__"
         const val VISIBLE_ROWS = 10
-        const val GRID_COLUMNS = 4
+        const val GRID_COLUMNS = 5
         const val GRID_ROWS = 2
         const val GRID_GAP = 24f
         const val GRID_ROW_HEIGHT = 305f

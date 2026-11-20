@@ -1,9 +1,10 @@
 {
   "schemaVersion": 1,
-  "description": "Browse every credited artist, albums and playlists in lists or four-column grids, with live artist artwork and native music playback.",
+  "description": "Browse every credited artist, albums and playlists in lists or five-column grids, with circular artist images, live artwork and native music playback.",
   "features": [
-    "Independent Artists, Albums and Playlists list/four-column grid settings",
+    "Independent Artists, Albums and Playlists list/five-column grid settings",
     "Songs always use a list",
+    "Circular artist artwork in grids, lists and details",
     "Collaborations appear under every credited artist",
     "Browse artists, then their albums, then songs",
     "Square album artwork beside its tracks",

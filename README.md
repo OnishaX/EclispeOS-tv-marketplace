@@ -37,13 +37,15 @@ Uninstalled plugins are offered only in Marketplace. Settings lists connection
 plugins only after installation; media-app listing manifests do not advertise
 optional plugins.
 
-Music offers per-user List/four-column Grid choices for Artists, Albums and Playlists;
+Music offers per-user List/five-column Grid choices for Artists, Albums and Playlists;
 Songs stay in a list. Open collections use a left artwork/information pane and
 a right track list, with parent-only Back navigation. Artists use plural credits
 so shared tracks appear under each contributor. Select an artist to browse
 their albums, then an album to open its full track list; Back restores each
-parent selection. Album details use square artwork. Music, movie and TV-show
-artwork matches the app tiles' rounded corners.
+parent selection. Album details use square artwork, and artist images are
+circular in lists, grids and details. Album, movie and TV-show artwork matches
+the app tiles' rounded corners. TV Shows uses a five-column portrait-poster
+grid; opening a show retains its episode list and parent selection.
 
 Playing Music supplies artist-image live thumbnails with Ken Burns motion and
 crossfading photographs, falling back to album artwork. The same timeline

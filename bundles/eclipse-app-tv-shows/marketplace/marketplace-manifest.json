@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "description": "Browse show posters, seasons and episodes.",
+  "description": "Browse shows in a five-column poster grid and open their episode lists.",
   "features": [
     "Native Eclipse integration",
     "Requires Eclipse host version 2 or later"
