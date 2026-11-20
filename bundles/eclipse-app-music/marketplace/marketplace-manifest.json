@@ -8,7 +8,11 @@
     "Collaborations appear under every credited artist",
     "Browse artists, then their albums, then songs",
     "Square album artwork beside its tracks",
+    "Album-only track numbers and per-song contributing artist credits",
     "Artist-image live thumbnails with Ken Burns slideshows and album-art fallback",
+    "Playback artwork fades in and crossfades without clearing during buffering",
+    "Smooth list/grid scrolling and five-second playback-control UI auto-hide",
+    "Icon-only Favourite/Dislike/Unset heart, saved per song and Eclipse user",
     "Synchronized artwork backdrop at 25% opacity",
     "Background playback, shuffle and repeat",
     "Requires Eclipse host version 2 or later"

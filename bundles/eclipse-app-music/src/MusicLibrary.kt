@@ -18,6 +18,12 @@ internal data class MusicSong(
     val genres: List<String> = emptyList(), val collections: List<String> = emptyList(),
     val artists: List<MusicArtist> = listOf(MusicArtist(artistId, artist)),
 ) {
+    // MediaStore and Navidrome pack the disc into this field; Jellyfin supplies the track alone.
+    val trackNumber: Int? get() = when {
+        connectionId == null -> track % 1000
+        connectionId.startsWith("navidrome:") -> track % 10000
+        else -> track
+    }.takeIf { it > 0 }
     val uri: Uri get() = sourceUri ?: ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, id)
     val artwork: Uri get() = sourceArtwork ?: if (connectionId != null) Uri.EMPTY else Uri.parse("content://media/external/audio/albumart/$albumId")
 }
@@ -35,6 +41,20 @@ internal class MusicLayouts(context: Context) {
     }
 }
 internal enum class MusicRepeat { NONE, ALL, ONE }
+internal enum class MusicRating(val icon: Int, val description: String) {
+    NONE(R.drawable.ic_music_heart, "Unset"),
+    FAVOURITE(R.drawable.ic_music_heart_fill, "Favourited"),
+    DISLIKE(R.drawable.ic_music_heart_break_fill, "Disliked"),
+}
+internal class MusicRatings(context: Context) {
+    private val prefs = HomePrefs(context)
+    private fun key(song: MusicSong) = "rating:${song.connectionId ?: "local"}:${song.id}"
+    fun get(song: MusicSong) = prefs.bundleSetting("music", key(song))?.let(MusicRating::valueOf) ?: MusicRating.NONE
+    fun cycle(song: MusicSong) {
+        val next = MusicRating.entries[(get(song).ordinal + 1) % MusicRating.entries.size]
+        prefs.setBundleSetting("music", key(song), next.name)
+    }
+}
 private fun songCount(count: Int) = if (count == 1) "1 song" else "$count songs"
 
 internal fun musicCollections(section: MusicSection, songs: List<MusicSong>, playlists: List<MusicPlaylist>): List<MusicCollection> =

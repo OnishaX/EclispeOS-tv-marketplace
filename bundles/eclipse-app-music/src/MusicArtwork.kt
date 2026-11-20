@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Canvas
+import android.graphics.RectF
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
@@ -28,7 +30,10 @@ internal object MusicArtwork {
         if (key == UserProfiles.ACTIVE &&
             prefs.getString(key, UserProfiles.DEFAULT_ID) != requested?.first?.profile) clear()
     }
-    val preview: ArtworkSlideshow? get() = slideshow.takeIf { playing }
+    val preview: ArtworkSlideshow? get() {
+        if (slideshow?.isFinished() == true) slideshow = null
+        return slideshow.takeIf { playing }
+    }
     private val tick = object : Runnable {
         override fun run() {
             listeners.toList().forEach { it() }
@@ -45,11 +50,12 @@ internal object MusicArtwork {
     fun update(context: Context, state: MusicPlayback) {
         val song = state.song ?: run { clear(); return }
         val wasPlaying = playing
-        playing = state.playing
+        playing = state.playing || state.loading
         if (!playing) {
             if (wasPlaying) changed()
             return
         }
+        if (!wasPlaying) slideshow?.beginFade()
         val app = context.applicationContext
         val prefs = profiles ?: app.getSharedPreferences(UserProfiles.STORAGE, Context.MODE_PRIVATE).also {
             profiles = it
@@ -64,7 +70,6 @@ internal object MusicArtwork {
         }
         requested = key
         artistImages = false
-        slideshow = null
         val request = ++generation
         task?.cancel(true)
         changed()
@@ -81,7 +86,11 @@ internal object MusicArtwork {
             main.post {
                 if (request == generation) {
                     artistImages = useArtist
-                    slideshow = images.takeIf { it.isNotEmpty() }?.let { ArtworkSlideshow(it) }
+                    if (images.isNotEmpty() || slideshow?.fadingOut != true) {
+                        val outgoing = snapshot(app)
+                        slideshow = if (images.isNotEmpty() || outgoing != null)
+                            ArtworkSlideshow(images, previous = outgoing, fadeIn = true) else null
+                    }
                     if (images.isEmpty()) requested = null
                     changed()
                 } else images.forEach { it.recycle() }
@@ -106,6 +115,20 @@ internal object MusicArtwork {
         main.removeCallbacks(tick)
         listeners.toList().forEach { it() }
         if (preview != null && listeners.isNotEmpty()) main.postDelayed(tick, 33)
+    }
+
+    private fun snapshot(context: Context): Bitmap? {
+        val scene = slideshow?.takeUnless { it.isFinished() } ?: return null
+        // Flatten interrupted fades so rapid skipping cannot retain a chain of decoded galleries.
+        return try {
+            Bitmap.createBitmap(960, 540, Bitmap.Config.ARGB_8888).also {
+                scene.draw(Canvas(it), RectF(0f, 0f, 960f, 540f))
+            }
+        } catch (error: OutOfMemoryError) {
+            Log.w("MusicArtwork", "Could not capture the outgoing artwork", error)
+            android.widget.Toast.makeText(context, "Could not animate the artwork change.", android.widget.Toast.LENGTH_SHORT).show()
+            null
+        }
     }
 
     private fun album(context: Context, song: MusicSong): Bitmap? {

@@ -46,12 +46,22 @@ parent selection. Album details use square artwork, and artist images are
 circular in lists, grids and details. Album, movie and TV-show artwork matches
 the app tiles' rounded corners. TV Shows uses a five-column portrait-poster
 grid; opening a show retains its episode list and parent selection.
+Album track lists show track numbers and per-song contributing artists;
+Songs and playlist rows retain their icons and artist/album subtitles.
 
 Playing Music supplies artist-image live thumbnails with Ken Burns motion and
 crossfading photographs, falling back to album artwork. The same timeline
-continues into the app's 25%-opacity backdrop behind its focus glow. Home's Live
+continues into the app's 25%-opacity backdrop behind its focus glow. Artwork
+fades in on playback start and crossfades over one second when it changes,
+keeping the previous image visible during buffering and image loading. Home's Live
 Thumbnail switch is independent of the app backdrop. Images are bounded and
 public artwork hosts never receive media-server credentials.
+All three media apps smoothly scroll lists and grids. After five idle seconds
+with playback controls focused, the UI and clock fade away until remote or touch
+input, leaving the backdrop visible. Browsing does not auto-hide.
+Music includes an icon-only heart between Shuffle and Repeat, cycling unset,
+favourite and dislike. Ratings are local to Eclipse, per song and user; they
+do not alter server ratings or automatically skip tracks.
 
 ## Model compatibility
 

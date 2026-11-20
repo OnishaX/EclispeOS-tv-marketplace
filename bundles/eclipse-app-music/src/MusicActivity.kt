@@ -132,6 +132,7 @@ open class MusicActivity : AppCompatActivity() {
             onArtwork = ::loadArtwork
         }
         val clock = ClockView(this)
+        music.onUiAlpha = { clock.alpha = it }
         content = FrameLayout(this).apply {
             addView(particles, FrameLayout.LayoutParams(-1, -1))
             addView(music, FrameLayout.LayoutParams(-1, -1))
@@ -149,6 +150,7 @@ open class MusicActivity : AppCompatActivity() {
             onClosed = {
                 particles.setAccentColor(appAccent)
                 music.refreshLayout()
+                music.userActive()
                 music.requestFocus()
             }
         }
@@ -161,6 +163,7 @@ open class MusicActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        music.userActive()
         UserButtonShortcutService.onAppSettingsButton = ::settingsButtonPressed
         UserButtonShortcutService.onEclipseSource = { QuickSource(packageName, appTitle, eclipse = true) }
         if (videoKind != null) videoPlaybackChanged()
@@ -172,6 +175,7 @@ open class MusicActivity : AppCompatActivity() {
     }
 
     override fun onPause() {
+        music.suspendIdle()
         UserButtonShortcutService.onAppSettingsButton = null
         UserButtonShortcutService.onEclipseSource = null
         UserButtonShortcutService.onCloseEclipse = null
@@ -179,6 +183,7 @@ open class MusicActivity : AppCompatActivity() {
     }
 
     private fun settingsButtonPressed() {
+        music.userActive()
         if (dialog?.isShowing == true || !content.isLaidOut) return
         if (appSettings.isShowing) appSettings.close()
         else appSettings.showApp(EclipseBundles(this, HomePrefs(this)).packagedItem(videoKind?.bundleId ?: BundleIds.MUSIC), content)
@@ -350,6 +355,7 @@ open class MusicActivity : AppCompatActivity() {
     }
 
     override fun dispatchKeyEvent(rawEvent: KeyEvent): Boolean {
+        if (::music.isInitialized && rawEvent.action == KeyEvent.ACTION_DOWN) music.userActive()
         if (!::music.isInitialized || dialog?.isShowing == true) return super.dispatchKeyEvent(rawEvent)
         val event = remoteMapping.mappedEvent(rawEvent)
         val code = event.keyCode
