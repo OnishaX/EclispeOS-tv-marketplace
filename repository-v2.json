@@ -171,13 +171,6 @@
       "version": "0.1"
     },
     {
-      "id": "eclipse-input-cassette",
-      "title": "Cassette",
-      "type": "input",
-      "featured": false,
-      "version": "0.1"
-    },
-    {
       "id": "eclipse-input-cd",
       "title": "CD",
       "type": "input",
@@ -187,20 +180,6 @@
     {
       "id": "eclipse-input-dvd",
       "title": "DVD",
-      "type": "input",
-      "featured": false,
-      "version": "0.1"
-    },
-    {
-      "id": "eclipse-input-vhs",
-      "title": "VHS",
-      "type": "input",
-      "featured": false,
-      "version": "0.1"
-    },
-    {
-      "id": "eclipse-input-vinyl",
-      "title": "Vinyl",
       "type": "input",
       "featured": false,
       "version": "0.1"
