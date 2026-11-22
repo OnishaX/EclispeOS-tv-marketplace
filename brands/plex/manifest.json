@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "id": "plex",
+  "title": "Plex",
+  "icon": "icon.png",
+  "colours": [
+    {
+      "name": "Plex Gold",
+      "hex": "#E5A00D"
+    }
+  ],
+  "packages": [
+    "com.plexapp.android",
+    "com.plexapp.plexamp"
+  ]
+}

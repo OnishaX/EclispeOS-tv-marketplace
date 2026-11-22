@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "id": "steam-deck",
+  "title": "Steam Deck",
+  "icon": "icon.png",
+  "colours": [
+    {
+      "name": "Steam Deck Blue",
+      "hex": "#1A9FFF"
+    }
+  ],
+  "packages": []
+}

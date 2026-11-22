@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "id": "twitch",
+  "title": "Twitch",
+  "icon": "icon.png",
+  "colours": [
+    {
+      "name": "Twitch Purple",
+      "hex": "#9146FF"
+    }
+  ],
+  "packages": [
+    "tv.twitch.android.app"
+  ]
+}

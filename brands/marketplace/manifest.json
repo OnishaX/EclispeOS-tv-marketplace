@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "id": "marketplace",
+  "title": "Marketplace",
+  "icon": "icon.png",
+  "colours": [
+    {
+      "name": "Marketplace Purple",
+      "hex": "#6819A8"
+    }
+  ],
+  "packages": []
+}

@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "id": "apple",
+  "title": "Apple",
+  "icon": "icon.png",
+  "colours": [
+    {
+      "name": "Black",
+      "hex": "#232326"
+    }
+  ],
+  "packages": []
+}

@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "id": "netflix",
+  "title": "Netflix",
+  "icon": "icon.png",
+  "colours": [
+    {
+      "name": "Netflix Red",
+      "hex": "#E50914"
+    }
+  ],
+  "packages": [
+    "com.netflix.ninja",
+    "com.netflix.mediaclient"
+  ]
+}

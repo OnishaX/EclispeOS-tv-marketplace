@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Steam Deck logo, converted from steam-deck.svg -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="19.5dp" android:height="24dp"
+    android:viewportWidth="1083.3" android:viewportHeight="1333.3">
+    <group android:name="pad" android:translateX="166.7" android:translateY="166.7">
+    <path android:fillColor="#FFFFFFFF" android:fillType="evenOdd"
+        android:pathData="M570.505 500C570.505 322.985 427.013 179.487 250.004 179.487V0C526.137 0 749.986 223.857 749.986 500C749.986 776.143 526.137 1000 250.004 1000V820.512C427.013 820.512 570.505 677.015 570.505 500Z"/>
+    <path android:fillColor="#FFFFFFFF"
+        android:pathData="M249.991 750.508C388.057 750.508 499.982 638.579 499.982 500.508C499.982 362.437 388.057 250.508 249.991 250.508C111.925 250.508 0 362.437 0 500.508C0 638.579 111.925 750.508 249.991 750.508Z"/>
+    </group>
+</vector>

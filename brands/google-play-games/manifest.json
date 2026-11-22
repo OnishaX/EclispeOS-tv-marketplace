@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "id": "google-play-games",
+  "title": "Google Play Games",
+  "icon": "icon.png",
+  "colours": [
+    {
+      "name": "Play Games Green",
+      "hex": "#01875F"
+    }
+  ],
+  "packages": [
+    "com.google.android.play.games"
+  ]
+}

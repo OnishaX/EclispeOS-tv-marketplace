@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "id": "apple-music",
+  "title": "Apple Music",
+  "icon": "icon.png",
+  "colours": [
+    {
+      "name": "White",
+      "hex": "#FFFFFF"
+    }
+  ],
+  "packages": [
+    "com.apple.android.music"
+  ]
+}

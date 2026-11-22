@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "id": "hbo-max",
+  "title": "HBO Max",
+  "icon": "icon.png",
+  "colours": [
+    {
+      "name": "Black",
+      "hex": "#232326"
+    }
+  ],
+  "packages": [
+    "com.hbo.hbonow"
+  ]
+}

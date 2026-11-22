@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Netflix logo, converted from Netflix.svg -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="15.92dp" android:height="24dp"
+    android:viewportWidth="884.3" android:viewportHeight="1333.3">
+    <group android:name="pad" android:translateX="166.7" android:translateY="166.7">
+    <path android:fillColor="#FFFFFFFF"
+        android:pathData="M194.122 599.26V973.117C194.122 973.117 143.468 976.625 99.3457 979.625C55.2278 982.625 0.0112916 990.401 0 990.403V50.225L194.122 599.26Z"/>
+    <path android:fillColor="#FFFFFFFF"
+        android:pathData="M550.084 949.217L353.828 394.142V0H550.084V949.217Z"/>
+    <path android:fillColor="#FFFFFFFF"
+        android:pathData="M0 0H196.41L550.084 1000C550.084 1000 488.071 992.541 442.8 988.879C397.529 985.216 347.794 983.364 347.794 983.364L0 0Z"/>
+    </group>
+</vector>

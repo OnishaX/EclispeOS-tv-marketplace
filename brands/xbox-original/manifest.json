@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "id": "xbox-original",
+  "title": "Xbox (Original)",
+  "icon": "icon.png",
+  "colours": [
+    {
+      "name": "Original Xbox Green",
+      "hex": "#9BC848"
+    }
+  ],
+  "packages": []
+}

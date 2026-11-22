@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "id": "youtube-music",
+  "title": "YouTube Music",
+  "icon": "icon.png",
+  "colours": [
+    {
+      "name": "YouTube Red",
+      "hex": "#FF0033"
+    }
+  ],
+  "packages": [
+    "com.google.android.apps.youtube.music",
+    "com.google.android.youtube.tvmusic"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "id": "android",
+  "title": "Android",
+  "icon": "icon.png",
+  "colours": [
+    {
+      "name": "Android Green",
+      "hex": "#3DDC84"
+    }
+  ],
+  "packages": []
+}

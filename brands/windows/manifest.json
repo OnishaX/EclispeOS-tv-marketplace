@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "id": "windows",
+  "title": "Windows",
+  "icon": "icon.png",
+  "colours": [
+    {
+      "name": "Windows Blue",
+      "hex": "#0078D4"
+    }
+  ],
+  "packages": [
+    "com.microsoft.rdc.androidx"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "id": "max",
+  "title": "Max",
+  "icon": "icon.png",
+  "colours": [
+    {
+      "name": "Black",
+      "hex": "#232326"
+    }
+  ],
+  "packages": [
+    "com.wbd.stream"
+  ]
+}

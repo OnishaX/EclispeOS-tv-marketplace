@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "id": "navidrome",
+  "title": "Navidrome",
+  "icon": "icon.png",
+  "colours": [
+    {
+      "name": "Navidrome Blue",
+      "hex": "#0084FF"
+    }
+  ],
+  "packages": []
+}

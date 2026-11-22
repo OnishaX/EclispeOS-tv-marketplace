@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "id": "jellyfin",
+  "title": "Jellyfin",
+  "icon": "icon.png",
+  "colours": [
+    {
+      "name": "Jellyfin Blue",
+      "hex": "#00A4DC"
+    }
+  ],
+  "packages": [
+    "org.jellyfin.androidtv",
+    "org.jellyfin.mobile"
+  ]
+}

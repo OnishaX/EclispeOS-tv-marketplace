@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "id": "google-play",
+  "title": "Google Play",
+  "icon": "icon.png",
+  "colours": [
+    {
+      "name": "Google Play Green",
+      "hex": "#01875F"
+    }
+  ],
+  "packages": [
+    "com.android.vending"
+  ]
+}

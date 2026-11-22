@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "id": "amazon-prime-video",
+  "title": "Amazon Prime Video",
+  "icon": "icon.png",
+  "colours": [
+    {
+      "name": "Prime Blue",
+      "hex": "#0477FF"
+    }
+  ],
+  "packages": [
+    "com.amazon.amazonvideo.livingroom",
+    "com.amazon.avod.thirdpartyclient"
+  ]
+}

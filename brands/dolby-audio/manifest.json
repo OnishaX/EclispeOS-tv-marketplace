@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "id": "dolby-audio",
+  "title": "Dolby Audio",
+  "icon": "icon.png",
+  "colours": [
+    {
+      "name": "Black",
+      "hex": "#232326"
+    }
+  ],
+  "packages": []
+}

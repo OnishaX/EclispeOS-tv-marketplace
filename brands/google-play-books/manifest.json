@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "id": "google-play-books",
+  "title": "Google Play Books",
+  "icon": "icon.png",
+  "colours": [
+    {
+      "name": "Play Books Blue",
+      "hex": "#0099FF"
+    }
+  ],
+  "packages": [
+    "com.google.android.apps.books"
+  ]
+}

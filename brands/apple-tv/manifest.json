@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "id": "apple-tv",
+  "title": "Apple TV",
+  "icon": "icon.png",
+  "colours": [
+    {
+      "name": "Black",
+      "hex": "#232326"
+    }
+  ],
+  "packages": [
+    "com.apple.atve.androidtv.appletv",
+    "com.apple.atve.amazon.appletv",
+    "com.apple.atve.sony.appletv"
+  ]
+}

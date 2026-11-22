@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "id": "files",
+  "title": "Google Files",
+  "icon": "icon.png",
+  "colours": [
+    {
+      "name": "Google Blue",
+      "hex": "#4285F4"
+    }
+  ],
+  "packages": [
+    "com.google.android.apps.nbu.files"
+  ]
+}

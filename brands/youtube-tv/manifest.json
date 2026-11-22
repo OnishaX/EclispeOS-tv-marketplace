@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "id": "youtube-tv",
+  "title": "YouTube TV",
+  "icon": "icon.png",
+  "colours": [
+    {
+      "name": "YouTube Red",
+      "hex": "#FF0033"
+    }
+  ],
+  "packages": [
+    "com.google.android.youtube.tvunplugged"
+  ]
+}

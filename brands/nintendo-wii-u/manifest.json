@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "id": "nintendo-wii-u",
+  "title": "Nintendo Wii U",
+  "icon": "icon.png",
+  "colours": [
+    {
+      "name": "Wii U Blue",
+      "hex": "#009AC7"
+    }
+  ],
+  "packages": []
+}

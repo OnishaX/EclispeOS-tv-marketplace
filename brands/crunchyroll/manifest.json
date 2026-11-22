@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "id": "crunchyroll",
+  "title": "Crunchyroll",
+  "icon": "icon.png",
+  "colours": [
+    {
+      "name": "Crunchyroll Orange",
+      "hex": "#F47521"
+    }
+  ],
+  "packages": [
+    "com.crunchyroll.crunchyroid"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "id": "disney-plus",
+  "title": "Disney+",
+  "icon": "icon.png",
+  "colours": [
+    {
+      "name": "Aurora Teal",
+      "hex": "#06968D"
+    }
+  ],
+  "packages": [
+    "com.disney.disneyplus"
+  ]
+}

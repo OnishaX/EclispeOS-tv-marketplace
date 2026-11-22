@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Dolby Audio logo, converted from dolby-audio.svg -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="31.34dp" android:height="24dp"
+    android:viewportWidth="1741.3" android:viewportHeight="1333.3">
+    <group android:name="pad" android:translateX="166.7" android:translateY="166.7">
+    <path android:fillColor="#FFFFFFFF"
+        android:pathData="M145.939 0C418.457 0 640.602 224.556 640.602 500C640.602 775.458 418.457 1000 145.939 1000H0V0H145.939ZM1407.41 0V1000H1261.47C988.954 1000 766.806 775.458 766.806 500C766.806 224.556 988.954 0 1261.47 0H1407.41Z"/>
+    </group>
+</vector>

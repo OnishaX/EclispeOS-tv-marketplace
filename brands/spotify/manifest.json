@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "id": "spotify",
+  "title": "Spotify",
+  "icon": "icon.png",
+  "colours": [
+    {
+      "name": "Spotify Green",
+      "hex": "#1ED760"
+    }
+  ],
+  "packages": [
+    "com.spotify.tv.android",
+    "com.spotify.music"
+  ]
+}

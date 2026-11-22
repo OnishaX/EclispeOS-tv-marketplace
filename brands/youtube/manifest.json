@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "id": "youtube",
+  "title": "Youtube",
+  "icon": "icon.png",
+  "colours": [
+    {
+      "name": "YouTube Red",
+      "hex": "#FF0033"
+    }
+  ],
+  "packages": [
+    "com.google.android.youtube.tv",
+    "com.google.android.youtube"
+  ]
+}

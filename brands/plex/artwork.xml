@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Plex logo, converted from Plex.svg -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24.83dp" android:height="24dp"
+    android:viewportWidth="1379.3" android:viewportHeight="1333.3">
+    <group android:name="pad" android:translateX="166.7" android:translateY="166.7">
+    <path android:fillColor="#FFFFFFFF"
+        android:pathData="M328.624 485.715L0 0H338.149L664.391 485.715L338.149 969.049H0L328.624 485.715Z"/>
+    <path android:fillColor="#FFFFFFFF"
+        android:pathData="M752.486 430.953L1045.39 0H707.241L585.793 178.572L752.486 430.953Z"/>
+    <path android:fillColor="#FFFFFFFF"
+        android:pathData="M585.793 792.856L642.945 871.427C697.716 957.142 769.155 999.999 852.502 999.999C940.611 997.618 1002.53 921.428 1026.34 892.856C1026.34 892.856 983.475 854.761 928.704 790.475C854.883 704.761 757.249 547.617 754.867 540.475L585.793 792.856Z"/>
+    </group>
+</vector>

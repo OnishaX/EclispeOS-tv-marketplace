@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "id": "nintendo-switch",
+  "title": "Nintendo Switch",
+  "icon": "icon.png",
+  "colours": [
+    {
+      "name": "Nintendo Red",
+      "hex": "#E60012"
+    }
+  ],
+  "packages": [
+    "com.nintendo.znca"
+  ]
+}
