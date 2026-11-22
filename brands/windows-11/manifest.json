@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "id": "windows-11",
+  "title": "Windows 11",
+  "icon": "icon.png",
+  "colours": [
+    { "name": "Windows 11 Blue", "hex": "#0078D4" }
+  ],
+  "packages": []
+}

@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "id": "windows-vista",
+  "title": "Windows Vista",
+  "icon": "icon.png",
+  "colours": [
+    { "name": "Windows Vista Blue", "hex": "#29599B" },
+    { "name": "Windows Vista Red", "hex": "#C61A04" },
+    { "name": "Windows Vista Green", "hex": "#51881A" },
+    { "name": "Windows Vista Yellow", "hex": "#FAC314" }
+  ],
+  "packages": []
+}

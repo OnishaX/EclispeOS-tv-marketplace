@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "id": "windows-7",
+  "title": "Windows 7",
+  "icon": "icon.png",
+  "colours": [
+    { "name": "Windows 7 Blue", "hex": "#2F68A3" },
+    { "name": "Windows 7 Red", "hex": "#D23108" },
+    { "name": "Windows 7 Green", "hex": "#42791A" },
+    { "name": "Windows 7 Yellow", "hex": "#FAD429" }
+  ],
+  "packages": []
+}

@@ -31,7 +31,8 @@ Keep listing descriptions consistent with their runtime compatibility profile.
 `brands/index.json` lists brand directory IDs. Each `brands/<id>/manifest.json`
 defines its `title`, relative PNG `icon` path, named `colours` and associated
 Android `packages`. Keep the index in sync when adding or removing brands.
-`artwork.xml` preserves the original vector; the app downloads the PNG.
+`artwork.xml` or `artwork.svg` preserves the original vector; the app downloads
+the PNG.
 The icon picker refreshes these manifests at a pinned Marketplace revision.
 Brand metadata and used icons are cached locally for offline tiles; other
 icons are downloaded only for browsing and kept in memory.
