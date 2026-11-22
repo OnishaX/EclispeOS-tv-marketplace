@@ -5,8 +5,20 @@
   "icon": "icon.png",
   "colours": [
     {
-      "name": "Google Play Green",
-      "hex": "#01875F"
+      "name": "Google Blue",
+      "hex": "#4285f4"
+    },
+    {
+      "name": "Google Green",
+      "hex": "#34a853"
+    },
+    {
+      "name": "Google Red",
+      "hex": "#ea4335"
+    },
+    {
+      "name": "Google Yellow",
+      "hex": "#fbbc05"
     }
   ],
   "packages": [
