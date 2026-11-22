@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
   "id": "eclipse-app-tv-shows",
-  "title": "TV Shows",
+  "title": "Shows",
   "developer": "Eclipse",
   "type": "app",
-  "version": "0.7",
+  "version": "0.8",
   "entryPoint": {
     "handler": "tvshows"
   },

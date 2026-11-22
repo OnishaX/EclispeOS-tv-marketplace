@@ -49,7 +49,7 @@ node tools/sync-native-bundles.mjs /path/to/Eclipse
 ```
 
 The converter preserves aspect ratios and bumps existing artwork versions only
-when their image changes. Native Music, Movies, TV Shows, Jellyfin, Navidrome
+when their image changes. Native Music, Movies, Shows, Jellyfin, Navidrome
 and Compatibility Profiler require Eclipse 1.1 (version code 2) or later.
 Their bundled Kotlin sources are informational/build inputs, not executable
 downloads; installing a catalog entry cannot upgrade the Eclipse host APK.
@@ -66,7 +66,7 @@ their albums, then an album to open its full track list; Back restores each
 parent selection. Album details use square artwork, and artist images are
 circular in lists, grids and details, using the artist's own primary image or
 an artist placeholder, never an album-cover substitute. Album, movie and TV-show artwork matches
-the app tiles' rounded corners. TV Shows uses a five-column portrait-poster
+the app tiles' rounded corners. Shows uses a five-column portrait-poster
 grid; opening a show retains its episode list and parent selection.
 Album track lists show track numbers and per-song contributing artists;
 Songs and playlist rows retain their icons and artist/album subtitles.

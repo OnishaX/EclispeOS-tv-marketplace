@@ -126,10 +126,10 @@
     },
     {
       "id": "eclipse-app-tv-shows",
-      "title": "TV Shows",
+      "title": "Shows",
       "type": "app",
       "featured": true,
-      "version": "0.7"
+      "version": "0.8"
     },
     {
       "id": "eclipse-plugin-connection-jellyfin",
