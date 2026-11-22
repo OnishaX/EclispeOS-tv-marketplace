@@ -66,8 +66,10 @@ their albums, then an album to open its full track list; Back restores each
 parent selection. Album details use square artwork, and artist images are
 circular in lists, grids and details, using the artist's own primary image or
 an artist placeholder, never an album-cover substitute. Album, movie and TV-show artwork matches
-the app tiles' rounded corners. Shows uses a five-column portrait-poster
-grid; opening a show retains its episode list and parent selection.
+the app tiles' rounded corners. Shows offers a list or five-column portrait-poster
+grid; opening a show retains its episode list and parent selection. Movies offers
+independent list/grid choices for Movies, Genres and Collections. These view
+settings are per user; Shows defaults to Grid and Movies to List.
 Album track lists show track numbers and per-song contributing artists;
 Songs and playlist rows retain their icons and artist/album subtitles.
 

@@ -115,21 +115,21 @@
       "title": "Music",
       "type": "app",
       "featured": true,
-      "version": "0.6"
+      "version": "0.7"
     },
     {
       "id": "eclipse-app-movies",
       "title": "Movies",
       "type": "app",
       "featured": true,
-      "version": "0.6"
+      "version": "0.7"
     },
     {
       "id": "eclipse-app-tv-shows",
       "title": "Shows",
       "type": "app",
       "featured": true,
-      "version": "0.8"
+      "version": "0.9"
     },
     {
       "id": "eclipse-plugin-connection-jellyfin",

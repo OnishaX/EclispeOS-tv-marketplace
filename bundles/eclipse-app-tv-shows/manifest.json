@@ -4,7 +4,7 @@
   "title": "Shows",
   "developer": "Eclipse",
   "type": "app",
-  "version": "0.8",
+  "version": "0.9",
   "entryPoint": {
     "handler": "tvshows"
   },
@@ -28,6 +28,8 @@
     "liveThumbnail": false,
     "nowPlaying": true
   },
-  "settings": [],
+  "settings": [
+    { "key": "showsGrid", "settingTitle": "Shows layout", "settingType": "bool" }
+  ],
   "minimumHostVersionCode": 2
 }

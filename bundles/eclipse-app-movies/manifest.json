@@ -4,7 +4,7 @@
   "title": "Movies",
   "developer": "Eclipse",
   "type": "app",
-  "version": "0.6",
+  "version": "0.7",
   "entryPoint": {
     "handler": "movies"
   },
@@ -28,6 +28,10 @@
     "liveThumbnail": false,
     "nowPlaying": true
   },
-  "settings": [],
+  "settings": [
+    { "key": "moviesGrid", "settingTitle": "Movies layout", "settingType": "bool" },
+    { "key": "genresGrid", "settingTitle": "Genres layout", "settingType": "bool" },
+    { "key": "collectionsGrid", "settingTitle": "Collections layout", "settingType": "bool" }
+  ],
   "minimumHostVersionCode": 2
 }

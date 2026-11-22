@@ -9,8 +9,8 @@ const repo = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const main = resolve(android, 'app/src/main');
 const entries = [
   ['eclipse-app-music', 'Browse every credited artist, albums and playlists in lists or five-column grids, with circular artist images, live artwork and native music playback.'],
-  ['eclipse-app-movies', 'Browse movie posters and play videos with the built-in Eclipse player.'],
-  ['eclipse-app-tv-shows', 'Browse shows in a five-column poster grid and open their episode lists.'],
+  ['eclipse-app-movies', 'Browse Movies, Genres and Collections in lists or five-column grids and play videos with the built-in Eclipse player.'],
+  ['eclipse-app-tv-shows', 'Browse shows in a list or five-column poster grid and open their episode lists.'],
   ['eclipse-plugin-connection-jellyfin', 'Connect Eclipse media apps to a Jellyfin server.'],
   ['eclipse-plugin-connection-navidrome', 'Connect Eclipse Music to a Navidrome/Subsonic server.'],
   ['eclipse-app-compatibility-profiler', 'Review hardware and firmware capabilities and propose a model compatibility plugin through GitHub.'],
@@ -92,6 +92,10 @@ for (const [id, description] of entries) {
           'Frame-synchronized Home transitions with a continuous artwork backdrop',
           'Synchronized artwork backdrop at 25% opacity', 'Background playback, shuffle and repeat',
           'Requires Eclipse host version 2 or later'] :
+      id === 'eclipse-app-movies' ?
+        ['Independent per-user list or grid layouts', 'Native Eclipse integration', 'Requires Eclipse host version 2 or later'] :
+      id === 'eclipse-app-tv-shows' ?
+        ['Per-user list or grid layout; episodes remain a list', 'Native Eclipse integration', 'Requires Eclipse host version 2 or later'] :
       ['Native Eclipse integration', 'Requires Eclipse host version 2 or later'],
   });
   if (existsSync(resolve(source, 'src'))) cpSync(resolve(source, 'src'), resolve(target, 'src'), {

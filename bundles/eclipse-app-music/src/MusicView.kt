@@ -90,15 +90,12 @@ internal class MusicView(context: Context, private val videoKind: VideoKind? = n
     private var artistAlbumGroups = emptyList<MusicCollection>()
     internal val hasParentPage get() = collection != null
     private val pageTransition = DualPanePageTransition(this)
-    private val layouts = MusicLayouts(context)
+    private val layouts = MusicLayouts(context, videoKind)
     private val ratings = MusicRatings(context)
     private val rating get() = playback.song?.let(ratings::get) ?: MusicRating.NONE
     private val collectionDetails get() = videoKind == null && hasParentPage && !queuePage
-    private val grid get() = !list && !needsPermission && when (videoKind) {
-        null -> layouts.grid(if (browsingArtistAlbums) MusicSection.ALBUMS else section)
-        VideoKind.SHOWS -> true
-        VideoKind.MOVIES -> false
-    }
+    private val grid get() = !list && !needsPermission &&
+        layouts.grid(if (browsingArtistAlbums) MusicSection.ALBUMS else section)
     private val visibleCount get() = if (grid) GRID_COLUMNS * GRID_ROWS else if (queuePage) 7 else VISIBLE_ROWS
     private val rowHeight get() = if (queuePage) 84f else SettingsChrome.ROW_HEIGHT
     private val contentTop get() = if (grid || queuePage) SettingsChrome.PANE_TOP else SettingsChrome.TOP
@@ -645,7 +642,9 @@ internal class MusicView(context: Context, private val videoKind: VideoKind? = n
         return RectF(x, y, x + cellWidth, y + gridArtworkHeight(cellWidth) + 59f)
     }
 
-    private fun gridArtworkHeight(width: Float) = if (videoKind == VideoKind.SHOWS) width * 1.5f else minOf(224f, width)
+    private fun gridArtworkHeight(width: Float) =
+        if (videoKind == VideoKind.SHOWS || videoKind == VideoKind.MOVIES && section == MusicSection.ARTISTS)
+            width * 1.5f else minOf(224f, width)
 
     private fun drawGrid(canvas: Canvas) {
         val visible = visibleIndices()

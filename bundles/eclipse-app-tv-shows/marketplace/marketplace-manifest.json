@@ -1,7 +1,8 @@
 {
   "schemaVersion": 1,
-  "description": "Browse shows in a five-column poster grid and open their episode lists.",
+  "description": "Browse shows in a list or five-column poster grid and open their episode lists.",
   "features": [
+    "Per-user list or grid layout; episodes remain a list",
     "Native Eclipse integration",
     "Requires Eclipse host version 2 or later"
   ]

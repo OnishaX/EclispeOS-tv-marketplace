@@ -1,7 +1,8 @@
 {
   "schemaVersion": 1,
-  "description": "Browse movie posters and play videos with the built-in Eclipse player.",
+  "description": "Browse Movies, Genres and Collections in lists or five-column grids and play videos with the built-in Eclipse player.",
   "features": [
+    "Independent per-user list or grid layouts",
     "Native Eclipse integration",
     "Requires Eclipse host version 2 or later"
   ]

@@ -32,13 +32,21 @@ internal data class MusicPlaylist(val id: String, val name: String, val songs: L
 internal data class MusicCollection(val id: String, val title: String, val subtitle: String, val songs: List<MusicSong>,
     val artist: MusicArtist? = null)
 internal enum class MusicSection(val title: String) { ARTISTS("Artists"), ALBUMS("Albums"), SONGS("Songs"), PLAYLISTS("Playlists") }
-internal class MusicLayouts(context: Context) {
+internal class MusicLayouts(context: Context, private val videoKind: VideoKind? = null) {
     private val prefs = HomePrefs(context)
-    fun grid(section: MusicSection) = section != MusicSection.SONGS &&
-        prefs.bundleSetting("music", "${section.name.lowercase()}Grid") == "true"
+    val sections = videoKind?.sections ?: MusicSection.entries.filter { it != MusicSection.SONGS }
+    fun title(section: MusicSection) = videoKind?.labels?.get(section.ordinal) ?: section.title
+    fun settingKey(section: MusicSection): String {
+        require(section in sections) { "This section has no layout setting." }
+        return "${title(section).lowercase()}Grid"
+    }
+    fun grid(section: MusicSection): Boolean {
+        if (section !in sections) return false
+        return prefs.bundleSetting(videoKind?.key ?: "music", settingKey(section))?.let { it == "true" }
+            ?: (videoKind == VideoKind.SHOWS)
+    }
     fun setGrid(section: MusicSection, grid: Boolean) {
-        require(section != MusicSection.SONGS) { "Songs always use a list." }
-        prefs.setBundleSetting("music", "${section.name.lowercase()}Grid", grid.toString())
+        prefs.setBundleSetting(videoKind?.key ?: "music", settingKey(section), grid.toString())
     }
 }
 internal enum class MusicRepeat { NONE, ALL, ONE }
