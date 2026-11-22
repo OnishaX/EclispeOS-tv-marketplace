@@ -8,5 +8,71 @@
     "Provides display, sound, OS, remote and buffer facts to Eclipse",
     "Firmware-scoped rendering recommendations; user choices take precedence",
     "Preserves unknowns and distinguishes advertised support from verified operation"
+  ],
+  "capabilitySections": [
+    {
+      "title": "Device and firmware",
+      "items": [
+        "JVC G24 TV, product SW8_JVC_NZ, Android 11 (API 30).",
+        "The measurements below are from firmware RTM9.241015.070, security patch 2024-12-01; other firmware may behave differently.",
+        "Manufacturer: skyworth; board: anaheim. Supported ABIs: armeabi-v7a and armeabi."
+      ]
+    },
+    {
+      "title": "Inputs",
+      "items": [
+        "Android reported four HDMI passthrough inputs and one composite passthrough input.",
+        "Antenna, Cable and Satellite can share the TV's digital tuner.",
+        "Input settle delays: HDMI 2.2 seconds; tuner 1.5 seconds.",
+        "One concurrent TV preview was observed as safe. The number of TV input scalers is unknown.",
+        "HDMI snapshot capture is unknown and requires a consented test with non-protected content."
+      ]
+    },
+    {
+      "title": "Display",
+      "items": [
+        "Physical panel: 3840 x 2160. Android reported 1920 x 1080 app display modes at 50 Hz and 60 Hz.",
+        "Panel HDR types reported by Android: Dolby Vision, HDR10 and HLG. Panel HDR support does not establish HDR interface output.",
+        "The observed graphics composition target was 1920 x 1080. Tested 4K UI buffers were composed into that target before scaling to the panel.",
+        "Graphics: ARM Mali-G52 r25p1-01bet0; OpenGL ES 3.2.",
+        "JVC picture backlight control supports 0-100 in steps of 5; manual mode and WRITE_SECURE_SETTINGS permission are required."
+      ]
+    },
+    {
+      "title": "Sound",
+      "items": [
+        "PCM and eARC return audio were observed in the tested setup. PCM worked with the tested external receiver; bitstream behaviour depends on the connected audio route.",
+        "The audio policy advertised AAC, AC-3, AC-4, E-AC-3, E-AC-3 JOC and PCM formats; advertised formats are not proof of playback.",
+        "The built-in speaker report includes two channels and sample rates from 8 kHz to 192 kHz; codec and channel limits remain unknown.",
+        "The later audio policy report did not show an eARC policy entry. This does not negate the separately observed return-audio result."
+      ]
+    },
+    {
+      "title": "Remote control",
+      "items": [
+        "The plugin adds KEYCODE_NOTIFICATION (83) as a Settings shortcut.",
+        "Android reported navigation, Select, Back, Home, Settings, Notification, TV Input and Volume keys present. Key presence does not prove Eclipse receives them.",
+        "Firmware may intercept input keys; use Eclipse button mapping to test delivery."
+      ]
+    },
+    {
+      "title": "Buffers and video",
+      "items": [
+        "UI buffer sizes tested: 1920 x 1080 and 3840 x 2160, in RGBA_8888 format.",
+        "HDR UI output was not supported in the tested driver; floating-point EGL format was advertised but BT.2020 PQ EGL colour space was not.",
+        "Native-resolution UI buffers measured about 18.8 frames per second in the recorded test; an observed 1080p interface output measured about 60 frames per second.",
+        "Android reported video decoder types including AV1, AVC, HEVC, Dolby Vision, MPEG-2, VP8 and VP9. Reported decoder counts, dimensions and frame rates require validation and are not guarantees of simultaneous playback.",
+        "An intermittent frozen or black thumbnail was observed during libVLC fullscreen-to-Home surface handoff."
+      ]
+    },
+    {
+      "title": "Verification and recommendations",
+      "items": [
+        "Measurements used Android APIs and read-only local ADB. Raw diagnostics were not included.",
+        "Eclipse recommends Android-window UI buffers on this firmware instead of native-resolution buffers; explicit user choices take precedence.",
+        "Audio encoding override: unknown. Connected receiver support is not a TV-wide codec guarantee.",
+        "App display mode is not a measurement of frame rate. HDR video support is not evidence of HDR UI output."
+      ]
+    }
   ]
 }
