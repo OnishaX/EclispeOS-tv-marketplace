@@ -19,11 +19,12 @@ Runtime artwork is transparent PNG, at most 512 x 512 pixels and 256 KiB.
 Manifests are at most 32 KiB. Original supplied artwork is kept as `artwork.svg`.
 The separate `marketplace/marketplace-manifest.json` contains listing details;
 runtime installation does not download the marketplace directory.
-Optional `capabilitySections` is an array of objects with `title` and `items`
-fields. Eclipse displays each section and its human-readable items in order;
-older listings can continue using the `capabilities` array. State the source
-firmware and retain unknowns and verification caveats. Keep listing descriptions
-consistent with their runtime compatibility profile when the profile changes.
+The profiler generates a `capabilityReport` from the merged, current-firmware
+facts and preserves other listing metadata. Eclipse displays the report by
+category in the profiler's format, including unknowns and verification caveats.
+Optional hand-authored `capabilitySections` (`title` and `items`) and older
+`capabilities` arrays remain supported when no generated report is present.
+Keep listing descriptions consistent with their runtime compatibility profile.
 
 Regenerate the supplied app/input/plugin artwork with Node.js and ImageMagick:
 
