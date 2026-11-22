@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
-  "id": "windows",
-  "title": "Windows",
+  "id": "windows-10",
+  "title": "Windows 10",
   "icon": "icon.png",
   "colours": [
     {
       "name": "Windows Blue",
-      "hex": "#0078D4"
+      "hex": "#0078D7"
     }
   ],
   "packages": [
