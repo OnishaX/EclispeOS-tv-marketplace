@@ -5,8 +5,12 @@
   "icon": "icon.png",
   "colours": [
     {
-      "name": "Steam Deck Blue",
-      "hex": "#1A9FFF"
+      "name": "Steam Deck Cyan",
+      "hex": "#00adee"
+    },
+    {
+      "name": "Steam Deck OLED",
+      "hex": "#ff5500"
     }
   ],
   "packages": []
