@@ -83,7 +83,7 @@
       "title": "Satellite",
       "type": "input",
       "featured": false,
-      "version": "0.2"
+      "version": "0.3"
     },
     {
       "id": "eclipse-app-airplay",
