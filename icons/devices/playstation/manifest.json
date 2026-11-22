@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "id": "playstation",
+  "title": "PlayStation",
+  "icon": "icon.svg",
+  "colours": [
+    {
+      "name": "PlayStation Blue",
+      "hex": "#00439C"
+    }
+  ],
+  "packages": [
+    "com.scee.psxandroid",
+    "com.playstation.remoteplay"
+  ]
+}

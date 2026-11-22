@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "id": "windows-xp",
+  "title": "Windows XP",
+  "icon": "icon.svg",
+  "colours": [
+    { "name": "Windows XP Blue", "hex": "#3F83C4" },
+    { "name": "Windows XP Red", "hex": "#E04B2B" },
+    { "name": "Windows XP Green", "hex": "#78AE43" },
+    { "name": "Windows XP Yellow", "hex": "#FFD51B" },
+    { "name": "Windows XP Orange", "hex": "#F4793B" }
+  ],
+  "packages": []
+}

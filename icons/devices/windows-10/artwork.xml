@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Windows logo, converted from windows.svg -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="23.75dp" android:height="24dp"
+    android:viewportWidth="1319.3" android:viewportHeight="1333.3">
+    <group android:name="pad" android:translateX="166.7" android:translateY="166.7">
+    <path android:fillColor="#FFFFFFFF"
+        android:pathData="M985.95 0L437.164 80.0745V477.73H985.95V0Z"/>
+    <path android:fillColor="#FFFFFFFF"
+        android:pathData="M0 143.823V477.731H398.504V85.6992L0 143.823Z"/>
+    <path android:fillColor="#FFFFFFFF"
+        android:pathData="M0 854.547L398.504 913.333V516.387H0V854.547Z"/>
+    <path android:fillColor="#FFFFFFFF"
+        android:pathData="M985.95 1000V516.387H437.164V919.051L985.95 1000Z"/>
+    </group>
+</vector>

@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "id": "windows-8",
+  "title": "Windows 8",
+  "icon": "icon.svg",
+  "colours": [
+    { "name": "Windows 8 Blue", "hex": "#00ADEF" }
+  ],
+  "packages": []
+}

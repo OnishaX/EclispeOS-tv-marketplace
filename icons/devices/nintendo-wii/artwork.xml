@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Nintendo Wii logo, converted from nintendo-wii.svg -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="43.66dp" android:height="24dp"
+    android:viewportWidth="2425.3" android:viewportHeight="1333.3">
+    <group android:name="pad" android:translateX="166.7" android:translateY="166.7">
+    <path android:fillColor="#FFFFFFFF"
+        android:pathData="M1443.89 113.611C1443.89 176.053 1496.82 227.222 1561.9 227.222C1629.58 227.222 1682.51 176.921 1682.51 113.611C1682.51 49.4335 1629.58 0 1561.9 0C1496.82 0 1443.89 51.168 1443.89 113.611Z"/>
+    <path android:fillColor="#FFFFFFFF"
+        android:pathData="M1462.87 992.975H1664.17V341.664H1462.87V992.975Z"/>
+    <path android:fillColor="#FFFFFFFF"
+        android:pathData="M1853.38 113.611C1853.38 176.053 1906.31 227.222 1971.39 227.222C2039.07 227.222 2092 176.921 2092 113.611C2092 49.4335 2039.07 0 1971.39 0C1906.31 0 1853.38 51.168 1853.38 113.611Z"/>
+    <path android:fillColor="#FFFFFFFF"
+        android:pathData="M1872.52 992.975H2073.82V341.664H1872.52V992.975Z"/>
+    <path android:fillColor="#FFFFFFFF"
+        android:pathData="M1142.75 54.6881L965.741 746.761C965.741 746.761 830.381 227.273 808.689 153.556C786.997 79.8386 741.009 47.75 677.667 47.75C613.458 47.75 568.338 79.8386 546.646 153.556C524.954 227.273 389.593 746.761 389.593 746.761L212.585 54.6881H0C0 54.6881 203.908 792.725 231.674 878.584C253.366 945.363 304.56 1000 380.05 1000C466.819 1000 507.6 936.69 525.821 878.584C544.043 820.478 676.8 333.078 676.8 333.078C676.8 333.078 809.557 820.478 827.778 878.584C846.867 936.69 887.649 1000 973.551 1000C1049.04 1000 1101.1 945.363 1122.79 878.584C1150.56 792.725 1354.47 54.6881 1354.47 54.6881H1142.75Z"/>
+    </group>
+</vector>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Nintendo Wii U logo, converted from nintendo-wii-u.svg -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="29.96dp" android:height="24dp"
+    android:viewportWidth="1664.3" android:viewportHeight="1333.3">
+    <group android:name="pad" android:translateX="166.7" android:translateY="166.7">
+    <path android:fillColor="#FFFFFFFF" android:fillType="evenOdd"
+        android:pathData="M488.253 448.819C488.253 748.515 842.645 705.652 842.645 496.064V0H488.253V448.819Z"/>
+    <path android:fillColor="#FFFFFFFF" android:fillType="evenOdd"
+        android:pathData="M0 763.78C0 911.854 102.292 1000 252.012 1000H1102.55C1228.88 1000 1330.94 912.791 1330.94 787.401V165.354C1330.94 89.7848 1274.61 7.87452 1204.93 7.87452H1008.05V519.685C1008.05 908.414 330.766 905.421 330.766 527.56V0H181.134C83.7166 0 0 61.7128 0 157.479V763.78Z"/>
+    </group>
+</vector>

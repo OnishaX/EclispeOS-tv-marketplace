@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "id": "hdmi",
+  "title": "HDMI",
+  "icon": "icon.svg",
+  "colours": [],
+  "packages": []
+}

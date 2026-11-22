@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "id": "xbox",
+  "title": "Xbox",
+  "icon": "icon.svg",
+  "colours": [
+    {
+      "name": "Xbox Green",
+      "hex": "#107C10"
+    }
+  ],
+  "packages": [
+    "com.gamepass",
+    "com.microsoft.xboxone.smartglass",
+    "com.microsoft.xcloud"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "id": "steam",
+  "title": "Steam",
+  "icon": "icon.svg",
+  "colours": [
+    {
+      "name": "Steam Navy",
+      "hex": "#171A21"
+    }
+  ],
+  "packages": [
+    "com.valvesoftware.steamlink",
+    "com.valvesoftware.android.steam.community"
+  ]
+}

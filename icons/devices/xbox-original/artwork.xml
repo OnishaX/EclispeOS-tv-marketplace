@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Xbox (Original) logo, converted from xbox-original.svg -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="29.33dp" android:height="24dp"
+    android:viewportWidth="1629.3" android:viewportHeight="1333.3">
+    <group android:name="pad" android:translateX="41.7" android:translateY="41.7">
+    <path android:fillColor="#FFFFFFFF"
+        android:pathData="M768.67 373.651L1292.51 126.126L1291.1 127.832C1114.24 319.609 992.86 446.852 926.975 508.729C1014.1 635.141 1084.96 734.223 1140.49 805.963C1223.98 913.609 1316.88 1018.13 1420.81 1120.03C1374.62 1091.74 1331.16 1064.41 1290.45 1038.08C1099.98 912.537 925.757 781.004 768.601 641.78C614.016 794.681 442.34 930.47 251.88 1049.2C212.572 1073.87 170.303 1099.05 125 1125L129.627 1119.15C180.004 1072.71 235.513 1013.38 296.643 940.932C399.98 818.786 504.182 675.295 611.809 509.616L458.077 360.994C402.563 305.469 355.581 258.499 318.853 217.503C290.849 187.455 263.741 156.608 237.496 125L768.67 373.651Z"/>
+    </group>
+</vector>

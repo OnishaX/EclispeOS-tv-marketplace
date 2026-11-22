@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "id": "nintendo-switch-2",
+  "title": "Nintendo Switch 2",
+  "icon": "icon.svg",
+  "colours": [
+    {
+      "name": "Nintendo Red",
+      "hex": "#E60012"
+    }
+  ],
+  "packages": []
+}

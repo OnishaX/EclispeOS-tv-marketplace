@@ -26,20 +26,24 @@ Optional hand-authored `capabilitySections` (`title` and `items`) and older
 `capabilities` arrays remain supported when no generated report is present.
 Keep listing descriptions consistent with their runtime compatibility profile.
 
-## Brand icons
+## Icons
 
-`brands/index.json` lists brand directory IDs. Each `brands/<id>/manifest.json`
-defines its `title`, relative SVG `icon` path, named `colours` and associated
-Android `packages`. Keep the index in sync when adding or removing brands.
+`icons/index.json` lists icon IDs in `apps`, `devices`, `inputs` and `generic`.
+Each `icons/<category>/<id>/manifest.json` defines its `title`, relative SVG
+`icon` path, named `colours` and associated Android `packages`. Colours and
+packages may be empty for unbranded icons. Keep the index in sync when adding
+or removing icons. An icon may appear in multiple categories; its copies must
+have identical manifest metadata and artwork so saved choices remain stable.
 `artwork.xml` or `artwork.svg` preserves the source vector; the app downloads
 `icon.svg` (maximum 256 KiB) and rasterizes it at up to 512 pixels. Supply a
 finite `viewBox` and use SVG shapes, paths, groups, local clipping and gradients;
 scripts, stylesheets, text, DTDs, entities and external references are unsupported.
 Existing cached PNG icons remain available offline, but older Eclipse APKs must
-be updated to refresh this SVG-only catalog.
-The icon picker refreshes these manifests at a pinned Marketplace revision.
-Brand metadata and used icons are cached locally for offline tiles; other
-icons are downloaded only for browsing and kept in memory.
+be updated to refresh this reorganized catalog. The icon picker reads manifests
+at a pinned Marketplace revision. Downloaded Marketplace manifests and icons
+are cached for 30 minutes; selected icons and their metadata are also retained
+for offline tiles. Refresh catalog in Marketplace app settings clears the
+download cache before fetching again.
 
 Regenerate the supplied app/input/plugin artwork with Node.js and ImageMagick:
 

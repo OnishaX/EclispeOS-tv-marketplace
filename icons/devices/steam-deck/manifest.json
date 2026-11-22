@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "id": "steam-deck",
+  "title": "Steam Deck",
+  "icon": "icon.svg",
+  "colours": [
+    {
+      "name": "Steam Deck Cyan",
+      "hex": "#00adee"
+    },
+    {
+      "name": "Steam Deck OLED",
+      "hex": "#ff5500"
+    }
+  ],
+  "packages": []
+}
