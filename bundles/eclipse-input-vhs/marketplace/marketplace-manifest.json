@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "description": "Open your VHS player through a compatible TV input. Map the connected TV input in App Settings.",
+  "capabilities": [
+    "Manual input mapping",
+    "Fullscreen viewing",
+    "Optional live thumbnail on supported setups"
+  ]
+}

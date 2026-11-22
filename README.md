@@ -53,6 +53,11 @@ when their image changes. Native Music, Movies, Shows, Jellyfin, Navidrome
 and Compatibility Profiler require Eclipse 1.1 (version code 2) or later.
 Their bundled Kotlin sources are informational/build inputs, not executable
 downloads; installing a catalog entry cannot upgrade the Eclipse host APK.
+Blu-ray, Cassette, CD, DVD, VHS, Vinyl and USB 1–3 require Eclipse 1.2
+(version code 3). Player tiles map to a TV passthrough input. Each USB tile
+remembers a user-selected drive or folder, since Android TV does not reliably
+associate storage volumes with physical USB ports. USB files open in an
+installed compatible player or viewer.
 
 Uninstalled plugins are offered only in Marketplace. Settings lists connection
 plugins only after installation; media-app listing manifests do not advertise

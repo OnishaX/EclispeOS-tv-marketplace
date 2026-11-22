@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "description": "USB 2 browses a selected USB drive. Choose the drive for this tile; Android TV may not report which physical port it uses.",
+  "capabilities": [
+    "Browse folders and files",
+    "Remember a selected drive per user",
+    "Open files in an installed compatible app"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "minimumHostVersionCode": 3,
+  "id": "eclipse-input-usb-2",
+  "title": "USB 2",
+  "developer": "Eclipse",
+  "type": "input",
+  "version": "0.1",
+  "entryPoint": {
+    "handler": "usb2"
+  },
+  "icons": [
+    {
+      "iconName": "USB",
+      "path": "icon0.png"
+    }
+  ],
+  "colours": [
+    {
+      "colourName": "Ocean Teal",
+      "hex": "#197C80"
+    }
+  ],
+  "customisation": {
+    "title": true,
+    "colour": true
+  },
+  "capabilities": {
+    "liveThumbnail": false,
+    "nowPlaying": false
+  },
+  "settings": []
+}

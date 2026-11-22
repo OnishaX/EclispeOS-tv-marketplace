@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "minimumHostVersionCode": 3,
+  "id": "eclipse-input-cd",
+  "title": "CD",
+  "developer": "Eclipse",
+  "type": "input",
+  "version": "0.1",
+  "entryPoint": {
+    "handler": "cd"
+  },
+  "icons": [
+    {
+      "iconName": "CD",
+      "path": "icon0.png"
+    }
+  ],
+  "colours": [
+    {
+      "colourName": "Amethyst",
+      "hex": "#6A3596"
+    }
+  ],
+  "customisation": {
+    "title": true,
+    "colour": true
+  },
+  "capabilities": {
+    "liveThumbnail": true,
+    "nowPlaying": true
+  },
+  "settings": [
+    {
+      "key": "channelMapping",
+      "settingTitle": "Channel Mapping",
+      "settingType": "string"
+    }
+  ]
+}

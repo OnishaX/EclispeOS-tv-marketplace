@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "minimumHostVersionCode": 3,
+  "id": "eclipse-input-usb-3",
+  "title": "USB 3",
+  "developer": "Eclipse",
+  "type": "input",
+  "version": "0.1",
+  "entryPoint": {
+    "handler": "usb3"
+  },
+  "icons": [
+    {
+      "iconName": "USB",
+      "path": "icon0.png"
+    }
+  ],
+  "colours": [
+    {
+      "colourName": "Deep Teal",
+      "hex": "#225F68"
+    }
+  ],
+  "customisation": {
+    "title": true,
+    "colour": true
+  },
+  "capabilities": {
+    "liveThumbnail": false,
+    "nowPlaying": false
+  },
+  "settings": []
+}

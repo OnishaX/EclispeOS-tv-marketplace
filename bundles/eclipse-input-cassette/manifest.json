@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "minimumHostVersionCode": 3,
+  "id": "eclipse-input-cassette",
+  "title": "Cassette",
+  "developer": "Eclipse",
+  "type": "input",
+  "version": "0.1",
+  "entryPoint": {
+    "handler": "cassette"
+  },
+  "icons": [
+    {
+      "iconName": "Cassette",
+      "path": "icon0.png"
+    }
+  ],
+  "colours": [
+    {
+      "colourName": "Copper",
+      "hex": "#A8562A"
+    }
+  ],
+  "customisation": {
+    "title": true,
+    "colour": true
+  },
+  "capabilities": {
+    "liveThumbnail": true,
+    "nowPlaying": true
+  },
+  "settings": [
+    {
+      "key": "channelMapping",
+      "settingTitle": "Channel Mapping",
+      "settingType": "string"
+    }
+  ]
+}

@@ -162,6 +162,69 @@
         "sdk": 31
       },
       "version": "0.2"
+    },
+    {
+      "id": "eclipse-input-bluray",
+      "title": "Blu-ray",
+      "type": "input",
+      "featured": false,
+      "version": "0.1"
+    },
+    {
+      "id": "eclipse-input-cassette",
+      "title": "Cassette",
+      "type": "input",
+      "featured": false,
+      "version": "0.1"
+    },
+    {
+      "id": "eclipse-input-cd",
+      "title": "CD",
+      "type": "input",
+      "featured": false,
+      "version": "0.1"
+    },
+    {
+      "id": "eclipse-input-dvd",
+      "title": "DVD",
+      "type": "input",
+      "featured": false,
+      "version": "0.1"
+    },
+    {
+      "id": "eclipse-input-vhs",
+      "title": "VHS",
+      "type": "input",
+      "featured": false,
+      "version": "0.1"
+    },
+    {
+      "id": "eclipse-input-vinyl",
+      "title": "Vinyl",
+      "type": "input",
+      "featured": false,
+      "version": "0.1"
+    },
+    {
+      "id": "eclipse-input-usb-1",
+      "title": "USB 1",
+      "type": "input",
+      "featured": false,
+      "version": "0.1"
+    },
+    {
+      "id": "eclipse-input-usb-2",
+      "title": "USB 2",
+      "type": "input",
+      "featured": false,
+      "version": "0.1"
+    },
+    {
+      "id": "eclipse-input-usb-3",
+      "title": "USB 3",
+      "type": "input",
+      "featured": false,
+      "version": "0.1"
     }
   ]
 }

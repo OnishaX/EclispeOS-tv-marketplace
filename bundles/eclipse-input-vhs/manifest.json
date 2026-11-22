@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "minimumHostVersionCode": 3,
+  "id": "eclipse-input-vhs",
+  "title": "VHS",
+  "developer": "Eclipse",
+  "type": "input",
+  "version": "0.1",
+  "entryPoint": {
+    "handler": "vhs"
+  },
+  "icons": [
+    {
+      "iconName": "VHS",
+      "path": "icon0.png"
+    }
+  ],
+  "colours": [
+    {
+      "colourName": "Amber",
+      "hex": "#A87A1E"
+    }
+  ],
+  "customisation": {
+    "title": true,
+    "colour": true
+  },
+  "capabilities": {
+    "liveThumbnail": true,
+    "nowPlaying": true
+  },
+  "settings": [
+    {
+      "key": "channelMapping",
+      "settingTitle": "Channel Mapping",
+      "settingType": "string"
+    }
+  ]
+}
