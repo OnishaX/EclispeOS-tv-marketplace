@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "windows-10",
   "title": "Windows 10",
-  "icon": "icon.png",
+  "icon": "icon.svg",
   "colours": [
     {
       "name": "Windows Blue",

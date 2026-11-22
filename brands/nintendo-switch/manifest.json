@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "nintendo-switch",
   "title": "Nintendo Switch",
-  "icon": "icon.png",
+  "icon": "icon.svg",
   "colours": [
     {
       "name": "Nintendo Red",

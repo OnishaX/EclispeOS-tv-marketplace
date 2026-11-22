@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "windows-7",
   "title": "Windows 7",
-  "icon": "icon.png",
+  "icon": "icon.svg",
   "colours": [
     { "name": "Windows 7 Blue", "hex": "#2F68A3" },
     { "name": "Windows 7 Red", "hex": "#D23108" },

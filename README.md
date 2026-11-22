@@ -29,10 +29,14 @@ Keep listing descriptions consistent with their runtime compatibility profile.
 ## Brand icons
 
 `brands/index.json` lists brand directory IDs. Each `brands/<id>/manifest.json`
-defines its `title`, relative PNG `icon` path, named `colours` and associated
+defines its `title`, relative SVG `icon` path, named `colours` and associated
 Android `packages`. Keep the index in sync when adding or removing brands.
-`artwork.xml` or `artwork.svg` preserves the original vector; the app downloads
-the PNG.
+`artwork.xml` or `artwork.svg` preserves the source vector; the app downloads
+`icon.svg` (maximum 256 KiB) and rasterizes it at up to 512 pixels. Supply a
+finite `viewBox` and use SVG shapes, paths, groups, local clipping and gradients;
+scripts, stylesheets, text, DTDs, entities and external references are unsupported.
+Existing cached PNG icons remain available offline, but older Eclipse APKs must
+be updated to refresh this SVG-only catalog.
 The icon picker refreshes these manifests at a pinned Marketplace revision.
 Brand metadata and used icons are cached locally for offline tiles; other
 icons are downloaded only for browsing and kept in memory.

@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "jellyfin",
   "title": "Jellyfin",
-  "icon": "icon.png",
+  "icon": "icon.svg",
   "colours": [
     {
       "name": "Jellyfin Blue",

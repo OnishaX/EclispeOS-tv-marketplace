@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "disney-plus",
   "title": "Disney+",
-  "icon": "icon.png",
+  "icon": "icon.svg",
   "colours": [
     {
       "name": "Aurora Teal",

@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "google-play",
   "title": "Google Play",
-  "icon": "icon.png",
+  "icon": "icon.svg",
   "colours": [
     {
       "name": "Google Blue",

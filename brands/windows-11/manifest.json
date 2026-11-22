@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "windows-11",
   "title": "Windows 11",
-  "icon": "icon.png",
+  "icon": "icon.svg",
   "colours": [
     { "name": "Windows 11 Blue", "hex": "#0078D4" }
   ],

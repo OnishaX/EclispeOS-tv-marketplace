@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "windows-xp",
   "title": "Windows XP",
-  "icon": "icon.png",
+  "icon": "icon.svg",
   "colours": [
     { "name": "Windows XP Blue", "hex": "#3F83C4" },
     { "name": "Windows XP Red", "hex": "#E04B2B" },

@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "steam-deck",
   "title": "Steam Deck",
-  "icon": "icon.png",
+  "icon": "icon.svg",
   "colours": [
     {
       "name": "Steam Deck Cyan",

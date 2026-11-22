@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "hbo-max",
   "title": "HBO Max",
-  "icon": "icon.png",
+  "icon": "icon.svg",
   "colours": [
     {
       "name": "Black",

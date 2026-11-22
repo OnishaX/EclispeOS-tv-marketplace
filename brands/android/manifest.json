@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "android",
   "title": "Android",
-  "icon": "icon.png",
+  "icon": "icon.svg",
   "colours": [
     {
       "name": "Android Green",

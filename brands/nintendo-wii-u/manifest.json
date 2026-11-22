@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "nintendo-wii-u",
   "title": "Nintendo Wii U",
-  "icon": "icon.png",
+  "icon": "icon.svg",
   "colours": [
     {
       "name": "Wii U Blue",

@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "windows-vista",
   "title": "Windows Vista",
-  "icon": "icon.png",
+  "icon": "icon.svg",
   "colours": [
     { "name": "Windows Vista Blue", "hex": "#29599B" },
     { "name": "Windows Vista Red", "hex": "#C61A04" },

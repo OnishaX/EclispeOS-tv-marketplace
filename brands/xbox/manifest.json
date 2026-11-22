@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "xbox",
   "title": "Xbox",
-  "icon": "icon.png",
+  "icon": "icon.svg",
   "colours": [
     {
       "name": "Xbox Green",

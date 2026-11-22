@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "dolby-audio",
   "title": "Dolby Audio",
-  "icon": "icon.png",
+  "icon": "icon.svg",
   "colours": [
     {
       "name": "Black",
