@@ -5,5 +5,264 @@
   "features": [
     "Model and firmware scoped",
     "No raw diagnostics or identifying device data"
-  ]
+  ],
+  "capabilityReport": {
+    "display": {
+      "nativeSize": [
+        1920,
+        1080
+      ],
+      "appModes": [
+        {
+          "width": 1920,
+          "height": 1080,
+          "refreshHz": 60.000004
+        }
+      ],
+      "panelHdrTypes": [],
+      "observedPassthroughInputTypes": [],
+      "adbDisplayReportAvailable": true,
+      "eglExtensions": [
+        "EGL_ANDROID_front_buffer_auto_refresh",
+        "EGL_ANDROID_get_frame_timestamps",
+        "EGL_ANDROID_get_native_client_buffer",
+        "EGL_ANDROID_image_native_buffer",
+        "EGL_ANDROID_presentation_time",
+        "EGL_ANDROID_recordable",
+        "EGL_EXT_surface_CTA861_3_metadata",
+        "EGL_EXT_surface_SMPTE2086_metadata",
+        "EGL_KHR_create_context",
+        "EGL_KHR_fence_sync",
+        "EGL_KHR_get_all_proc_addresses",
+        "EGL_KHR_gl_texture_2D_image",
+        "EGL_KHR_image",
+        "EGL_KHR_image_base",
+        "EGL_KHR_swap_buffers_with_damage"
+      ],
+      "observedClientTargetSize": [
+        1920,
+        1080
+      ]
+    },
+    "sound": {
+      "builtInSpeakers": [
+        {
+          "encodings": [],
+          "sampleRates": [],
+          "channelCounts": []
+        }
+      ],
+      "decoderMimeTypes": [
+        "audio\/3gpp",
+        "audio\/amr-wb",
+        "audio\/flac",
+        "audio\/g711-alaw",
+        "audio\/g711-mlaw",
+        "audio\/mp4a-latm",
+        "audio\/mpeg",
+        "audio\/opus",
+        "audio\/raw",
+        "audio\/vorbis"
+      ],
+      "advertisedPolicyFormats": [
+        "AUDIO_FORMAT_DEFAULT",
+        "AUDIO_FORMAT_PCM_16_BIT"
+      ],
+      "policyFormatsArePlaybackVerification": false,
+      "earcPolicyPresent": false
+    },
+    "os": {
+      "sdk": 31,
+      "release": "12",
+      "firmwareBuild": "STT9.221129.002 dev-keys",
+      "securityPatch": "2022-12-01",
+      "manufacturer": "Google",
+      "board": "goldfish_arm64",
+      "supportedAbis": [
+        "arm64-v8a"
+      ]
+    },
+    "remote": {
+      "reportedKeyPresence": [
+        {
+          "code": 19,
+          "present": true
+        },
+        {
+          "code": 20,
+          "present": true
+        },
+        {
+          "code": 21,
+          "present": true
+        },
+        {
+          "code": 22,
+          "present": true
+        },
+        {
+          "code": 23,
+          "present": true
+        },
+        {
+          "code": 4,
+          "present": true
+        },
+        {
+          "code": 3,
+          "present": true
+        },
+        {
+          "code": 176,
+          "present": false
+        },
+        {
+          "code": 83,
+          "present": false
+        },
+        {
+          "code": 178,
+          "present": false
+        },
+        {
+          "code": 24,
+          "present": true
+        },
+        {
+          "code": 25,
+          "present": true
+        }
+      ],
+      "keyDelivery": "unknown; key presence does not prove Eclipse receives it",
+      "inputReportAvailable": true
+    },
+    "buffers": {
+      "videoDecoderMimeTypes": [
+        "video\/3gpp",
+        "video\/av01",
+        "video\/avc",
+        "video\/hevc",
+        "video\/mp4v-es",
+        "video\/x-vnd.on2.vp8",
+        "video\/x-vnd.on2.vp9"
+      ],
+      "reportedHardwareDecoderLimits": [
+        {
+          "mime": "video\/avc",
+          "maxInstances": 32,
+          "maxWidth": 4096,
+          "maxHeight": 4096,
+          "maxFrameRate": 480,
+          "colorFormats": [
+            2130708361,
+            2135033992,
+            19,
+            21,
+            20,
+            39
+          ],
+          "profileLevels": [
+            {
+              "profile": 65536,
+              "level": 65536
+            },
+            {
+              "profile": 1,
+              "level": 65536
+            },
+            {
+              "profile": 2,
+              "level": 65536
+            },
+            {
+              "profile": 524288,
+              "level": 65536
+            },
+            {
+              "profile": 8,
+              "level": 65536
+            }
+          ]
+        },
+        {
+          "mime": "video\/x-vnd.on2.vp8",
+          "maxInstances": 32,
+          "maxWidth": 3840,
+          "maxHeight": 2160,
+          "maxFrameRate": 480,
+          "colorFormats": [
+            2130708361,
+            2135033992,
+            19,
+            21,
+            20,
+            39
+          ],
+          "profileLevels": [
+            {
+              "profile": 1,
+              "level": 1
+            }
+          ]
+        },
+        {
+          "mime": "video\/x-vnd.on2.vp9",
+          "maxInstances": 32,
+          "maxWidth": 3840,
+          "maxHeight": 2160,
+          "maxFrameRate": 480,
+          "colorFormats": [
+            2130708361,
+            2135033992,
+            19,
+            21,
+            20,
+            39
+          ],
+          "profileLevels": [
+            {
+              "profile": 1,
+              "level": 256
+            },
+            {
+              "profile": 4,
+              "level": 256
+            },
+            {
+              "profile": 4096,
+              "level": 256
+            },
+            {
+              "profile": 16384,
+              "level": 256
+            }
+          ]
+        }
+      ],
+      "simultaneousTvInputScalers": null,
+      "hdmiSnapshotCapture": "unknown; requires a consented test with non-protected content",
+      "hdrUiOutput": false,
+      "observedInterfaceOutput": {
+        "size": [
+          1920,
+          1080
+        ],
+        "hdr": false,
+        "displayRefreshHz": 60.000004
+      }
+    },
+    "verification": {
+      "method": "Android APIs and read-only local ADB",
+      "rawDiagnosticsIncluded": false,
+      "connectedReceiverAudioSupport": "not model capability",
+      "decoderLimits": "reported limits; simultaneous decode and maximum dimensions\/rate require validation",
+      "unavailableProbes": [
+        "DISPLAY: local ADB unavailable or not authorized",
+        "COMPOSITOR: local ADB unavailable or not authorized",
+        "AUDIO_POLICY: local ADB unavailable or not authorized",
+        "REMOTE: local ADB unavailable or not authorized",
+        "UI_PRESENTATION: local ADB unavailable or not authorized"
+      ]
+    }
+  }
 }

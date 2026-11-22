@@ -4,7 +4,7 @@
   "title": "sdk_google_atv64_arm64 Compatibility",
   "developer": "Eclipse",
   "type": "plugin",
-  "version": "0.1",
+  "version": "0.2",
   "pluginType": "compatibility",
   "compatibilityType": "tv",
   "entryPoint": {
@@ -288,7 +288,11 @@
         "connectedReceiverAudioSupport": "not model capability",
         "decoderLimits": "reported limits; simultaneous decode and maximum dimensions\/rate require validation",
         "unavailableProbes": [
-          "UI_PRESENTATION: no usable layer timing samples; measured frame rate is unknown"
+          "DISPLAY: local ADB unavailable or not authorized",
+          "COMPOSITOR: local ADB unavailable or not authorized",
+          "AUDIO_POLICY: local ADB unavailable or not authorized",
+          "REMOTE: local ADB unavailable or not authorized",
+          "UI_PRESENTATION: local ADB unavailable or not authorized"
         ]
       }
     }
