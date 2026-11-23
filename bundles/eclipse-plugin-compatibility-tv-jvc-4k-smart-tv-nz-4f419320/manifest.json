@@ -1,0 +1,1054 @@
+{
+  "schemaVersion": 1,
+  "id": "eclipse-plugin-compatibility-tv-jvc-4k-smart-tv-nz-4f419320",
+  "title": "JVC 4K Smart TV NZ Compatibility",
+  "developer": "Eclipse",
+  "type": "plugin",
+  "version": "0.1",
+  "pluginType": "compatibility",
+  "compatibilityType": "tv",
+  "entryPoint": {
+    "handler": "compatibility"
+  },
+  "icons": [
+    {
+      "iconName": "TV Compatibility",
+      "path": "icon0.png"
+    }
+  ],
+  "colours": [
+    {
+      "colourName": "Graphite",
+      "hex": "#4A505C"
+    }
+  ],
+  "customisation": {
+    "title": false,
+    "colour": false
+  },
+  "capabilities": {
+    "liveThumbnail": false,
+    "nowPlaying": false
+  },
+  "compatibility": {
+    "device": {
+      "model": "JVC 4K Smart TV NZ",
+      "product": "SW6H_JVC",
+      "sdk": 30
+    },
+    "sharedDigitalTuner": false,
+    "capabilities": {
+      "display": {
+        "nativeSize": [
+          3840,
+          2160
+        ],
+        "appModes": [
+          {
+            "width": 1920,
+            "height": 1080,
+            "refreshHz": 60.000004
+          }
+        ],
+        "panelHdrTypes": [
+          1,
+          2,
+          3
+        ],
+        "backlight": {
+          "backend": "jvc-picture",
+          "levelRange": [
+            0,
+            100
+          ],
+          "step": 5,
+          "manualModeRequired": true,
+          "manualNow": true,
+          "requiredPermission": "android.permission.WRITE_SECURE_SETTINGS",
+          "panelResponseVerified": null
+        },
+        "observedPassthroughInputTypes": [
+          1007,
+          1007,
+          1007,
+          1001
+        ],
+        "adbDisplayReportAvailable": true,
+        "eglExtensions": [
+          "EGL_ANDROID_blob_cache",
+          "EGL_ANDROID_framebuffer_target",
+          "EGL_ANDROID_image_crop",
+          "EGL_ANDROID_image_native_buffer",
+          "EGL_ANDROID_native_fence_sync",
+          "EGL_ANDROID_recordable",
+          "EGL_ARM_image_format",
+          "EGL_ARM_implicit_external_sync",
+          "EGL_ARM_pixmap_multisample_discard",
+          "EGL_EXT_create_context_robustness",
+          "EGL_EXT_image_dma_buf_import",
+          "EGL_EXT_image_gl_colorspace",
+          "EGL_EXT_pixel_format_float",
+          "EGL_IMG_context_priority",
+          "EGL_KHR_config_attribs",
+          "EGL_KHR_create_context",
+          "EGL_KHR_fence_sync",
+          "EGL_KHR_get_all_proc_addresses",
+          "EGL_KHR_gl_colorspace",
+          "EGL_KHR_gl_renderbuffer_image",
+          "EGL_KHR_gl_texture_2D_image",
+          "EGL_KHR_gl_texture_cubemap_image",
+          "EGL_KHR_image",
+          "EGL_KHR_image_base",
+          "EGL_KHR_mutable_render_buffer",
+          "EGL_KHR_no_config_context",
+          "EGL_KHR_partial_update",
+          "EGL_KHR_surfaceless_context",
+          "EGL_KHR_wait_sync",
+          "EGL_MST_image_native_buffer"
+        ],
+        "observedClientTargetSize": [
+          1920,
+          1080
+        ]
+      },
+      "sound": {
+        "builtInSpeakers": [
+          {
+            "encodings": [
+              2,
+              5,
+              6,
+              18
+            ],
+            "sampleRates": [
+              8000,
+              11025,
+              12000,
+              16000,
+              22050,
+              24000,
+              32000,
+              44100,
+              48000,
+              96000,
+              192000
+            ],
+            "channelCounts": [
+              2
+            ]
+          }
+        ],
+        "decoderMimeTypes": [
+          "audio\/3gpp",
+          "audio\/ac3",
+          "audio\/amr-wb",
+          "audio\/eac3",
+          "audio\/flac",
+          "audio\/g711-alaw",
+          "audio\/g711-mlaw",
+          "audio\/mp4a-latm",
+          "audio\/mp4a-latm-hw",
+          "audio\/mpeg",
+          "audio\/mpeg-L1",
+          "audio\/mpeg-L2",
+          "audio\/opus",
+          "audio\/raw",
+          "audio\/vorbis",
+          "audio\/x-adpcm-ima",
+          "audio\/x-adpcm-ms"
+        ],
+        "advertisedPolicyFormats": [
+          "AUDIO_FORMAT_AAC",
+          "AUDIO_FORMAT_AAC_LC",
+          "AUDIO_FORMAT_AC3",
+          "AUDIO_FORMAT_AC4",
+          "AUDIO_FORMAT_E_AC3",
+          "AUDIO_FORMAT_E_AC3_JOC",
+          "AUDIO_FORMAT_HE_AAC_V1",
+          "AUDIO_FORMAT_HE_AAC_V2",
+          "AUDIO_FORMAT_PCM_16_BIT",
+          "AUDIO_FORMAT_PCM_32_BIT"
+        ],
+        "policyFormatsArePlaybackVerification": false,
+        "earcPolicyPresent": false
+      },
+      "os": {
+        "sdk": 30,
+        "release": "11",
+        "firmwareBuild": "RTT2.220103.001",
+        "securityPatch": "2024-10-01",
+        "manufacturer": "skyworth",
+        "board": "SW6H",
+        "supportedAbis": [
+          "armeabi-v7a",
+          "armeabi"
+        ]
+      },
+      "remote": {
+        "reportedKeyPresence": [
+          {
+            "code": 19,
+            "present": true
+          },
+          {
+            "code": 20,
+            "present": true
+          },
+          {
+            "code": 21,
+            "present": true
+          },
+          {
+            "code": 22,
+            "present": true
+          },
+          {
+            "code": 23,
+            "present": true
+          },
+          {
+            "code": 4,
+            "present": true
+          },
+          {
+            "code": 3,
+            "present": true
+          },
+          {
+            "code": 176,
+            "present": true
+          },
+          {
+            "code": 83,
+            "present": true
+          },
+          {
+            "code": 178,
+            "present": true
+          },
+          {
+            "code": 24,
+            "present": true
+          },
+          {
+            "code": 25,
+            "present": true
+          }
+        ],
+        "keyDelivery": "unknown; key presence does not prove Eclipse receives it",
+        "inputReportAvailable": true
+      },
+      "buffers": {
+        "videoDecoderMimeTypes": [
+          "video\/3gpp",
+          "video\/VC1",
+          "video\/av01",
+          "video\/avc",
+          "video\/dolby-vision",
+          "video\/flv",
+          "video\/hevc",
+          "video\/mp4v-es",
+          "video\/mpeg2",
+          "video\/x-motion-jpeg",
+          "video\/x-ms-wmv",
+          "video\/x-vnd.on2.vp8",
+          "video\/x-vnd.on2.vp9"
+        ],
+        "reportedHardwareDecoderLimits": [
+          {
+            "mime": "video\/av01",
+            "maxInstances": 2,
+            "maxWidth": 4096,
+            "maxHeight": 2160,
+            "maxFrameRate": 960,
+            "colorFormats": [
+              2135033992,
+              19
+            ],
+            "profileLevels": [
+              {
+                "profile": 1,
+                "level": 8192
+              },
+              {
+                "profile": 2,
+                "level": 8192
+              },
+              {
+                "profile": 4096,
+                "level": 8192
+              }
+            ]
+          },
+          {
+            "mime": "video\/avc",
+            "maxInstances": 2,
+            "maxWidth": 4096,
+            "maxHeight": 2304,
+            "maxFrameRate": 960,
+            "colorFormats": [
+              2135033992,
+              19
+            ],
+            "profileLevels": [
+              {
+                "profile": 1,
+                "level": 32768
+              },
+              {
+                "profile": 65536,
+                "level": 32768
+              },
+              {
+                "profile": 2,
+                "level": 32768
+              },
+              {
+                "profile": 8,
+                "level": 32768
+              },
+              {
+                "profile": 524288,
+                "level": 32768
+              }
+            ]
+          },
+          {
+            "mime": "video\/dolby-vision",
+            "maxInstances": 1,
+            "maxWidth": 4096,
+            "maxHeight": 2176,
+            "maxFrameRate": 960,
+            "colorFormats": [
+              2135033992,
+              19
+            ],
+            "profileLevels": [
+              {
+                "profile": 16,
+                "level": 256
+              }
+            ]
+          },
+          {
+            "mime": "video\/dolby-vision",
+            "maxInstances": 1,
+            "maxWidth": 4096,
+            "maxHeight": 2176,
+            "maxFrameRate": 960,
+            "colorFormats": [
+              2135033992,
+              19
+            ],
+            "profileLevels": [
+              {
+                "profile": 32,
+                "level": 256
+              }
+            ]
+          },
+          {
+            "mime": "video\/dolby-vision",
+            "maxInstances": 1,
+            "maxWidth": 4096,
+            "maxHeight": 2176,
+            "maxFrameRate": 960,
+            "colorFormats": [
+              2135033992,
+              19
+            ],
+            "profileLevels": [
+              {
+                "profile": 256,
+                "level": 256
+              }
+            ]
+          },
+          {
+            "mime": "video\/dolby-vision",
+            "maxInstances": 1,
+            "maxWidth": 4096,
+            "maxHeight": 2176,
+            "maxFrameRate": 960,
+            "colorFormats": [
+              2135033992,
+              19
+            ],
+            "profileLevels": [
+              {
+                "profile": 16,
+                "level": 256
+              },
+              {
+                "profile": 32,
+                "level": 256
+              },
+              {
+                "profile": 256,
+                "level": 256
+              }
+            ]
+          },
+          {
+            "mime": "video\/dolby-vision",
+            "maxInstances": 1,
+            "maxWidth": 4096,
+            "maxHeight": 2176,
+            "maxFrameRate": 960,
+            "colorFormats": [
+              2135033992,
+              19
+            ],
+            "profileLevels": [
+              {
+                "profile": 512,
+                "level": 16
+              }
+            ]
+          },
+          {
+            "mime": "video\/dolby-vision",
+            "maxInstances": 1,
+            "maxWidth": 4096,
+            "maxHeight": 2304,
+            "maxFrameRate": 960,
+            "colorFormats": [
+              2135033992,
+              19
+            ],
+            "profileLevels": [
+              {
+                "profile": 512,
+                "level": 16
+              }
+            ]
+          },
+          {
+            "mime": "video\/dolby-vision",
+            "maxInstances": 1,
+            "maxWidth": 4096,
+            "maxHeight": 2160,
+            "maxFrameRate": 960,
+            "colorFormats": [
+              2135033992,
+              19
+            ],
+            "profileLevels": [
+              {
+                "profile": 1024,
+                "level": 256
+              }
+            ]
+          },
+          {
+            "mime": "video\/dolby-vision",
+            "maxInstances": 1,
+            "maxWidth": 4096,
+            "maxHeight": 2160,
+            "maxFrameRate": 960,
+            "colorFormats": [
+              2135033992,
+              19
+            ],
+            "profileLevels": [
+              {
+                "profile": 1024,
+                "level": 256
+              }
+            ]
+          },
+          {
+            "mime": "video\/flv",
+            "maxInstances": 2,
+            "maxWidth": 32768,
+            "maxHeight": 32768,
+            "maxFrameRate": 960,
+            "colorFormats": [
+              2135033992,
+              19
+            ],
+            "profileLevels": [
+              {
+                "profile": 1,
+                "level": 1
+              },
+              {
+                "profile": 1,
+                "level": 2
+              },
+              {
+                "profile": 1,
+                "level": 4
+              },
+              {
+                "profile": 1,
+                "level": 8
+              },
+              {
+                "profile": 1,
+                "level": 16
+              },
+              {
+                "profile": 1,
+                "level": 32
+              },
+              {
+                "profile": 1,
+                "level": 64
+              },
+              {
+                "profile": 1,
+                "level": 128
+              },
+              {
+                "profile": 2,
+                "level": 1
+              },
+              {
+                "profile": 2,
+                "level": 2
+              },
+              {
+                "profile": 2,
+                "level": 4
+              },
+              {
+                "profile": 2,
+                "level": 8
+              },
+              {
+                "profile": 2,
+                "level": 16
+              },
+              {
+                "profile": 2,
+                "level": 32
+              },
+              {
+                "profile": 2,
+                "level": 64
+              },
+              {
+                "profile": 2,
+                "level": 128
+              },
+              {
+                "profile": 4,
+                "level": 1
+              },
+              {
+                "profile": 4,
+                "level": 2
+              },
+              {
+                "profile": 4,
+                "level": 4
+              },
+              {
+                "profile": 4,
+                "level": 8
+              },
+              {
+                "profile": 4,
+                "level": 16
+              },
+              {
+                "profile": 4,
+                "level": 32
+              },
+              {
+                "profile": 4,
+                "level": 64
+              },
+              {
+                "profile": 4,
+                "level": 128
+              },
+              {
+                "profile": 8,
+                "level": 1
+              },
+              {
+                "profile": 8,
+                "level": 2
+              },
+              {
+                "profile": 8,
+                "level": 4
+              },
+              {
+                "profile": 8,
+                "level": 8
+              },
+              {
+                "profile": 8,
+                "level": 16
+              },
+              {
+                "profile": 8,
+                "level": 32
+              },
+              {
+                "profile": 8,
+                "level": 64
+              },
+              {
+                "profile": 8,
+                "level": 128
+              }
+            ]
+          },
+          {
+            "mime": "video\/3gpp",
+            "maxInstances": 2,
+            "maxWidth": 720,
+            "maxHeight": 576,
+            "maxFrameRate": 60,
+            "colorFormats": [
+              2135033992,
+              19
+            ],
+            "profileLevels": [
+              {
+                "profile": 1,
+                "level": 1
+              },
+              {
+                "profile": 1,
+                "level": 2
+              },
+              {
+                "profile": 1,
+                "level": 4
+              },
+              {
+                "profile": 1,
+                "level": 8
+              },
+              {
+                "profile": 1,
+                "level": 16
+              },
+              {
+                "profile": 1,
+                "level": 32
+              },
+              {
+                "profile": 1,
+                "level": 64
+              },
+              {
+                "profile": 1,
+                "level": 128
+              },
+              {
+                "profile": 2,
+                "level": 1
+              },
+              {
+                "profile": 2,
+                "level": 2
+              },
+              {
+                "profile": 2,
+                "level": 4
+              },
+              {
+                "profile": 2,
+                "level": 8
+              },
+              {
+                "profile": 2,
+                "level": 16
+              },
+              {
+                "profile": 2,
+                "level": 32
+              },
+              {
+                "profile": 2,
+                "level": 64
+              },
+              {
+                "profile": 2,
+                "level": 128
+              },
+              {
+                "profile": 4,
+                "level": 1
+              },
+              {
+                "profile": 4,
+                "level": 2
+              },
+              {
+                "profile": 4,
+                "level": 4
+              },
+              {
+                "profile": 4,
+                "level": 8
+              },
+              {
+                "profile": 4,
+                "level": 16
+              },
+              {
+                "profile": 4,
+                "level": 32
+              },
+              {
+                "profile": 4,
+                "level": 64
+              },
+              {
+                "profile": 4,
+                "level": 128
+              },
+              {
+                "profile": 8,
+                "level": 1
+              },
+              {
+                "profile": 8,
+                "level": 2
+              },
+              {
+                "profile": 8,
+                "level": 4
+              },
+              {
+                "profile": 8,
+                "level": 8
+              },
+              {
+                "profile": 8,
+                "level": 16
+              },
+              {
+                "profile": 8,
+                "level": 32
+              },
+              {
+                "profile": 8,
+                "level": 64
+              },
+              {
+                "profile": 8,
+                "level": 128
+              }
+            ]
+          },
+          {
+            "mime": "video\/hevc",
+            "maxInstances": 2,
+            "maxWidth": 4096,
+            "maxHeight": 2176,
+            "maxFrameRate": 960,
+            "colorFormats": [
+              2135033992,
+              19
+            ],
+            "profileLevels": [
+              {
+                "profile": 1,
+                "level": 131072
+              },
+              {
+                "profile": 2,
+                "level": 131072
+              },
+              {
+                "profile": 4096,
+                "level": 131072
+              }
+            ]
+          },
+          {
+            "mime": "video\/x-motion-jpeg",
+            "maxInstances": 2,
+            "maxWidth": 32768,
+            "maxHeight": 32768,
+            "maxFrameRate": 960,
+            "colorFormats": [
+              2135033992,
+              19
+            ],
+            "profileLevels": []
+          },
+          {
+            "mime": "video\/mpeg2",
+            "maxInstances": 2,
+            "maxWidth": 1920,
+            "maxHeight": 1088,
+            "maxFrameRate": 60,
+            "colorFormats": [
+              2135033992,
+              19
+            ],
+            "profileLevels": [
+              {
+                "profile": 0,
+                "level": 0
+              },
+              {
+                "profile": 0,
+                "level": 1
+              },
+              {
+                "profile": 0,
+                "level": 2
+              },
+              {
+                "profile": 0,
+                "level": 3
+              },
+              {
+                "profile": 1,
+                "level": 0
+              },
+              {
+                "profile": 1,
+                "level": 1
+              },
+              {
+                "profile": 1,
+                "level": 2
+              },
+              {
+                "profile": 1,
+                "level": 3
+              }
+            ]
+          },
+          {
+            "mime": "video\/mp4v-es",
+            "maxInstances": 2,
+            "maxWidth": 896,
+            "maxHeight": 896,
+            "maxFrameRate": 60,
+            "colorFormats": [
+              2135033992,
+              19
+            ],
+            "profileLevels": [
+              {
+                "profile": 1,
+                "level": 1
+              },
+              {
+                "profile": 1,
+                "level": 2
+              },
+              {
+                "profile": 1,
+                "level": 4
+              },
+              {
+                "profile": 1,
+                "level": 8
+              },
+              {
+                "profile": 1,
+                "level": 16
+              },
+              {
+                "profile": 1,
+                "level": 32
+              },
+              {
+                "profile": 1,
+                "level": 64
+              },
+              {
+                "profile": 1,
+                "level": 128
+              },
+              {
+                "profile": 4,
+                "level": 1
+              },
+              {
+                "profile": 4,
+                "level": 2
+              },
+              {
+                "profile": 4,
+                "level": 4
+              },
+              {
+                "profile": 4,
+                "level": 8
+              },
+              {
+                "profile": 4,
+                "level": 16
+              },
+              {
+                "profile": 4,
+                "level": 32
+              },
+              {
+                "profile": 4,
+                "level": 64
+              },
+              {
+                "profile": 4,
+                "level": 128
+              },
+              {
+                "profile": 8,
+                "level": 1
+              },
+              {
+                "profile": 8,
+                "level": 2
+              },
+              {
+                "profile": 8,
+                "level": 4
+              },
+              {
+                "profile": 8,
+                "level": 8
+              },
+              {
+                "profile": 8,
+                "level": 16
+              },
+              {
+                "profile": 8,
+                "level": 32
+              },
+              {
+                "profile": 8,
+                "level": 64
+              },
+              {
+                "profile": 8,
+                "level": 128
+              },
+              {
+                "profile": 1024,
+                "level": 1
+              },
+              {
+                "profile": 1024,
+                "level": 2
+              },
+              {
+                "profile": 1024,
+                "level": 4
+              },
+              {
+                "profile": 1024,
+                "level": 8
+              },
+              {
+                "profile": 1024,
+                "level": 16
+              },
+              {
+                "profile": 1024,
+                "level": 32
+              },
+              {
+                "profile": 1024,
+                "level": 64
+              },
+              {
+                "profile": 1024,
+                "level": 128
+              },
+              {
+                "profile": 32768,
+                "level": 1
+              }
+            ]
+          },
+          {
+            "mime": "video\/VC1",
+            "maxInstances": 2,
+            "maxWidth": 32768,
+            "maxHeight": 32768,
+            "maxFrameRate": 960,
+            "colorFormats": [
+              2135033992,
+              19
+            ],
+            "profileLevels": []
+          },
+          {
+            "mime": "video\/x-vnd.on2.vp8",
+            "maxInstances": 1,
+            "maxWidth": 1920,
+            "maxHeight": 1088,
+            "maxFrameRate": 960,
+            "colorFormats": [
+              2135033992,
+              19
+            ],
+            "profileLevels": []
+          },
+          {
+            "mime": "video\/x-vnd.on2.vp9",
+            "maxInstances": 2,
+            "maxWidth": 4096,
+            "maxHeight": 2176,
+            "maxFrameRate": 960,
+            "colorFormats": [
+              2135033992,
+              19
+            ],
+            "profileLevels": [
+              {
+                "profile": 1,
+                "level": 512
+              },
+              {
+                "profile": 4,
+                "level": 512
+              },
+              {
+                "profile": 4096,
+                "level": 512
+              }
+            ]
+          },
+          {
+            "mime": "video\/x-ms-wmv",
+            "maxInstances": 2,
+            "maxWidth": 32768,
+            "maxHeight": 32768,
+            "maxFrameRate": 960,
+            "colorFormats": [
+              2135033992,
+              19
+            ],
+            "profileLevels": []
+          }
+        ],
+        "simultaneousTvInputScalers": null,
+        "hdmiSnapshotCapture": "unknown; requires a consented test with non-protected content",
+        "hdrUiOutput": false,
+        "observedInterfaceOutput": {
+          "size": [
+            1920,
+            1080
+          ],
+          "hdr": false,
+          "displayRefreshHz": 60.000004
+        },
+        "observedUiPresentationFps": 58.595942770045845,
+        "uiPresentationSamples": 126
+      },
+      "verification": {
+        "method": "Android APIs and read-only local ADB",
+        "rawDiagnosticsIncluded": false,
+        "connectedReceiverAudioSupport": "not model capability",
+        "decoderLimits": "reported limits; simultaneous decode and maximum dimensions\/rate require validation",
+        "unavailableProbes": []
+      }
+    }
+  }
+}
