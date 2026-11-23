@@ -4,7 +4,7 @@
   "title": "JVC 4K Smart TV NZ Compatibility",
   "developer": "Eclipse",
   "type": "plugin",
-  "version": "0.1",
+  "version": "0.2",
   "pluginType": "compatibility",
   "compatibilityType": "tv",
   "entryPoint": {
@@ -65,7 +65,7 @@
           "manualModeRequired": true,
           "manualNow": true,
           "requiredPermission": "android.permission.WRITE_SECURE_SETTINGS",
-          "panelResponseVerified": null
+          "panelResponseVerified": true
         },
         "observedPassthroughInputTypes": [
           1007,
@@ -1039,7 +1039,7 @@
           "hdr": false,
           "displayRefreshHz": 60.000004
         },
-        "observedUiPresentationFps": 58.595942770045845,
+        "observedUiPresentationFps": 51.359613970557206,
         "uiPresentationSamples": 126
       },
       "verification": {
@@ -1049,6 +1049,7 @@
         "decoderLimits": "reported limits; simultaneous decode and maximum dimensions\/rate require validation",
         "unavailableProbes": []
       }
-    }
+    },
+    "backlight": "jvc-picture"
   }
 }
