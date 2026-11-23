@@ -34,7 +34,7 @@
         "manualModeRequired": true,
         "manualNow": true,
         "requiredPermission": "android.permission.WRITE_SECURE_SETTINGS",
-        "panelResponseVerified": null
+        "panelResponseVerified": true
       },
       "observedPassthroughInputTypes": [
         1007,
@@ -1008,7 +1008,7 @@
         "hdr": false,
         "displayRefreshHz": 60.000004
       },
-      "observedUiPresentationFps": 58.595942770045845,
+      "observedUiPresentationFps": 51.359613970557206,
       "uiPresentationSamples": 126
     },
     "verification": {
