@@ -204,6 +204,17 @@
       "type": "input",
       "featured": false,
       "version": "0.1"
+    },
+    {
+      "id": "eclipse-plugin-compatibility-tv-jvc-4k-smart-tv-nz-4f419320",
+      "title": "JVC 4K Smart TV NZ Compatibility",
+      "type": "plugin",
+      "device": {
+        "model": "JVC 4K Smart TV NZ",
+        "product": "SW6H_JVC",
+        "sdk": 30
+      },
+      "version": "0.1"
     }
   ]
 }
